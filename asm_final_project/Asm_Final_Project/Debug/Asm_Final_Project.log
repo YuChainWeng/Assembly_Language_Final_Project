@@ -1,0 +1,23 @@
+﻿Build started 2024/12/9 上午 11:39:54.
+Logging verbosity is set to: Normal.     1>Project "E:\School\Assembly_Language_Final_Project\asm_final_project\Asm_Final_Project\Asm_Final_Project.vcxproj" on node 2 (Build target(s)).
+     1>PrepareForBuild:
+         Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+       InitializeBuildStatus:
+         Touching "Debug\Asm_Fina.71685d2b.tlog\unsuccessfulbuild".
+       _MASM:
+         Assembling main.asm...
+         cmd.exe /C "C:\Users\weng1\AppData\Local\Temp\tmp0ad4514eb7cb48e180b27b9680bd0eed.cmd"
+         ml.exe /c /nologo /Zi /Fo"Debug\main.obj" /Fl"Asm_Final_Project.lst" /I "E:\School\Assembly_Language_Final_Project\Irvine" /W3 /errorReport:prompt  /Tamain.asm
+       Link:
+         D:\VisualStudio\VC\Tools\MSVC\14.42.34433\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"E:\School\Assembly_Language_Final_Project\asm_final_project\Debug\Asm_Final_Project.exe" /INCREMENTAL /ILK:"Debug\Asm_Final_Project.ilk" /NOLOGO /LIBPATH:E:\School\Assembly_Language_Final_Project\Irvine Irvine32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\School\Assembly_Language_Final_Project\asm_final_project\Debug\Asm_Final_Project.pdb" /MAP /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\School\Assembly_Language_Final_Project\asm_final_project\Debug\Asm_Final_Project.lib" /MACHINE:X86 Debug\main.obj
+         Asm_Final_Project.vcxproj -> E:\School\Assembly_Language_Final_Project\asm_final_project\Debug\Asm_Final_Project.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Asm_Fina.71685d2b.tlog\unsuccessfulbuild".
+         Touching "Debug\Asm_Fina.71685d2b.tlog\Asm_Final_Project.lastbuildstate".
+     1>Done Building Project "E:\School\Assembly_Language_Final_Project\asm_final_project\Asm_Final_Project\Asm_Final_Project.vcxproj" (Build target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.98
