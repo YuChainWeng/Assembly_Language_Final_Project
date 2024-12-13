@@ -1,7 +1,7 @@
 include Irvine32.inc
 
 .data
-    String BYTE "Hello, World!", 0
+    String BYTE "Kevin!", 0
 
 .code
 main PROC

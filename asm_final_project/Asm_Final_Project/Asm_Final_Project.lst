@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/09/24 11:39:55
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/13/24 14:22:36
 main.asm						     Page 1 - 1
 
 
@@ -20,12 +20,11 @@ main.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-
+				
  00000000			.data
- 00000000 48 65 6C 6C 6F	    String BYTE "Hello, World!", 0
-	   2C 20 57 6F 72
-	   6C 64 21 00
-
+ 00000000 4B 65 76 69 6E	    String BYTE "Kevin!", 0
+	   21 00
+				
  00000000			.code
  00000000			main PROC
  00000000  BA 00000000 R	    mov edx, OFFSET String
@@ -33,9 +32,9 @@ main.asm						     Page 1 - 1
 				    invoke ExitProcess, 0
 				    exit
  00000018			main ENDP
-
+				
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/09/24 11:39:55
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/13/24 14:22:36
 main.asm						     Symbols 2 - 1
 
 
@@ -129,7 +128,7 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000000E Para	  Public  'DATA'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000007 Para	  Public  'DATA'	
 _TEXT  . . . . . . . . . . . . .	32 Bit	 00000018 Para	  Public  'CODE'	
 
 
