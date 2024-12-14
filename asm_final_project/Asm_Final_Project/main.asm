@@ -38,6 +38,7 @@ main PROC
     ; 畫出初始的方塊
     call DrawBox
 
+
     ; 主迴圈
 mainLoop:
     ; 加入延遲，避免移動速度過快
