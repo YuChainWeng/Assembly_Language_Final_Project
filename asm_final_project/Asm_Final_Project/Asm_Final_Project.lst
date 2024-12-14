@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/13/24 14:22:36
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/14/24 22:24:26
 main.asm						     Page 1 - 1
 
 
-				include Irvine32.inc
+				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
 			      C ;OPTION CASEMAP:NONE		; optional: make identifiers case-sensitive
@@ -21,20 +21,185 @@ main.asm						     Page 1 - 1
 			      C .LIST
 			      C 
 				
+ = 00000003			BoxWidth  = 3
+ = 00000003			BoxHeight = 3
+				
  00000000			.data
- 00000000 4B 65 76 69 6E	    String BYTE "Kevin!", 0
-	   21 00
+ 00000000 DA			    boxTop    BYTE 0DAh, (BoxWidth - 2) DUP(0C4h), 0BFh
+	   00000001 [
+	    C4
+	   ] BF
+ 00000003 B3			    boxBody   BYTE 0B3h, (BoxWidth - 2) DUP(' '), 0B3h
+	   00000001 [
+	    20
+	   ] B3
+ 00000006 C0			    boxBottom BYTE 0C0h, (BoxWidth - 2) DUP(0C4h), 0D9h
+	   00000001 [
+	    C4
+	   ] D9
+				
+ 00000009 00000000		    outputHandle DWORD 0
+ 0000000D 00000000		    bytesWritten DWORD 0
+ 00000011 00000000		    count DWORD 0
+ 00000015 000A 000A		    xyPosition COORD <10,10> ; 起始位置
+ 00000019 0050 0019		    xyBound COORD <80,25> ; 螢幕邊界
+				
+ 0000001D 00000000		    cellsWritten DWORD ?
+ 00000021  00000003 [		    attributes0 WORD BoxWidth DUP(0Ch)
+	    000C
+	   ]
+ 00000027  00000002 [		    attributes1 WORD (BoxWidth-1) DUP(0Eh),0Ah
+	    000E
+	   ] 000A
+ 0000002D  00000003 [		    attributes2 WORD BoxWidth DUP(0Bh)
+	    000B
+	   ]
+				
+ 00000033 00000000		    keyState DWORD 0
+				
+ = start@0			main EQU start@0
 				
  00000000			.code
- 00000000			main PROC
- 00000000  BA 00000000 R	    mov edx, OFFSET String
- 00000005  E8 00000000 E	    call WriteString
-				    invoke ExitProcess, 0
-				    exit
- 00000018			main ENDP
+				    SetConsoleOutputCP PROTO STDCALL :DWORD
+				    GetAsyncKeyState PROTO STDCALL :DWORD
+				    Sleep PROTO STDCALL :DWORD  ; 延遲函數
 				
+ 00000000			main PROC
+				    INVOKE SetConsoleOutputCP, 437
+				
+				    ; 取得控制台的輸出控制
+				    INVOKE GetStdHandle, STD_OUTPUT_HANDLE
+ 00000011  A3 00000009 R	    mov outputHandle, eax
+				
+				    ; 畫出初始的方塊
+ 00000016  E8 0000011F		    call DrawBox
+				
+				    ; 主迴圈
+ 0000001B			mainLoop:
+				    ; 加入延遲，避免移動速度過快
+				    INVOKE Sleep, 100  ; 延遲 100 毫秒
+				
+				    ; 初始化 "是否有檢測到按鍵" 的標誌位
+ 00000022  C7 05 00000033 R	    mov keyState, 0  ; 0 表示沒有檢測到按鍵
+	   00000000
+				
+				    ; 依次檢測每個方向鍵，僅檢測到**一個**按鍵後立刻執行對應的操作
+				    INVOKE GetAsyncKeyState, VK_UP
+ 00000033  A9 00008000		    test eax, 8000h
+ 00000038  74 30		    jz noUp
+ 0000003A  C7 05 00000033 R	    mov keyState, 1 ; 設置標誌位，表示檢測到按鍵
+	   00000001
+				    ; 向上移動
+ 00000044  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 0000004B  E8 00000000 E	    call Clrscr
+ 00000050  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 00000057  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 0000005E  E8 000000D7		    call DrawBox
+ 00000063  E8 00000198		    call WaitForRelease ; 等待該鍵釋放
+ 00000068  EB B1		    jmp mainLoop
+				
+ 0000006A			noUp:
+				    INVOKE GetAsyncKeyState, VK_DOWN
+ 00000071  A9 00008000		    test eax, 8000h
+ 00000076  74 33		    jz noDown
+ 00000078  C7 05 00000033 R	    mov keyState, 1
+	   00000001
+				    ; 向下移動
+ 00000082  66| FF 05		    inc xyPosition.y
+	   00000017 R
+ 00000089  E8 00000000 E	    call Clrscr
+ 0000008E  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 00000095  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 0000009C  E8 00000099		    call DrawBox
+ 000000A1  E8 0000015A		    call WaitForRelease
+ 000000A6  E9 FFFFFF70		    jmp mainLoop
+				
+ 000000AB			noDown:
+				    INVOKE GetAsyncKeyState, VK_LEFT
+ 000000B2  A9 00008000		    test eax, 8000h
+ 000000B7  74 33		    jz noLeft
+ 000000B9  C7 05 00000033 R	    mov keyState, 1
+	   00000001
+				    ; 向左移動
+ 000000C3  66| FF 0D		    dec xyPosition.x
+	   00000015 R
+ 000000CA  E8 00000000 E	    call Clrscr
+ 000000CF  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 000000D6  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 000000DD  E8 00000058		    call DrawBox
+ 000000E2  E8 00000119		    call WaitForRelease
+ 000000E7  E9 FFFFFF2F		    jmp mainLoop
+				
+ 000000EC			noLeft:
+				    INVOKE GetAsyncKeyState, VK_RIGHT
+ 000000F3  A9 00008000		    test eax, 8000h
+ 000000F8  74 33		    jz noRight
+ 000000FA  C7 05 00000033 R	    mov keyState, 1
+	   00000001
+				    ; 向右移動
+ 00000104  66| FF 05		    inc xyPosition.x
+	   00000015 R
+ 0000010B  E8 00000000 E	    call Clrscr
+ 00000110  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 00000117  66| FF 0D		    dec xyPosition.y
+	   00000017 R
+ 0000011E  E8 00000017		    call DrawBox
+ 00000123  E8 000000D8		    call WaitForRelease
+ 00000128  E9 FFFFFEEE		    jmp mainLoop
+				
+ 0000012D			noRight:
+				    ; 如果沒有檢測到任何按鍵，則重新回到主迴圈
+ 0000012D  83 3D 00000033 R	    cmp keyState, 0
+	   00
+ 00000134  0F 84 FFFFFEE1	    jz mainLoop
+				
+				; 繪製方塊
+ 0000013A			DrawBox PROC
+				    ; 上邊框
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes0, BoxWidth, xyPosition, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxTop, BoxWidth, xyPosition, ADDR cellsWritten
+				
+ 00000174  66| FF 05		    inc xyPosition.y    ; 移動到下一行
+	   00000017 R
+				
+				    ; 中間的內容
+ 0000017B  B9 00000001		    mov ecx, BoxHeight - 2
+ 00000180			L1: 
+ 00000180  51			    push ecx
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, BoxWidth, xyPosition, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBody, BoxWidth, xyPosition, ADDR cellsWritten
+ 000001BB  66| FF 05		    inc xyPosition.y
+	   00000017 R
+ 000001C2  59			    pop ecx
+ 000001C3  E2 BB		    loop L1
+				
+				    ; 下邊框
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes2, BoxWidth, xyPosition, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBottom, BoxWidth, xyPosition, ADDR cellsWritten
+ 000001FF  C3			    ret
+ 00000200			DrawBox ENDP
+				
+				; 等待按鍵釋放
+ 00000200			WaitForRelease PROC
+				    ; ecx = 虛擬鍵的代碼
+ 00000200			WaitLoop:
+				    INVOKE GetAsyncKeyState, ecx
+ 00000206  A9 00008000		    test eax, 8000h
+ 0000020B  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
+ 0000020D  C3			    ret
+ 0000020E			WaitForRelease ENDP
+				
+ 0000020E			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/13/24 14:22:36
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/14/24 22:24:26
 main.asm						     Symbols 2 - 1
 
 
@@ -128,8 +293,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000007 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000018 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000037 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000020E Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -143,6 +308,8 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+DrawBox  . . . . . . . . . . . .	P Near	 0000013A _TEXT	Length= 000000C6 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000180 _TEXT	
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -150,6 +317,7 @@ FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FormatMessageA . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetAsyncKeyState . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandLineA  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandTail . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetConsoleCP . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -202,6 +370,7 @@ ReadString . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetConsoleCursorInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleCursorPosition . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleMode . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetConsoleOutputCP . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -218,6 +387,8 @@ Str_length . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+WaitForRelease . . . . . . . . .	P Near	 00000200 _TEXT	Length= 0000000E Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 00000200 _TEXT	
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -236,9 +407,14 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000018 Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
+start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000020E Public STDCALL
+  mainLoop . . . . . . . . . . .	L Near	 0000001B _TEXT	
+  noUp . . . . . . . . . . . . .	L Near	 0000006A _TEXT	
+  noDown . . . . . . . . . . . .	L Near	 000000AB _TEXT	
+  noLeft . . . . . . . . . . . .	L Near	 000000EC _TEXT	
+  noRight  . . . . . . . . . . .	L Near	 0000012D _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -256,6 +432,8 @@ Symbols:
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
+BoxHeight  . . . . . . . . . . .	Number	 00000003h   
+BoxWidth . . . . . . . . . . . .	Number	 00000003h   
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -371,7 +549,6 @@ STD_ERROR_HANDLE . . . . . . . .	Number	 -0000000Ch
 STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah   
 STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
 SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
-String . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 TAB  . . . . . . . . . . . . . .	Number	 00000009h   
 TRUE . . . . . . . . . . . . . .	Number	 00000001h   
 TRUNCATE_EXISTING  . . . . . . .	Number	 00000005h   
@@ -456,13 +633,23 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
+attributes0  . . . . . . . . . .	Word	 00000021 _DATA	
+attributes1  . . . . . . . . . .	Word	 00000027 _DATA	
+attributes2  . . . . . . . . . .	Word	 0000002D _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
+boxBody  . . . . . . . . . . . .	Byte	 00000003 _DATA	
+boxBottom  . . . . . . . . . . .	Byte	 00000006 _DATA	
+boxTop . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 brown  . . . . . . . . . . . . .	Number	 00000006h   
+bytesWritten . . . . . . . . . .	DWord	 0000000D _DATA	
+cellsWritten . . . . . . . . . .	DWord	 0000001D _DATA	
+count  . . . . . . . . . . . . .	DWord	 00000011 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
+keyState . . . . . . . . . . . .	DWord	 00000033 _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -470,9 +657,13 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+main . . . . . . . . . . . . . .	Text   	 start@0
+outputHandle . . . . . . . . . .	DWord	 00000009 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
+xyBound  . . . . . . . . . . . .	COORD	 00000019 _DATA	
+xyPosition . . . . . . . . . . .	COORD	 00000015 _DATA	
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   0 Warnings
