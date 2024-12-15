@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\School\\Assembly_Language_Final_Project\\asm_final_project\\",
+  "WorkspaceRootPath": "C:\\Assembly_Language_Final_Project\\asm_final_project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71685D2B-CDC2-4B71-B4AC-FE817B64F2B3}|Asm_Final_Project\\Asm_Final_Project.vcxproj|E:\\School\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{71685D2B-CDC2-4B71-B4AC-FE817B64F2B3}|Asm_Final_Project\\Asm_Final_Project.vcxproj|C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{71685D2B-CDC2-4B71-B4AC-FE817B64F2B3}|Asm_Final_Project\\Asm_Final_Project.vcxproj|solutionrelative:Asm_Final_Project\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
@@ -14,17 +14,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.asm",
-              "DocumentMoniker": "E:\\School\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
+              "DocumentMoniker": "C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
               "RelativeDocumentMoniker": "Asm_Final_Project\\main.asm",
-              "ToolTip": "E:\\School\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
+              "ToolTip": "C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
               "RelativeToolTip": "Asm_Final_Project\\main.asm",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAO8AAAAAAAAAAAAAADQAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-12-06T09:03:03.612Z",
               "EditorCaption": ""

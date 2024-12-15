@@ -86,12 +86,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\School\Assembly_Language_Final_Project\Irvine</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>"C:\Irvine"</AdditionalLibraryDirectories>
       <AdditionalDependencies>Irvine32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <MASM>
-      <IncludePaths>E:\School\Assembly_Language_Final_Project\Irvine</IncludePaths>
+      <IncludePaths>"C:\Irvine"</IncludePaths>
       <AssembledCodeListingFile>$(ProjectName).lst</AssembledCodeListingFile>
     </MASM>
   </ItemDefinitionGroup>
