@@ -1,7 +1,8 @@
 INCLUDE Irvine32.inc
 
 .data
-    floor     BYTE 42 DUP(0C4h)
+    floorLength DWORD 100
+    floor BYTE 100 DUP(0C4h)
     floorFix  BYTE 0C4h
     BoxWidth  = 3
     BoxHeight = 3
@@ -18,7 +19,7 @@ INCLUDE Irvine32.inc
 
     cactus     BYTE '|',0
     ;cactus_pos COORD <39, 12>
-    cactus_speed DWORD 1 ; 仙人掌的速度
+    cactus_speed WORD 5 ; 仙人掌的速度
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
@@ -28,7 +29,7 @@ INCLUDE Irvine32.inc
     xyPosition COORD <3,10> ; 起始位置
     xyBound COORD <80,25> ; 螢幕邊界
     cellsWritten DWORD ?
-    attributes_floor WORD 42 DUP(0Fh)
+    attributes_floor WORD 100 DUP(0Fh)
     ;attributes0 WORD BoxWidth DUP(0Ch)
     attributes0 WORD BoxWidth DUP(0Ah)
     attributes1 WORD BoxWidth DUP(0Ah)
@@ -78,13 +79,12 @@ mainLoop:
     dec xyPosition.y
     call DrawBackground
     call CheckJumpKey
-
+    mov eax, 0
     ; 檢查是否碰撞到仙人掌
-    ;call CheckCollision
+    call CheckCollision
     ; 如果碰撞，顯示遊戲結束訊息並結束程式
     cmp eax, 1
-    ;call GameOver ; 如果碰撞，則跳到 GameOver
-
+    je GameOver
     ; 如果沒有檢測到任何按鍵，則重新回到主迴圈
     jmp mainLoop
 
@@ -148,34 +148,20 @@ Jump ENDP
 
 ; **檢查是否碰撞到仙人掌**
 CheckCollision PROC
-    ; 檢查恐龍是否與仙人掌碰撞
-    mov ax, xyPosition.x
-    mov bx, cactus_pos.x
-    cmp ax, bx
-    
-    jl NoCollision  ; 如果恐龍的 x 小於仙人掌的 x，則沒有碰撞
-
-    mov ax, xyPosition.x
-    add ax, BoxWidth
-    mov bx, cactus_pos.x
-    cmp ax, bx
-    jg NoCollision  ; 如果恐龍的右邊界大於仙人掌的 x，則沒有碰撞
-
-    mov ax, xyPosition.y
-    mov bx, cactus_pos.y
-    cmp ax, bx
-    jl NoCollision  ; 如果恐龍的 y 小於仙人掌的 y，則沒有碰撞
-
-    mov ax, xyPosition.y
-    add ax, BoxHeight
-    mov bx, cactus_pos.y
-    cmp ax, bx
-    jg NoCollision  ; 如果恐龍的下邊界大於仙人掌的 y，則沒有碰撞
-
-    ; 如果沒有跳過這些檢查，則發生碰撞
+    ; 檢查是否碰撞到仙人掌
+    mov ax, cactus_pos.x
+    mov cx, xyPosition.x
+    sub ax, cx
+    cmp ax, 3
+    jge NoCollision
+    mov ax, cactus_pos.y
+    mov cx, xyPosition.y
+    sub ax, cx
+    cmp ax, 3
+    jge NoCollision
     mov eax, 1
-
-NoCollision:
+    ret
+    NoCollision:
     mov eax, 0
     ret
 CheckCollision ENDP
@@ -194,8 +180,8 @@ GameOver ENDP
 DrawBox PROC
     ; 清除螢幕
     ;call MoveCactus
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 42, floor_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floor, 42, floor_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, floorLength, floor_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floor, floorLength, floor_pos, ADDR cellsWritten
     ; 上邊框
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes0, BoxWidth, xyPosition, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxTop, BoxWidth, xyPosition, ADDR cellsWritten
@@ -264,9 +250,8 @@ DrawBackground ENDP
 
 MoveCactus PROC
     ; 移動仙人掌
-    dec cactus_pos.x
-    dec cactus_pos.x
-    dec cactus_pos.x
+    mov ax, cactus_speed
+    sub cactus_pos.x, ax
     dec cactus_pos.y
     dec cactus_pos.y
     call DrawCactus
@@ -277,8 +262,10 @@ MoveCactus PROC
     ret
 
 resetCactus:
-    
-    mov cactus_pos.x, 39 ; 重新生成仙人掌
+    mov eax, 20
+    call RandomRange
+    add eax, 50
+    mov cactus_pos.x, ax ; 重新生成仙人掌
     ret
 MoveCactus ENDP
 
