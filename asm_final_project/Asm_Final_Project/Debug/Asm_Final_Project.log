@@ -1,3 +1,2 @@
 ﻿  Assembling main.asm...
-main.asm(140): error A2008: syntax error : call
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: The command "ml.exe /c /nologo /Zi /Fo"Debug\main.obj" /Fl"Asm_Final_Project.lst" /I "C:\Irvine" /W3 /errorReport:prompt  /Tamain.asm" exited with code 1.
+  Asm_Final_Project.vcxproj -> C:\Assembly_Language_Final_Project\asm_final_project\Debug\Asm_Final_Project.exe
