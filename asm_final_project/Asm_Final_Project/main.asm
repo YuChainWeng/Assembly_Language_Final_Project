@@ -5,11 +5,19 @@ INCLUDE Irvine32.inc
     floorFix  BYTE 0C4h
     BoxWidth  = 3
     BoxHeight = 3
+
     boxTop    BYTE 0DAh, (BoxWidth - 2) DUP(0C4h), 0BFh
     boxBody   BYTE 0B3h, (BoxWidth - 2) DUP(' '), 0B3h
     boxBottom BYTE 0C0h, (BoxWidth - 2) DUP(0C4h), 0D9h
+
+    cactusTop    BYTE '  ', '|', ' ', 0    ; The top part of the cactus
+    cactusMiddle BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
+    cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
+    cactus_pos    COORD <37, 10>           ; Cactus position
+    cactus_height DWORD 3                  ; Height of the cactus (3 lines)
+
     cactus     BYTE '|',0
-    cactus_pos COORD <39, 12>
+    ;cactus_pos COORD <39, 12>
     cactus_speed DWORD 1 ; 仙人掌的速度
     outputHandle DWORD 0
     bytesWritten DWORD 0
@@ -33,8 +41,8 @@ INCLUDE Irvine32.inc
 
     score DWORD 0
     highscore DWORD 0
-    scoreString BYTE "Score: 000000", 0
-    highscoreString BYTE "High Score: 000000", 0
+    scoreString BYTE "Score: 0000", 0
+    highscoreString BYTE "High Score: 000 0", 0
     gameOverMessage BYTE "Game Over!", 0
 
 main EQU start@0
@@ -53,25 +61,22 @@ main PROC
 
     ; 畫出初始的方塊
     call DrawBox
+    call DrawCactus
 
     ; 主迴圈
 mainLoop:
     ; 加入延遲，避免移動速度過快
     INVOKE Sleep, 75  ; 延遲 100 毫秒
-    call MoveCactus
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactus, 1, cactus_pos, ADDR cellsWritten
+    
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, floor_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, floor_pos, ADDR cellsWritten
-    inc cactus_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, cactus_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, cactus_pos, ADDR cellsWritten
     
-    dec cactus_pos.x
     inc score
     call FormatScore
-    call DrawScore
-    call DrawHighScore
+    ;減回畫方塊所位移的2格
+    dec xyPosition.y
+    dec xyPosition.y
+    call DrawBackground
     call CheckJumpKey
 
     ; 檢查是否碰撞到仙人掌
@@ -115,11 +120,8 @@ JumpLoop:
     mov ax, velocity
     sub xyPosition.y, ax  ; y = y - velocity
     
-    ; 清除並重繪恐龍 (更新恐龍的畫面)
-    call Clrscr
-    call DrawBox
-    call DrawScore
-    call DrawHighScore
+    ; 更新成下一時刻的畫面
+    call DrawBackground
     ;繼續增加score
     inc score
     call FormatScore
@@ -140,10 +142,7 @@ JumpLoop:
 EndJump:
     ; 確保恐龍回到地面
     mov xyPosition.y, 10
-    call Clrscr
-    call DrawBox
-    call DrawScore
-    call DrawHighScore
+    call DrawBackground
     ret
 Jump ENDP
 
@@ -194,7 +193,7 @@ GameOver ENDP
 ; 繪製方塊
 DrawBox PROC
     ; 清除螢幕
-    call MoveCactus
+    ;call MoveCactus
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 42, floor_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floor, 42, floor_pos, ADDR cellsWritten
     ; 上邊框
@@ -216,10 +215,72 @@ L1:
     ; 下邊框
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes2, BoxWidth, xyPosition, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBottom, BoxWidth, xyPosition, ADDR cellsWritten
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactus, 1, cactus_pos, ADDR cellsWritten
+    ;INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
+    ;INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactus, 1, cactus_pos, ADDR cellsWritten
     ret
 DrawBox ENDP
+
+DrawCactus PROC
+    ; Draw the cactus at its current position
+    ; Draw top part
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 3, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 3, cactus_pos, ADDR cellsWritten
+
+    ; Move down to the next line for middle part
+    inc cactus_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 6, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 6, cactus_pos, ADDR cellsWritten
+
+    ; Move down to the next line for bottom part
+    inc cactus_pos.y
+    inc cactus_pos.x
+    inc cactus_pos.x
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusBottom, 1, cactus_pos, ADDR cellsWritten
+    ret
+DrawCactus ENDP
+
+DrawScore PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, score_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR scoreString, 12, score_pos, ADDR cellsWritten
+    ret
+DrawScore ENDP
+
+DrawHighScore PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, highscore_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR highscoreString, 18, highscore_pos, ADDR cellsWritten
+    ret
+DrawHighScore ENDP
+
+;繪製下一時刻的背景(移動仙人掌)
+DrawBackground PROC
+    call Clrscr
+    call DrawBox
+    call MoveCactus
+    call DrawScore
+    call DrawHighScore
+    ret
+DrawBackground ENDP
+
+MoveCactus PROC
+    ; 移動仙人掌
+    dec cactus_pos.x
+    dec cactus_pos.x
+    dec cactus_pos.x
+    dec cactus_pos.y
+    dec cactus_pos.y
+    call DrawCactus
+    ; 如果仙人掌越過螢幕邊界，則重新生成
+    cmp cactus_pos.x, 0
+
+    jl resetCactus
+    ret
+
+resetCactus:
+    
+    mov cactus_pos.x, 39 ; 重新生成仙人掌
+    ret
+MoveCactus ENDP
 
 ; 等待按鍵釋放
 WaitForRelease PROC
@@ -248,33 +309,6 @@ FormatScore PROC
         jnz L1
     ret
 FormatScore ENDP
-
-DrawScore PROC
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, score_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR scoreString, 12, score_pos, ADDR cellsWritten
-    ret
-DrawScore ENDP
-
-DrawHighScore PROC
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, highscore_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR highscoreString, 18, highscore_pos, ADDR cellsWritten
-    ret
-DrawHighScore ENDP
-
-MoveCactus PROC
-    ; 移動仙人掌
-    dec cactus_pos.x
-    ; 如果仙人掌越過螢幕邊界，則重新生成
-    cmp cactus_pos.x, 0
-
-    jl resetCactus
-    ret
-
-resetCactus:
-    
-    mov cactus_pos.x, 39 ; 重新生成仙人掌
-    ret
-MoveCactus ENDP
 
 main ENDP
 END main
