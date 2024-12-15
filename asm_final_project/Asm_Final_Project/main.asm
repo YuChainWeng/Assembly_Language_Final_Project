@@ -117,7 +117,8 @@ DoJump:
     ret
 CheckJumpKey ENDP
 
-; **跳躍的動作 (包含重力效果)**
+; **跳躍的動作 (獨立出一個子程式)**
+; **跳躍的動作，加入重力效果**
 Jump PROC
     ; 設定初始速度 (例如速度 6 可以測試跳得多高)
     mov velocity, 6
@@ -126,26 +127,29 @@ Jump PROC
 JumpLoop:
     ; 更新 Y 座標，模擬向上和向下運動
     mov ax, velocity
-    sub xyPosition.y, ax  ; y = y - velocity (向上移動)
-
-    ; 更新畫面
+    sub xyPosition.y, ax  ; y = y - velocity
+    
+    ; 更新成下一時刻的畫面
     call DrawBackground
+    ;繼續增加score
+    inc score
+    call FormatScore
     
     ; 模擬重力效果，速度會逐漸減少
     mov ax, velocity      ; Load velocity into AX
-    sub ax, gravity       ; 每次更新速度時減少重力
-    mov velocity, ax      ; 儲存更新後的速度
-
+    sub ax, gravity       ; Add gravity to velocity
+    mov velocity, ax      ; Store updated velocity back to memory
+    
     ; 檢查恐龍是否已經回到地面
     cmp xyPosition.y, 10  ; 假設地面 y 座標為 10
-    jge EndJump           ; 如果 y >= 10，跳出跳躍並回到地面
+    jge EndJump           ; 如果 y >= 10，則結束跳躍
     
     ; 延遲，讓動作不會太快
     INVOKE Sleep, 100
     jmp JumpLoop  ; 繼續下一幀
 
 EndJump:
-    ; 確保恐龍回到地面 (y=10)
+    ; 確保恐龍回到地面
     mov xyPosition.y, 10
     call DrawBackground
     ret
@@ -154,26 +158,28 @@ Jump ENDP
 CheckCollision PROC
     ; 檢查是否碰撞到仙人掌
     mov ax, cactus_pos.x          ; Get the cactus's x position
-    mov cx, xyPosition.x          ; Get the dinosaur's x position
+    mov cx, xyPosition.x         ; Get the dinosaur's x position
     sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge NoCollision               ; Jump to NoCollision if no collision on x-axis
 
     mov ax, cactus_pos.y          ; Get the cactus's y position
-    mov cx, xyPosition.y          ; Get the dinosaur's y position
+    mov cx, xyPosition.y         ; Get the dinosaur's y position
     sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge NoCollision               ; Jump to NoCollision if no collision on y-axis
 
     ; 如果發生碰撞，檢查分數是否高於 highScore
-    mov eax, score                ; Load current score into eax
-    mov ebx, highscore            ; Load high score into ebx
-    cmp eax, ebx                  ; Compare current score with high score
+    mov eax, score                 ; Load current score into eax
+    mov ebx, highscore             ; Load high score into ebx
+    cmp eax, ebx                   ; Compare current score with high score
     jle NoUpdateHighScore         ; Jump if current score is not greater than high score
 
     ; 更新 high score
-    mov highscore, eax            ; Update high score
-    call FormatHighScore          ; Update high score string
+    mov highscore, eax             ; Update high score
+
+    ; 呼叫 FormatHighScore 來顯示更新後的 high score
+    call FormatHighScore
 
 NoUpdateHighScore:
     ; 如果發生碰撞，返回 1，表示遊戲結束

@@ -1,12 +1,12 @@
  Asm_Final_Project
 
- Timestamp is 675f1f16 (Mon Dec 16 02:25:26 2024)
+ Timestamp is 675f22e6 (Mon Dec 16 02:41:42 2024)
 
  Preferred load address is 00400000
 
  Start         Length     Name                   Class
  0001:00000000 00002730H .text                   CODE
- 0001:00002730 00001840H .text$mn                CODE
+ 0001:00002730 0000184eH .text$mn                CODE
  0002:00000000 00000144H .rdata                  DATA
  0002:00000143 00000000H .edata                  DATA
  0002:00000144 00000199H .rdata$zzzdbg           DATA
@@ -105,49 +105,49 @@
  0001:00002730       _start@0@0                 00403730 f   main.obj
  0001:000027cc       _CheckJumpKey@0            004037cc f   main.obj
  0001:000027f4       _Jump@0                    004037f4 f   main.obj
- 0001:0000284d       _CheckCollision@0          0040384d f   main.obj
- 0001:0000289e       _RestartGame@0             0040389e f   main.obj
- 0001:00002909       _GameOverMsg@0             00403909 f   main.obj
- 0001:000029bd       _WaitForEnter@0            004039bd f   main.obj
- 0001:000029df       _ExitGame@0                004039df f   main.obj
- 0001:00002a20       _DrawBox@0                 00403a20 f   main.obj
- 0001:00002b28       _DrawCactus@0              00403b28 f   main.obj
- 0001:00002bf3       _DrawScore@0               00403bf3 f   main.obj
- 0001:00002c2e       _DrawHighScore@0           00403c2e f   main.obj
- 0001:00002c69       _DrawBackground@0          00403c69 f   main.obj
- 0001:00002c83       _MoveCactus@0              00403c83 f   main.obj
- 0001:00002cc2       _WaitForRelease@0          00403cc2 f   main.obj
- 0001:00002cd0       _FormatScore@0             00403cd0 f   main.obj
- 0001:00002cf6       _FormatHighScore@0         00403cf6 f   main.obj
- 0001:00002e97       _ExitProcess@4             00403e97 f   kernel32:KERNEL32.dll
- 0001:00002e9d       _GetStdHandle@4            00403e9d f   kernel32:KERNEL32.dll
- 0001:00002ea3       _Sleep@4                   00403ea3 f   kernel32:KERNEL32.dll
- 0001:00002ea9       _WriteConsoleOutputCharacterA@20 00403ea9 f   kernel32:KERNEL32.dll
- 0001:00002eaf       _WriteConsoleOutputAttribute@20 00403eaf f   kernel32:KERNEL32.dll
- 0001:00002eb5       _SetConsoleOutputCP@4      00403eb5 f   kernel32:KERNEL32.dll
- 0001:00002ebb       _CloseHandle@4             00403ebb f   kernel32:KERNEL32.dll
- 0001:00002ec1       _CreateFileA@28            00403ec1 f   kernel32:KERNEL32.dll
- 0001:00002ec7       _FormatMessageA@28         00403ec7 f   kernel32:KERNEL32.dll
- 0001:00002ecd       _FlushConsoleInputBuffer@4 00403ecd f   kernel32:KERNEL32.dll
- 0001:00002ed3       _GetCommandLineA@0         00403ed3 f   kernel32:KERNEL32.dll
- 0001:00002ed9       _GetConsoleMode@8          00403ed9 f   kernel32:KERNEL32.dll
- 0001:00002edf       _GetConsoleScreenBufferInfo@8 00403edf f   kernel32:KERNEL32.dll
- 0001:00002ee5       _GetLastError@0            00403ee5 f   kernel32:KERNEL32.dll
- 0001:00002eeb       _GetLocalTime@4            00403eeb f   kernel32:KERNEL32.dll
- 0001:00002ef1       _GetSystemTime@4           00403ef1 f   kernel32:KERNEL32.dll
- 0001:00002ef7       _LocalFree@4               00403ef7 f   kernel32:KERNEL32.dll
- 0001:00002efd       _PeekConsoleInputA@16      00403efd f   kernel32:KERNEL32.dll
- 0001:00002f03       _ReadConsoleA@20           00403f03 f   kernel32:KERNEL32.dll
- 0001:00002f09       _ReadConsoleInputA@16      00403f09 f   kernel32:KERNEL32.dll
- 0001:00002f0f       _ReadFile@20               00403f0f f   kernel32:KERNEL32.dll
- 0001:00002f15       _SetConsoleCursorPosition@8 00403f15 f   kernel32:KERNEL32.dll
- 0001:00002f1b       _SetConsoleMode@8          00403f1b f   kernel32:KERNEL32.dll
- 0001:00002f21       _SetConsoleTextAttribute@8 00403f21 f   kernel32:KERNEL32.dll
- 0001:00002f27       _SystemTimeToFileTime@8    00403f27 f   kernel32:KERNEL32.dll
- 0001:00002f2d       _WriteConsoleA@20          00403f2d f   kernel32:KERNEL32.dll
- 0001:00002f33       _WriteFile@20              00403f33 f   kernel32:KERNEL32.dll
- 0001:00002f39       _GetAsyncKeyState@4        00403f39 f   user32:USER32.dll
- 0001:00002f3f       _MessageBoxA@16            00403f3f f   user32:USER32.dll
+ 0001:00002858       _CheckCollision@0          00403858 f   main.obj
+ 0001:000028a9       _RestartGame@0             004038a9 f   main.obj
+ 0001:00002914       _GameOverMsg@0             00403914 f   main.obj
+ 0001:000029c8       _WaitForEnter@0            004039c8 f   main.obj
+ 0001:000029ea       _ExitGame@0                004039ea f   main.obj
+ 0001:00002a2b       _DrawBox@0                 00403a2b f   main.obj
+ 0001:00002b33       _DrawCactus@0              00403b33 f   main.obj
+ 0001:00002bfe       _DrawScore@0               00403bfe f   main.obj
+ 0001:00002c39       _DrawHighScore@0           00403c39 f   main.obj
+ 0001:00002c74       _DrawBackground@0          00403c74 f   main.obj
+ 0001:00002c8e       _MoveCactus@0              00403c8e f   main.obj
+ 0001:00002ccd       _WaitForRelease@0          00403ccd f   main.obj
+ 0001:00002cdb       _FormatScore@0             00403cdb f   main.obj
+ 0001:00002d01       _FormatHighScore@0         00403d01 f   main.obj
+ 0001:00002ea4       _ExitProcess@4             00403ea4 f   kernel32:KERNEL32.dll
+ 0001:00002eaa       _GetStdHandle@4            00403eaa f   kernel32:KERNEL32.dll
+ 0001:00002eb0       _Sleep@4                   00403eb0 f   kernel32:KERNEL32.dll
+ 0001:00002eb6       _WriteConsoleOutputCharacterA@20 00403eb6 f   kernel32:KERNEL32.dll
+ 0001:00002ebc       _WriteConsoleOutputAttribute@20 00403ebc f   kernel32:KERNEL32.dll
+ 0001:00002ec2       _SetConsoleOutputCP@4      00403ec2 f   kernel32:KERNEL32.dll
+ 0001:00002ec8       _CloseHandle@4             00403ec8 f   kernel32:KERNEL32.dll
+ 0001:00002ece       _CreateFileA@28            00403ece f   kernel32:KERNEL32.dll
+ 0001:00002ed4       _FormatMessageA@28         00403ed4 f   kernel32:KERNEL32.dll
+ 0001:00002eda       _FlushConsoleInputBuffer@4 00403eda f   kernel32:KERNEL32.dll
+ 0001:00002ee0       _GetCommandLineA@0         00403ee0 f   kernel32:KERNEL32.dll
+ 0001:00002ee6       _GetConsoleMode@8          00403ee6 f   kernel32:KERNEL32.dll
+ 0001:00002eec       _GetConsoleScreenBufferInfo@8 00403eec f   kernel32:KERNEL32.dll
+ 0001:00002ef2       _GetLastError@0            00403ef2 f   kernel32:KERNEL32.dll
+ 0001:00002ef8       _GetLocalTime@4            00403ef8 f   kernel32:KERNEL32.dll
+ 0001:00002efe       _GetSystemTime@4           00403efe f   kernel32:KERNEL32.dll
+ 0001:00002f04       _LocalFree@4               00403f04 f   kernel32:KERNEL32.dll
+ 0001:00002f0a       _PeekConsoleInputA@16      00403f0a f   kernel32:KERNEL32.dll
+ 0001:00002f10       _ReadConsoleA@20           00403f10 f   kernel32:KERNEL32.dll
+ 0001:00002f16       _ReadConsoleInputA@16      00403f16 f   kernel32:KERNEL32.dll
+ 0001:00002f1c       _ReadFile@20               00403f1c f   kernel32:KERNEL32.dll
+ 0001:00002f22       _SetConsoleCursorPosition@8 00403f22 f   kernel32:KERNEL32.dll
+ 0001:00002f28       _SetConsoleMode@8          00403f28 f   kernel32:KERNEL32.dll
+ 0001:00002f2e       _SetConsoleTextAttribute@8 00403f2e f   kernel32:KERNEL32.dll
+ 0001:00002f34       _SystemTimeToFileTime@8    00403f34 f   kernel32:KERNEL32.dll
+ 0001:00002f3a       _WriteConsoleA@20          00403f3a f   kernel32:KERNEL32.dll
+ 0001:00002f40       _WriteFile@20              00403f40 f   kernel32:KERNEL32.dll
+ 0001:00002f46       _GetAsyncKeyState@4        00403f46 f   user32:USER32.dll
+ 0001:00002f4c       _MessageBoxA@16            00403f4c f   user32:USER32.dll
  0004:00000000       __imp__ExitProcess@4       00408000     kernel32:KERNEL32.dll
  0004:00000004       __imp__GetStdHandle@4      00408004     kernel32:KERNEL32.dll
  0004:00000008       __imp__Sleep@4             00408008     kernel32:KERNEL32.dll
