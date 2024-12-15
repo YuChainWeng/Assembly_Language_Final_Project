@@ -5,6 +5,9 @@
     {
       "AbsoluteMoniker": "D:0:0:{71685D2B-CDC2-4B71-B4AC-FE817B64F2B3}|Asm_Final_Project\\Asm_Final_Project.vcxproj|C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{71685D2B-CDC2-4B71-B4AC-FE817B64F2B3}|Asm_Final_Project\\Asm_Final_Project.vcxproj|solutionrelative:Asm_Final_Project\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Microsoft\\VC\\v170\\BuildCustomizations\\masm.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +17,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,13 +33,29 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "masm.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Microsoft\\VC\\v170\\BuildCustomizations\\masm.targets",
+              "RelativeDocumentMoniker": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Microsoft\\VC\\v170\\BuildCustomizations\\masm.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Microsoft\\VC\\v170\\BuildCustomizations\\masm.targets",
+              "RelativeToolTip": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Microsoft\\VC\\v170\\BuildCustomizations\\masm.targets",
+              "ViewState": "AgIAADkAAAAAAAAAAAAqwEUAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-12-14T16:21:28.154Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.asm",
               "DocumentMoniker": "C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
               "RelativeDocumentMoniker": "Asm_Final_Project\\main.asm",
               "ToolTip": "C:\\Assembly_Language_Final_Project\\asm_final_project\\Asm_Final_Project\\main.asm",
               "RelativeToolTip": "Asm_Final_Project\\main.asm",
+<<<<<<< HEAD
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIcAAAASAAAAAAAAAA==",
+=======
+              "ViewState": "AgIAAKsAAAAAAAAAAAAcwL4AAAAMAAAAAAAAAA==",
+>>>>>>> manfeilong
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-12-06T09:03:03.612Z",
               "EditorCaption": ""
