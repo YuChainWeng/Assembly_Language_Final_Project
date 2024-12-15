@@ -1,22 +1,21 @@
 INCLUDE Irvine32.inc
 
-BoxWidth  = 3
-BoxHeight = 3
-
 .data
     floor     BYTE 42 DUP(0C4h)
     floorFix  BYTE 0C4h
+    BoxWidth  = 3
+    BoxHeight = 3
     boxTop    BYTE 0DAh, (BoxWidth - 2) DUP(0C4h), 0BFh
     boxBody   BYTE 0B3h, (BoxWidth - 2) DUP(' '), 0B3h
     boxBottom BYTE 0C0h, (BoxWidth - 2) DUP(0C4h), 0D9h
     cactus     BYTE '|',0
     cactus_pos COORD <39, 12>
     cactus_speed DWORD 1 ; 仙人掌的速度
-
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
-    score_pos COORD <0,0>
+    highscore_pos COORD <5,0>
+    score_pos COORD <25,0>
     floor_pos COORD <0,12>
     xyPosition COORD <3,10> ; 起始位置
     xyBound COORD <80,25> ; 螢幕邊界
@@ -33,7 +32,9 @@ BoxHeight = 3
     keyState DWORD 0
 
     score DWORD 0
+    highscore DWORD 0
     scoreString BYTE "Score: 000000", 0
+    highscoreString BYTE "High Score: 000000", 0
     gameOverMessage BYTE "Game Over!", 0
 
 main EQU start@0
@@ -70,13 +71,14 @@ mainLoop:
     inc score
     call FormatScore
     call DrawScore
+    call DrawHighScore
     call CheckJumpKey
 
     ; 檢查是否碰撞到仙人掌
-    call CheckCollision
+    ;call CheckCollision
     ; 如果碰撞，顯示遊戲結束訊息並結束程式
     cmp eax, 1
-    call GameOver ; 如果碰撞，則跳到 GameOver
+    ;call GameOver ; 如果碰撞，則跳到 GameOver
 
     ; 如果沒有檢測到任何按鍵，則重新回到主迴圈
     jmp mainLoop
@@ -117,6 +119,7 @@ JumpLoop:
     call Clrscr
     call DrawBox
     call DrawScore
+    call DrawHighScore
     ;繼續增加score
     inc score
     call FormatScore
@@ -140,6 +143,7 @@ EndJump:
     call Clrscr
     call DrawBox
     call DrawScore
+    call DrawHighScore
     ret
 Jump ENDP
 
@@ -250,6 +254,12 @@ DrawScore PROC
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR scoreString, 12, score_pos, ADDR cellsWritten
     ret
 DrawScore ENDP
+
+DrawHighScore PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, highscore_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR highscoreString, 18, highscore_pos, ADDR cellsWritten
+    ret
+DrawHighScore ENDP
 
 MoveCactus PROC
     ; 移動仙人掌
