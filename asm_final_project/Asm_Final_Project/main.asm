@@ -42,6 +42,7 @@ INCLUDE Irvine32.inc
     keyState DWORD 0
 
     redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
+    blueColor WORD 100 DUP(01h) ; 0A表示藍色
 
     score DWORD 0
     highscore DWORD 0
@@ -50,6 +51,9 @@ INCLUDE Irvine32.inc
     gameOverMessage BYTE "Game Over!", 0
     restartMessage BYTE "Press Enter to restart", 0
     exitMessage BYTE "Press Esc to exit", 0
+
+    hConsole HANDLE ?                ; Handle to the console
+    cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
 
 main EQU start@0
 
@@ -68,6 +72,7 @@ main PROC
     ; 畫出初始的方塊
     call DrawBox
     call DrawCactus
+
 
     ; 主迴圈
 mainLoop:
@@ -159,6 +164,7 @@ CheckCollision PROC
     ; 檢查是否碰撞到仙人掌
     mov ax, cactus_pos.x          ; Get the cactus's x position
     mov cx, xyPosition.x         ; Get the dinosaur's x position
+    sub ax, 1
     sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge NoCollision               ; Jump to NoCollision if no collision on x-axis
@@ -228,9 +234,9 @@ GameOverMsg PROC
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR gameOverMessage, 10, gameOver_pos, ADDR cellsWritten
     
     ; 顯示 "Press Enter to restart" 和 "Press Esc to exit" 訊息
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, restart_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, restart_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR restartMessage, 23, restart_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, exit_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, exit_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
     
     ; 等待玩家按下 Enter 或 Esc 鍵
