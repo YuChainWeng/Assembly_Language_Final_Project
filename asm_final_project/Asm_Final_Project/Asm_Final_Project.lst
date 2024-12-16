@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/16/24 09:43:43
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/16/24 10:40:17
 main.asm						     Page 1 - 1
 
 
@@ -20,7 +20,7 @@ main.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-
+				
  00000000			.data
  00000000 00000064		    floorLength DWORD 100
  00000004  00000064 [		    floor BYTE 100 DUP(0C4h)
@@ -29,7 +29,7 @@ main.asm						     Page 1 - 1
  00000068 C4			    floorFix  BYTE 0C4h
  = 00000003			    BoxWidth  = 3
  = 00000003			    BoxHeight = 3
-
+				
  00000069 DA			    boxTop    BYTE 0DAh, (BoxWidth - 2) DUP(0C4h), 0BFh
 	   00000001 [
 	    C4
@@ -42,98 +42,114 @@ main.asm						     Page 1 - 1
 	   00000001 [
 	    C4
 	   ] D9
-
+				
  00000072 20 20 7C 20 00	    cactusTop    BYTE '  ', '|', ' ', 0    ; The top part of the cactus
  00000077 7C 5F 7C 5F 7C	    cactusMiddle BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
 	   00
  0000007D 7C 00			    cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
  0000007F 0025 000A		    cactus_pos    COORD <37, 10>           ; Cactus position
  00000083 00000003		    cactus_height DWORD 3                  ; Height of the cactus (3 lines)
-
+				
  00000087 0005			    cactus_speed WORD 5 ; 仙人掌的速度
  00000089 00000000		    outputHandle DWORD 0
  0000008D 00000000		    bytesWritten DWORD 0
  00000091 00000000		    count DWORD 0
- 00000095 0023 0000		    highscore_pos COORD <35,0>
- 00000099 0037 0000		    score_pos COORD <55,0>
+ 00000095 0025 0000		    highscore_pos COORD <37,0>
+ 00000099 0039 0000		    score_pos COORD <57,0>
  0000009D 002F 0002		    gameOver_pos COORD <47,2>
- 000000A1 002C 0004		    exit_pos COORD <44,4>
- 000000A5 002A 0005		    restart_pos COORD <42,5>
- 000000A9 0000 000C		    floor_pos COORD <0,12>
- 000000AD 0003 000A		    xyPosition COORD <3,10> ; 起始位置
- 000000B1 0050 0019		    xyBound COORD <80,25> ; 螢幕邊界
- 000000B5 00000000		    cellsWritten DWORD ?
- 000000B9  00000064 [		    attributes_floor WORD 100 DUP(0Fh)
+ 000000A1 0025 000F		    intro_pos COORD <37,15>
+ 000000A5 002C 0004		    exit_pos COORD <44,4>
+ 000000A9 002A 0005		    restart_pos COORD <42,5>
+ 000000AD 0000 000C		    floor_pos COORD <0,12>
+ 000000B1 0003 000A		    xyPosition COORD <3,10> ; 起始位置
+ 000000B5 0050 0019		    xyBound COORD <80,25> ; 螢幕邊界
+ 000000B9 00000000		    cellsWritten DWORD ?
+ 000000BD  00000064 [		    attributes_floor WORD 100 DUP(0Fh)
 	    000F
 	   ]
-				    ;attributes0 WORD BoxWidth DUP(0Ch)
- 00000181  00000003 [		    attributes0 WORD BoxWidth DUP(0Ah)
+ 00000185  00000003 [		    attributes0 WORD BoxWidth DUP(0Ah)
 	    000A
 	   ]
- 00000187  00000003 [		    attributes1 WORD BoxWidth DUP(0Ah)
+ 0000018B  00000003 [		    attributes1 WORD BoxWidth DUP(0Ah)
 	    000A
 	   ]
- 0000018D  00000003 [		    attributes2 WORD BoxWidth DUP(0Ah)
+ 00000191  00000003 [		    attributes2 WORD BoxWidth DUP(0Ah)
 	    000A
 	   ]
-				    ;attributes1 WORD (BoxWidth-1) DUP(0Eh),0Ah
-				    ;attributes2 WORD BoxWidth DUP(0Bh)
- 00000193 0000			    velocity WORD 0  ; 速度，控制跳躍上升和下降
- 00000195 0001			    gravity WORD 1   ; 重力，會讓速度每次減少 1
- 00000197 00000000		    keyState DWORD 0
-
- 0000019B  00000064 [		    redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
+ 00000197 0000			    velocity WORD 0  ; 速度，控制跳躍上升和下降
+ 00000199 0001			    gravity WORD 1   ; 重力，會讓速度每次減少 1
+ 0000019B 00000000		    keyState DWORD 0
+				
+ 0000019F  00000064 [		    redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
 	    000C
 	   ]
- 00000263  00000064 [		    blueColor WORD 100 DUP(01h) ; 0A表示藍色
+ 00000267  00000064 [		    blueColor WORD 100 DUP(01h) ; 0A表示藍色
 	    0001
 	   ]
-
- 0000032B 00000000		    score DWORD 0
- 0000032F 00000000		    highscore DWORD 0
- 00000333 53 63 6F 72 65	    scoreString BYTE "Score: 0000", 0
+ 0000032F  00000064 [		    purpleColor WORD 100 DUP(05h) ; 05表示紫色
+	    0005
+	   ]
+				
+ 000003F7 00000000		    score DWORD 0
+ 000003FB 00000000		    highscore DWORD 0
+ 000003FF 50 72 65 73 73	    introString BYTE "Press SPACE or UP ARROW to jump", 0
+	   20 53 50 41 43
+	   45 20 6F 72 20
+	   55 50 20 41 52
+	   52 4F 57 20 74
+	   6F 20 6A 75 6D
+	   70 00
+ 0000041F 53 63 6F 72 65	    scoreString BYTE "Score: 0000", 0
 	   3A 20 30 30 30
 	   30 00
- 0000033F 48 69 67 68 20	    highscoreString BYTE "High Score: 0000", 0
+ 0000042B 48 69 67 68 20	    highscoreString BYTE "High Score: 0000", 0
 	   53 63 6F 72 65
 	   3A 20 30 30 30
 	   30 00
- 00000350 47 61 6D 65 20	    gameOverMessage BYTE "Game Over!", 0
+ 0000043C 47 61 6D 65 20	    gameOverMessage BYTE "Game Over!", 0
 	   4F 76 65 72 21
 	   00
- 0000035B 50 72 65 73 73	    restartMessage BYTE "Press Enter to restart", 0
-	   20 45 6E 74 65
-	   72 20 74 6F 20
+ 00000447 50 72 65 73 73	    restartMessage BYTE "Press ENTER to restart", 0
+	   20 45 4E 54 45
+	   52 20 74 6F 20
 	   72 65 73 74 61
 	   72 74 00
- 00000372 50 72 65 73 73	    exitMessage BYTE "Press Esc to exit", 0
-	   20 45 73 63 20
+ 0000045E 45 4E 54 45 52	    enterMessage BYTE "ENTER", 0
+	   00
+ 00000464 50 72 65 73 73	    exitMessage BYTE "Press ESC to exit", 0
+	   20 45 53 43 20
 	   74 6F 20 65 78
 	   69 74 00
-
- 00000384 00000000		    hConsole HANDLE ?                ; Handle to the console
- 00000388 00000000		    cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
+ 00000476 45 53 43 00		    escMessage BYTE "ESC", 0
+ 0000047A 53 50 41 43 45	    spaceMessage BYTE "SPACE", 0
+	   00
+ 00000480 55 50 20 41 52	    upMessage BYTE "UP ARROW", 0
+	   52 4F 57 00
+				
+ 00000489 00000000		    hConsole HANDLE ?                ; Handle to the console
+ 0000048D 00000000		    cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
 	   00000000
-
+				
  = start@0			main EQU start@0
-
+				
  00000000			.code
 				    SetConsoleOutputCP PROTO STDCALL :DWORD
 				    GetAsyncKeyState PROTO STDCALL :DWORD
 				    Sleep PROTO STDCALL :DWORD  ; 延遲函數
-
+				
  00000000			main PROC
 				    INVOKE SetConsoleOutputCP, 437
-
+				
 				    ; 取得控制台的輸出控制
 				    INVOKE GetStdHandle, STD_OUTPUT_HANDLE
  00000011  A3 00000089 R	    mov outputHandle, eax
-
+				
 				    ; 畫出初始的方塊
- 00000016  E8 000002E4		    call DrawBox
- 0000001B  E8 000003E7		    call DrawCactus
-
-
+ 00000016  E8 0000037D		    call DrawBox
+ 0000001B  E8 00000547		    call DrawCactus
+				    
+				
+				
 				    ; 主迴圈
  00000020			mainLoop:
 				    ; 加入延遲，避免移動速度過快
@@ -142,14 +158,14 @@ main.asm						     Page 1 - 1
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, floor_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, floor_pos, ADDR cellsWritten
 				    
- 00000061  FF 05 0000032B R	    inc score
- 00000067  E8 00000543		    call FormatScore
+ 00000061  FF 05 000003F7 R	    inc score
+ 00000067  E8 000006A8		    call FormatScore
 				    ;減回畫方塊所位移的2格
  0000006C  66| FF 0D		    dec xyPosition.y
-	   000000AF R
+	   000000B3 R
  00000073  66| FF 0D		    dec xyPosition.y
-	   000000AF R
- 0000007A  E8 000004C9		    call DrawBackground
+	   000000B3 R
+ 0000007A  E8 00000629		    call DrawBackground
  0000007F  E8 00000018		    call CheckJumpKey
  00000084  B8 00000000		    mov eax, 0
 				    ; 檢查是否碰撞到仙人掌
@@ -158,214 +174,231 @@ main.asm						     Page 1 - 1
  00000091  74 02		    je GameOver ; 如果碰撞到仙人掌，則遊戲結束
 				    ; 如果沒有檢測到任何按鍵，則重新回到主迴圈
  00000093  EB 8B		    jmp mainLoop
-
+				
  00000095			Gameover:
- 00000095  E8 0000014E		    call GameOverMsg
+ 00000095  E8 00000153		    call GameOverMsg
  0000009A  EB 84		    jmp mainLoop
 				  
 				    
-
+				
 				; **檢測上鍵和空白鍵的跳躍**
  0000009C			CheckJumpKey PROC
 				    ; 檢測上鍵 (VK_UP)
 				    INVOKE GetAsyncKeyState, VK_UP
  000000A3  A9 00008000		    test eax, 8000h
  000000A8  75 0F		    jnz DoJump  ; 如果按下上鍵，執行跳躍
-
+				
 				    ; 檢測空白鍵 (VK_SPACE)
 				    INVOKE GetAsyncKeyState, VK_SPACE
  000000B1  A9 00008000		    test eax, 8000h
  000000B6  75 01		    jnz DoJump  ; 如果按下空白鍵，執行跳躍
  000000B8  C3			    ret
-
+				
  000000B9			DoJump:
  000000B9  E8 00000006		    call Jump
- 000000BE  E8 000004DE		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
+ 000000BE  E8 00000643		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
  000000C3  C3			    ret
  000000C4			CheckJumpKey ENDP
-
+				
 				; **跳躍的動作 (獨立出一個子程式)**
 				; **跳躍的動作，加入重力效果**
  000000C4			Jump PROC
 				    ; 設定初始速度 (例如速度 6 可以測試跳得多高)
  000000C4  66| C7 05		    mov velocity, 6
-	   00000193 R
+	   00000197 R
 	   0006
  000000CD  66| C7 05		    mov gravity, 2  ; 重力，每次更新速度時會減少
-	   00000195 R
+	   00000199 R
 	   0002
-
+				
  000000D6			JumpLoop:
 				    ; 更新 Y 座標，模擬向上和向下運動
  000000D6  66| A1		    mov ax, velocity
-	   00000193 R
+	   00000197 R
  000000DC  66| 29 05		    sub xyPosition.y, ax  ; y = y - velocity
-	   000000AF R
+	   000000B3 R
 				    
 				    ; 更新成下一時刻的畫面
- 000000E3  E8 00000460		    call DrawBackground
+ 000000E3  E8 000005C0		    call DrawBackground
 				    ;繼續增加score
- 000000E8  FF 05 0000032B R	    inc score
- 000000EE  E8 000004BC		    call FormatScore
+ 000000E8  FF 05 000003F7 R	    inc score
+ 000000EE  E8 00000621		    call FormatScore
 				    
 				    ; 模擬重力效果，速度會逐漸減少
  000000F3  66| A1		    mov ax, velocity      ; Load velocity into AX
-	   00000193 R
+	   00000197 R
  000000F9  66| 2B 05		    sub ax, gravity       ; Add gravity to velocity
-	   00000195 R
+	   00000199 R
  00000100  66| A3		    mov velocity, ax      ; Store updated velocity back to memory
-	   00000193 R
+	   00000197 R
 				    
 				    ; 檢查恐龍是否已經回到地面
  00000106  66| 83 3D		    cmp xyPosition.y, 10  ; 假設地面 y 座標為 10
-	   000000AF R 0A
+	   000000B3 R 0A
  0000010E  7D 09		    jge EndJump           ; 如果 y >= 10，則結束跳躍
 				    
 				    ; 延遲，讓動作不會太快
 				    INVOKE Sleep, 100
  00000117  EB BD		    jmp JumpLoop  ; 繼續下一幀
-
+				
  00000119			EndJump:
 				    ; 確保恐龍回到地面
  00000119  66| C7 05		    mov xyPosition.y, 10
-	   000000AF R
+	   000000B3 R
 	   000A
- 00000122  E8 00000421		    call DrawBackground
+ 00000122  E8 00000581		    call DrawBackground
  00000127  C3			    ret
  00000128			Jump ENDP
-
+				
  00000128			CheckCollision PROC
 				    ; 檢查是否碰撞到仙人掌
  00000128  66| A1		    mov ax, cactus_pos.x          ; Get the cactus's x position
 	   0000007F R
  0000012E  66| 8B 0D		    mov cx, xyPosition.x         ; Get the dinosaur's x position
-	   000000AD R
+	   000000B1 R
  00000135  66| 83 E8 01		    sub ax, 1
  00000139  66| 2B C1		    sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
  0000013C  66| 83 F8 03		    cmp ax, 3                     ; If the difference is 3 or more, no collision
- 00000140  7D 35		    jge NoCollision               ; Jump to NoCollision if no collision on x-axis
-
+ 00000140  7D 3A		    jge NoCollision               ; Jump to NoCollision if no collision on x-axis
+				
  00000142  66| A1		    mov ax, cactus_pos.y          ; Get the cactus's y position
 	   00000081 R
  00000148  66| 8B 0D		    mov cx, xyPosition.y         ; Get the dinosaur's y position
-	   000000AF R
+	   000000B3 R
  0000014F  66| 2B C1		    sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
  00000152  66| 83 F8 03		    cmp ax, 3                     ; If the difference is 3 or more, no collision
- 00000156  7D 1F		    jge NoCollision               ; Jump to NoCollision if no collision on y-axis
-
+ 00000156  7D 24		    jge NoCollision               ; Jump to NoCollision if no collision on y-axis
+				
 				    ; 如果發生碰撞，檢查分數是否高於 highScore
- 00000158  A1 0000032B R	    mov eax, score                 ; Load current score into eax
- 0000015D  8B 1D 0000032F R	    mov ebx, highscore             ; Load high score into ebx
+ 00000158  A1 000003F7 R	    mov eax, score                 ; Load current score into eax
+ 0000015D  8B 1D 000003FB R	    mov ebx, highscore             ; Load high score into ebx
  00000163  3B C3		    cmp eax, ebx                   ; Compare current score with high score
- 00000165  7E 0A		    jle NoUpdateHighScore         ; Jump if current score is not greater than high score
-
+ 00000165  7E 0F		    jle NoUpdateHighScore         ; Jump if current score is not greater than high score
+				
 				    ; 更新 high score
- 00000167  A3 0000032F R	    mov highscore, eax             ; Update high score
-
+ 00000167  A3 000003FB R	    mov highscore, eax             ; Update high score
+				
 				    ; 呼叫 FormatHighScore 來顯示更新後的 high score
- 0000016C  E8 00000464		    call FormatHighScore
-
- 00000171			NoUpdateHighScore:
+ 0000016C  E8 000005C9		    call FormatHighScore
+ 00000171  E8 000004F7		    call DrawHighScore
+				
+ 00000176			NoUpdateHighScore:
 				    ; 如果發生碰撞，返回 1，表示遊戲結束
- 00000171  B8 00000001		    mov eax, 1                    ; Set eax to 1 indicating collision happened
- 00000176  C3			    ret
-
- 00000177			NoCollision:
+ 00000176  B8 00000001		    mov eax, 1                    ; Set eax to 1 indicating collision happened
+ 0000017B  C3			    ret
+				
+ 0000017C			NoCollision:
 				    ; 如果沒有碰撞，返回 0
- 00000177  B8 00000000		    mov eax, 0                    ; Set eax to 0 indicating no collision
- 0000017C  C3			    ret
- 0000017D			CheckCollision ENDP
-
-
-
-
+ 0000017C  B8 00000000		    mov eax, 0                    ; Set eax to 0 indicating no collision
+ 00000181  C3			    ret
+ 00000182			CheckCollision ENDP
+				
+				
+				
+				
 				; **重置遊戲變數，讓遊戲重新開始**
- 0000017D			RestartGame PROC
+ 00000182			RestartGame PROC
 				    ; 重置分數
- 0000017D  C7 05 0000032B R	    mov score, 0
+ 00000182  C7 05 000003F7 R	    mov score, 0
 	   00000000
- 00000187  C6 05 0000033A R	    mov BYTE PTR [scoreString + 7], '0'
+ 0000018C  C6 05 00000426 R	    mov BYTE PTR [scoreString + 7], '0'
 	   30
- 0000018E  C6 05 0000033B R	    mov BYTE PTR [scoreString + 8], '0'
+ 00000193  C6 05 00000427 R	    mov BYTE PTR [scoreString + 8], '0'
 	   30
- 00000195  C6 05 0000033C R	    mov BYTE PTR [scoreString + 9], '0'
+ 0000019A  C6 05 00000428 R	    mov BYTE PTR [scoreString + 9], '0'
 	   30
- 0000019C  C6 05 0000033D R	    mov BYTE PTR [scoreString + 10], '0'
+ 000001A1  C6 05 00000429 R	    mov BYTE PTR [scoreString + 10], '0'
 	   30
 				    ; 重置恐龍的位置
- 000001A3  66| C7 05		    mov xyPosition.x, 3     ; 起始位置 X
-	   000000AD R
+ 000001A8  66| C7 05		    mov xyPosition.x, 3     ; 起始位置 X
+	   000000B1 R
 	   0003
- 000001AC  66| C7 05		    mov xyPosition.y, 10    ; 恐龍位置 Y（在地面上）
-	   000000AF R
+ 000001B1  66| C7 05		    mov xyPosition.y, 10    ; 恐龍位置 Y（在地面上）
+	   000000B3 R
 	   000A
-
+				
 				    ; 重置仙人掌的位置
- 000001B5  66| C7 05		    mov cactus_pos.x, 70    ; 仙人掌在螢幕右邊
+ 000001BA  66| C7 05		    mov cactus_pos.x, 70    ; 仙人掌在螢幕右邊
 	   0000007F R
 	   0046
- 000001BE  66| C7 05		    mov cactus_pos.y, 12    ; 仙人掌的地面高度
+ 000001C3  66| C7 05		    mov cactus_pos.y, 12    ; 仙人掌的地面高度
 	   00000081 R
 	   000C
-
+				
 				    ; 重置其他遊戲變數
- 000001C7  66| C7 05		    mov velocity, 6         ; 停止恐龍的跳躍速度
-	   00000193 R
+ 000001CC  66| C7 05		    mov velocity, 6         ; 停止恐龍的跳躍速度
+	   00000197 R
 	   0006
- 000001D0  66| C7 05		    mov gravity, 2          ; 重力重置
-	   00000195 R
+ 000001D5  66| C7 05		    mov gravity, 2          ; 重力重置
+	   00000199 R
 	   0002
- 000001D9  66| C7 05		    mov cactus_speed, 5     ; 仙人掌的速度
+ 000001DE  66| C7 05		    mov cactus_speed, 5     ; 仙人掌的速度
 	   00000087 R
 	   0005
 				    
 				    ; 重新繪製畫面
- 000001E2  E8 00000361		    call DrawBackground
- 000001E7  C3			    ret
- 000001E8			RestartGame ENDP
-
+ 000001E7  E8 000004BC		    call DrawBackground
+ 000001EC  C3			    ret
+ 000001ED			RestartGame ENDP
+				
 				; **遊戲結束**
- 000001E8			GameOverMsg PROC
+ 000001ED			GameOverMsg PROC
 				    ; 顯示 "Game Over!" 訊息
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR redColor, 10, gameOver_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR gameOverMessage, 10, gameOver_pos, ADDR cellsWritten
 				    
 				    ; 顯示 "Press Enter to restart" 和 "Press Esc to exit" 訊息
-				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, restart_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 17, exit_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 17, exit_pos, ADDR cellsWritten
+ 00000261  66| 83 05		    add exit_pos.x, 6
+	   000000A5 R 06
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 3, exit_pos , ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR escMessage, 3, exit_pos , ADDR cellsWritten
+ 000002A3  66| 83 2D		    sub exit_pos.x, 6
+	   000000A5 R 06
+				
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 23, restart_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR restartMessage, 23, restart_pos, ADDR cellsWritten
-				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, exit_pos, ADDR cellsWritten
-				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
+ 000002E5  66| 83 05		    add restart_pos.x, 6
+	   000000A9 R 06
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, restart_pos , ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, restart_pos , ADDR cellsWritten
+ 00000327  66| 83 2D		    sub restart_pos.x, 6
+	   000000A9 R 06
+				
+				    
+				
 				    
 				    ; 等待玩家按下 Enter 或 Esc 鍵
- 00000296  E8 00000001		    call WaitForEnter
- 0000029B  C3			    ret
- 0000029C			GameOverMsg ENDP
-
- 0000029C			WaitForEnter PROC
+ 0000032F  E8 00000001		    call WaitForEnter
+ 00000334  C3			    ret
+ 00000335			GameOverMsg ENDP
+				
+ 00000335			WaitForEnter PROC
 				    ; 檢測是否按下 Enter 或 Esc 鍵
- 0000029C			WaitLoop:
+ 00000335			WaitLoop:
 				    INVOKE GetAsyncKeyState, VK_RETURN
- 000002A3  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
- 000002A8  0F 85 FFFFFECF	    jnz RestartGame        ; 如果按下 Enter，重啟遊戲
-
+ 0000033C  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
+ 00000341  0F 85 FFFFFE3B	    jnz RestartGame        ; 如果按下 Enter，重啟遊戲
+				
 				    INVOKE GetAsyncKeyState, VK_ESCAPE
- 000002B5  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Esc 鍵
- 000002BA  75 02		    jnz ExitGame           ; 如果按下 Esc，退出遊戲
-
- 000002BC  EB DE		    jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
- 000002BE			WaitForEnter ENDP
-
+ 0000034E  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Esc 鍵
+ 00000353  75 02		    jnz ExitGame           ; 如果按下 Esc，退出遊戲
+				
+ 00000355  EB DE		    jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
+ 00000357			WaitForEnter ENDP
+				
 				; **結束遊戲**
- 000002BE			ExitGame PROC
+ 00000357			ExitGame PROC
 				    ; 顯示退出訊息
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, exit_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
 				    ; 結束程式
 				    INVOKE ExitProcess, 0
- 000002FF			ExitGame ENDP
-
+ 00000398			ExitGame ENDP
+				
 				; 繪製方塊
- 000002FF			DrawBox PROC
+ 00000398			DrawBox PROC
 				    ; 清除螢幕
 				    ;call MoveCactus
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, floorLength, floor_pos, ADDR cellsWritten
@@ -373,149 +406,166 @@ main.asm						     Page 1 - 1
 				    ; 上邊框
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes0, BoxWidth, xyPosition, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxTop, BoxWidth, xyPosition, ADDR cellsWritten
-
- 0000037B  66| FF 05		    inc xyPosition.y    ; 移動到下一行
-	   000000AF R
-
+				
+ 00000414  66| FF 05		    inc xyPosition.y    ; 移動到下一行
+	   000000B3 R
+				
 				    ; 中間的內容
- 00000382  B9 00000001		    mov ecx, BoxHeight - 2
- 00000387			L1: 
- 00000387  51			    push ecx
+ 0000041B  B9 00000001		    mov ecx, BoxHeight - 2
+ 00000420			L1: 
+ 00000420  51			    push ecx
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, BoxWidth, xyPosition, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBody, BoxWidth, xyPosition, ADDR cellsWritten
- 000003C2  66| FF 05		    inc xyPosition.y
-	   000000AF R
- 000003C9  59			    pop ecx
- 000003CA  E2 BB		    loop L1
-
+ 0000045B  66| FF 05		    inc xyPosition.y
+	   000000B3 R
+ 00000462  59			    pop ecx
+ 00000463  E2 BB		    loop L1
+				
 				    ; 下邊框
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes2, BoxWidth, xyPosition, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBottom, BoxWidth, xyPosition, ADDR cellsWritten
 				    ;INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
 				    ;INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactus, 1, cactus_pos, ADDR cellsWritten
- 00000406  C3			    ret
- 00000407			DrawBox ENDP
-
- 00000407			DrawCactus PROC
+ 0000049F  C3			    ret
+ 000004A0			DrawBox ENDP
+				
+ 000004A0			DrawIntro PROC
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 31, intro_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR introString, 31, intro_pos, ADDR cellsWritten
+ 000004DA  66| 83 05		    add intro_pos.x, 6
+	   000000A1 R 06
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 5, intro_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR spaceMessage, 5, intro_pos, ADDR cellsWritten
+ 0000051C  66| 83 05		    add intro_pos.x, 9
+	   000000A1 R 09
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 8, intro_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR upMessage, 8, intro_pos, ADDR cellsWritten
+ 0000055E  66| 83 2D		    sub intro_pos.x, 15
+	   000000A1 R 0F
+ 00000566  C3			    ret
+ 00000567			DrawIntro ENDP
+				
+ 00000567			DrawCactus PROC
 				    ; Draw the cactus at its current position
 				    ; Draw top part
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 3, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 3, cactus_pos, ADDR cellsWritten
-
+				
 				    ; Move down to the next line for middle part
- 00000441  66| FF 05		    inc cactus_pos.y
+ 000005A1  66| FF 05		    inc cactus_pos.y
 	   00000081 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 6, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 6, cactus_pos, ADDR cellsWritten
-
+				
 				    ; Move down to the next line for bottom part
- 00000482  66| FF 05		    inc cactus_pos.y
+ 000005E2  66| FF 05		    inc cactus_pos.y
 	   00000081 R
- 00000489  66| FF 05		    inc cactus_pos.x
+ 000005E9  66| FF 05		    inc cactus_pos.x
 	   0000007F R
- 00000490  66| FF 05		    inc cactus_pos.x
+ 000005F0  66| FF 05		    inc cactus_pos.x
 	   0000007F R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusBottom, 1, cactus_pos, ADDR cellsWritten
- 000004D1  C3			    ret
- 000004D2			DrawCactus ENDP
-
- 000004D2			DrawScore PROC
+ 00000631  C3			    ret
+ 00000632			DrawCactus ENDP
+				
+ 00000632			DrawScore PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, score_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR scoreString, 12, score_pos, ADDR cellsWritten
- 0000050C  C3			    ret
- 0000050D			DrawScore ENDP
-
- 0000050D			DrawHighScore PROC
+ 0000066C  C3			    ret
+ 0000066D			DrawScore ENDP
+				
+ 0000066D			DrawHighScore PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, highscore_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR highscoreString, 17, highscore_pos, ADDR cellsWritten
- 00000547  C3			    ret
- 00000548			DrawHighScore ENDP
-
+ 000006A7  C3			    ret
+ 000006A8			DrawHighScore ENDP
+				
 				;繪製下一時刻的背景(移動仙人掌)
- 00000548			DrawBackground PROC
- 00000548  E8 00000000 E	    call Clrscr
- 0000054D  E8 FFFFFDAD		    call DrawBox
- 00000552  E8 0000000B		    call MoveCactus
- 00000557  E8 FFFFFF76		    call DrawScore
- 0000055C  E8 FFFFFFAC		    call DrawHighScore
- 00000561  C3			    ret
- 00000562			DrawBackground ENDP
-
- 00000562			MoveCactus PROC
+ 000006A8			DrawBackground PROC
+ 000006A8  E8 00000000 E	    call Clrscr
+ 000006AD  E8 FFFFFCE6		    call DrawBox
+ 000006B2  E8 FFFFFDE9		    call DrawIntro
+ 000006B7  E8 0000000B		    call MoveCactus
+ 000006BC  E8 FFFFFF71		    call DrawScore
+ 000006C1  E8 FFFFFFA7		    call DrawHighScore
+ 000006C6  C3			    ret
+ 000006C7			DrawBackground ENDP
+				
+ 000006C7			MoveCactus PROC
 				    ; 移動仙人掌
- 00000562  66| A1		    mov ax, cactus_speed
+ 000006C7  66| A1		    mov ax, cactus_speed
 	   00000087 R
- 00000568  66| 29 05		    sub cactus_pos.x, ax
+ 000006CD  66| 29 05		    sub cactus_pos.x, ax
 	   0000007F R
- 0000056F  66| FF 0D		    dec cactus_pos.y
+ 000006D4  66| FF 0D		    dec cactus_pos.y
 	   00000081 R
- 00000576  66| FF 0D		    dec cactus_pos.y
+ 000006DB  66| FF 0D		    dec cactus_pos.y
 	   00000081 R
- 0000057D  E8 FFFFFE85		    call DrawCactus
+ 000006E2  E8 FFFFFE80		    call DrawCactus
 				    ; 如果仙人掌越過螢幕邊界，則重新生成
- 00000582  66| 83 3D		    cmp cactus_pos.x, 0
+ 000006E7  66| 83 3D		    cmp cactus_pos.x, 0
 	   0000007F R 00
-
- 0000058A  7C 01		    jl resetCactus
- 0000058C  C3			    ret
-
- 0000058D			resetCactus:
- 0000058D  B8 00000014		    mov eax, 20
- 00000592  E8 00000000 E	    call RandomRange
- 00000597  83 C0 32		    add eax, 50
- 0000059A  66| A3		    mov cactus_pos.x, ax ; 重新生成仙人掌
+				
+ 000006EF  7C 01		    jl resetCactus
+ 000006F1  C3			    ret
+				
+ 000006F2			resetCactus:
+ 000006F2  B8 00000014		    mov eax, 20
+ 000006F7  E8 00000000 E	    call RandomRange
+ 000006FC  83 C0 32		    add eax, 50
+ 000006FF  66| A3		    mov cactus_pos.x, ax ; 重新生成仙人掌
 	   0000007F R
- 000005A0  C3			    ret
- 000005A1			MoveCactus ENDP
-
+ 00000705  C3			    ret
+ 00000706			MoveCactus ENDP
+				
 				; 等待按鍵釋放
- 000005A1			WaitForRelease PROC
+ 00000706			WaitForRelease PROC
 				    ; ecx = 虛擬鍵的代碼
- 000005A1			WaitLoop:
+ 00000706			WaitLoop:
 				    INVOKE GetAsyncKeyState, ecx
- 000005A7  A9 00008000		    test eax, 8000h
- 000005AC  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
- 000005AE  C3			    ret
- 000005AF			WaitForRelease ENDP
-
- 000005AF			FormatScore PROC
- 000005AF  A1 0000032B R	    mov eax, score
- 000005B4  B9 0000000A		    mov ecx, 10
- 000005B9  BF 0000033E R	    mov edi, OFFSET scoreString + 11
- 000005BE  C6 07 00		    mov BYTE PTR [edi], 0
- 000005C1  BA 00000000		    mov edx, 0
- 000005C6			    L1:
- 000005C6  33 D2		    xor edx, edx
- 000005C8  F7 F1		        div ecx
- 000005CA  80 C2 30		        add dl, '0'
- 000005CD  4F			        dec edi
- 000005CE  88 17		        mov BYTE PTR [edi], dl
- 000005D0  85 C0		        test eax, eax
- 000005D2  75 F2		        jnz L1
- 000005D4  C3			    ret
- 000005D5			FormatScore ENDP
-
- 000005D5			FormatHighScore PROC
- 000005D5  A1 0000032F R	    mov eax, highscore
- 000005DA  B9 0000000A		    mov ecx, 10
- 000005DF  BF 0000034F R	    mov edi, OFFSET highscoreString + 16
- 000005E4  C6 07 00		    mov BYTE PTR [edi], 0
- 000005E7  BA 00000000		    mov edx, 0
- 000005EC			    L1:
- 000005EC  33 D2		    xor edx, edx
- 000005EE  F7 F1		        div ecx
- 000005F0  80 C2 30		        add dl, '0'
- 000005F3  4F			        dec edi
- 000005F4  88 17		        mov BYTE PTR [edi], dl
- 000005F6  85 C0		        test eax, eax
- 000005F8  75 F2		        jnz L1
- 000005FA  C3			    ret
- 000005FB			FormatHighScore ENDP
-
- 000005FB			main ENDP
+ 0000070C  A9 00008000		    test eax, 8000h
+ 00000711  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
+ 00000713  C3			    ret
+ 00000714			WaitForRelease ENDP
+				
+ 00000714			FormatScore PROC
+ 00000714  A1 000003F7 R	    mov eax, score
+ 00000719  B9 0000000A		    mov ecx, 10
+ 0000071E  BF 0000042A R	    mov edi, OFFSET scoreString + 11
+ 00000723  C6 07 00		    mov BYTE PTR [edi], 0
+ 00000726  BA 00000000		    mov edx, 0
+ 0000072B			    L1:
+ 0000072B  33 D2		    xor edx, edx
+ 0000072D  F7 F1		        div ecx
+ 0000072F  80 C2 30		        add dl, '0'
+ 00000732  4F			        dec edi
+ 00000733  88 17		        mov BYTE PTR [edi], dl
+ 00000735  85 C0		        test eax, eax
+ 00000737  75 F2		        jnz L1
+ 00000739  C3			    ret
+ 0000073A			FormatScore ENDP
+				
+ 0000073A			FormatHighScore PROC
+ 0000073A  A1 000003FB R	    mov eax, highscore
+ 0000073F  B9 0000000A		    mov ecx, 10
+ 00000744  BF 0000043B R	    mov edi, OFFSET highscoreString + 16
+ 00000749  C6 07 00		    mov BYTE PTR [edi], 0
+ 0000074C  BA 00000000		    mov edx, 0
+ 00000751			    L1:
+ 00000751  33 D2		    xor edx, edx
+ 00000753  F7 F1		        div ecx
+ 00000755  80 C2 30		        add dl, '0'
+ 00000758  4F			        dec edi
+ 00000759  88 17		        mov BYTE PTR [edi], dl
+ 0000075B  85 C0		        test eax, eax
+ 0000075D  75 F2		        jnz L1
+ 0000075F  C3			    ret
+ 00000760			FormatHighScore ENDP
+				
+ 00000760			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/16/24 09:43:43
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/16/24 10:40:17
 main.asm						     Symbols 2 - 1
 
 
@@ -609,17 +659,17 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000390 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000005FB Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000495 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000760 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
-CheckCollision . . . . . . . . .	P Near	 00000128 _TEXT	Length= 00000055 Public STDCALL
-  NoUpdateHighScore  . . . . . .	L Near	 00000171 _TEXT	
-  NoCollision  . . . . . . . . .	L Near	 00000177 _TEXT	
+CheckCollision . . . . . . . . .	P Near	 00000128 _TEXT	Length= 0000005A Public STDCALL
+  NoUpdateHighScore  . . . . . .	L Near	 00000176 _TEXT	
+  NoCollision  . . . . . . . . .	L Near	 0000017C _TEXT	
 CheckJumpKey . . . . . . . . . .	P Near	 0000009C _TEXT	Length= 00000028 Public STDCALL
   DoJump . . . . . . . . . . . .	L Near	 000000B9 _TEXT	
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -629,25 +679,26 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-DrawBackground . . . . . . . . .	P Near	 00000548 _TEXT	Length= 0000001A Public STDCALL
-DrawBox  . . . . . . . . . . . .	P Near	 000002FF _TEXT	Length= 00000108 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00000387 _TEXT	
-DrawCactus . . . . . . . . . . .	P Near	 00000407 _TEXT	Length= 000000CB Public STDCALL
-DrawHighScore  . . . . . . . . .	P Near	 0000050D _TEXT	Length= 0000003B Public STDCALL
-DrawScore  . . . . . . . . . . .	P Near	 000004D2 _TEXT	Length= 0000003B Public STDCALL
+DrawBackground . . . . . . . . .	P Near	 000006A8 _TEXT	Length= 0000001F Public STDCALL
+DrawBox  . . . . . . . . . . . .	P Near	 00000398 _TEXT	Length= 00000108 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000420 _TEXT	
+DrawCactus . . . . . . . . . . .	P Near	 00000567 _TEXT	Length= 000000CB Public STDCALL
+DrawHighScore  . . . . . . . . .	P Near	 0000066D _TEXT	Length= 0000003B Public STDCALL
+DrawIntro  . . . . . . . . . . .	P Near	 000004A0 _TEXT	Length= 000000C7 Public STDCALL
+DrawScore  . . . . . . . . . . .	P Near	 00000632 _TEXT	Length= 0000003B Public STDCALL
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-ExitGame . . . . . . . . . . . .	P Near	 000002BE _TEXT	Length= 00000041 Public STDCALL
+ExitGame . . . . . . . . . . . .	P Near	 00000357 _TEXT	Length= 00000041 Public STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatHighScore  . . . . . . . .	P Near	 000005D5 _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 000005EC _TEXT	
+FormatHighScore  . . . . . . . .	P Near	 0000073A _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000751 _TEXT	
 FormatMessageA . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatScore  . . . . . . . . . .	P Near	 000005AF _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 000005C6 _TEXT	
-GameOverMsg  . . . . . . . . . .	P Near	 000001E8 _TEXT	Length= 000000B4 Public STDCALL
+FormatScore  . . . . . . . . . .	P Near	 00000714 _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 0000072B _TEXT	
+GameOverMsg  . . . . . . . . . .	P Near	 000001ED _TEXT	Length= 00000148 Public STDCALL
 GetAsyncKeyState . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandLineA  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandTail . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -680,8 +731,8 @@ Jump . . . . . . . . . . . . . .	P Near	 000000C4 _TEXT	Length= 00000064 Public 
   EndJump  . . . . . . . . . . .	L Near	 00000119 _TEXT	
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-MoveCactus . . . . . . . . . . .	P Near	 00000562 _TEXT	Length= 0000003F Public STDCALL
-  resetCactus  . . . . . . . . .	L Near	 0000058D _TEXT	
+MoveCactus . . . . . . . . . . .	P Near	 000006C7 _TEXT	Length= 0000003F Public STDCALL
+  resetCactus  . . . . . . . . .	L Near	 000006F2 _TEXT	
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 OpenInputFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -703,7 +754,7 @@ ReadInt  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 ReadKeyFlush . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadKey  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadString . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-RestartGame  . . . . . . . . . .	P Near	 0000017D _TEXT	Length= 0000006B Public STDCALL
+RestartGame  . . . . . . . . . .	P Near	 00000182 _TEXT	Length= 0000006B Public STDCALL
 SetConsoleCursorInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleCursorPosition . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleMode . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -724,10 +775,10 @@ Str_length . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-WaitForEnter . . . . . . . . . .	P Near	 0000029C _TEXT	Length= 00000022 Public STDCALL
-  WaitLoop . . . . . . . . . . .	L Near	 0000029C _TEXT	
-WaitForRelease . . . . . . . . .	P Near	 000005A1 _TEXT	Length= 0000000E Public STDCALL
-  WaitLoop . . . . . . . . . . .	L Near	 000005A1 _TEXT	
+WaitForEnter . . . . . . . . . .	P Near	 00000335 _TEXT	Length= 00000022 Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 00000335 _TEXT	
+WaitForRelease . . . . . . . . .	P Near	 00000706 _TEXT	Length= 0000000E Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 00000706 _TEXT	
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -748,7 +799,7 @@ WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000005FB Public STDCALL
+start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000760 Public STDCALL
   mainLoop . . . . . . . . . . .	L Near	 00000020 _TEXT	
   Gameover . . . . . . . . . . .	L Near	 00000095 _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -969,12 +1020,12 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
-attributes0  . . . . . . . . . .	Word	 00000181 _DATA	
-attributes1  . . . . . . . . . .	Word	 00000187 _DATA	
-attributes2  . . . . . . . . . .	Word	 0000018D _DATA	
-attributes_floor . . . . . . . .	Word	 000000B9 _DATA	
+attributes0  . . . . . . . . . .	Word	 00000185 _DATA	
+attributes1  . . . . . . . . . .	Word	 0000018B _DATA	
+attributes2  . . . . . . . . . .	Word	 00000191 _DATA	
+attributes_floor . . . . . . . .	Word	 000000BD _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
-blueColor  . . . . . . . . . . .	Word	 00000263 _DATA	
+blueColor  . . . . . . . . . . .	Word	 00000267 _DATA	
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 boxBody  . . . . . . . . . . . .	Byte	 0000006C _DATA	
 boxBottom  . . . . . . . . . . .	Byte	 0000006F _DATA	
@@ -987,27 +1038,31 @@ cactusTop  . . . . . . . . . . .	Byte	 00000072 _DATA
 cactus_height  . . . . . . . . .	DWord	 00000083 _DATA	
 cactus_pos . . . . . . . . . . .	COORD	 0000007F _DATA	
 cactus_speed . . . . . . . . . .	Word	 00000087 _DATA	
-cellsWritten . . . . . . . . . .	DWord	 000000B5 _DATA	
+cellsWritten . . . . . . . . . .	DWord	 000000B9 _DATA	
 count  . . . . . . . . . . . . .	DWord	 00000091 _DATA	
-cursorInfo . . . . . . . . . . .	CONSOLE_CURSOR_INFO  00000388 _DATA	
+cursorInfo . . . . . . . . . . .	CONSOLE_CURSOR_INFO  0000048D _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-exitMessage  . . . . . . . . . .	Byte	 00000372 _DATA	
-exit_pos . . . . . . . . . . . .	COORD	 000000A1 _DATA	
+enterMessage . . . . . . . . . .	Byte	 0000045E _DATA	
+escMessage . . . . . . . . . . .	Byte	 00000476 _DATA	
+exitMessage  . . . . . . . . . .	Byte	 00000464 _DATA	
+exit_pos . . . . . . . . . . . .	COORD	 000000A5 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 floorFix . . . . . . . . . . . .	Byte	 00000068 _DATA	
 floorLength  . . . . . . . . . .	DWord	 00000000 _DATA	
-floor_pos  . . . . . . . . . . .	COORD	 000000A9 _DATA	
+floor_pos  . . . . . . . . . . .	COORD	 000000AD _DATA	
 floor  . . . . . . . . . . . . .	Byte	 00000004 _DATA	
-gameOverMessage  . . . . . . . .	Byte	 00000350 _DATA	
+gameOverMessage  . . . . . . . .	Byte	 0000043C _DATA	
 gameOver_pos . . . . . . . . . .	COORD	 0000009D _DATA	
-gravity  . . . . . . . . . . . .	Word	 00000195 _DATA	
+gravity  . . . . . . . . . . . .	Word	 00000199 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
-hConsole . . . . . . . . . . . .	DWord	 00000384 _DATA	
-highscoreString  . . . . . . . .	Byte	 0000033F _DATA	
+hConsole . . . . . . . . . . . .	DWord	 00000489 _DATA	
+highscoreString  . . . . . . . .	Byte	 0000042B _DATA	
 highscore_pos  . . . . . . . . .	COORD	 00000095 _DATA	
-highscore  . . . . . . . . . . .	DWord	 0000032F _DATA	
-keyState . . . . . . . . . . . .	DWord	 00000197 _DATA	
+highscore  . . . . . . . . . . .	DWord	 000003FB _DATA	
+introString  . . . . . . . . . .	Byte	 000003FF _DATA	
+intro_pos  . . . . . . . . . . .	COORD	 000000A1 _DATA	
+keyState . . . . . . . . . . . .	DWord	 0000019B _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -1017,18 +1072,21 @@ lightRed . . . . . . . . . . . .	Number	 0000000Ch
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 main . . . . . . . . . . . . . .	Text   	 start@0
 outputHandle . . . . . . . . . .	DWord	 00000089 _DATA	
-redColor . . . . . . . . . . . .	Word	 0000019B _DATA	
+purpleColor  . . . . . . . . . .	Word	 0000032F _DATA	
+redColor . . . . . . . . . . . .	Word	 0000019F _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-restartMessage . . . . . . . . .	Byte	 0000035B _DATA	
-restart_pos  . . . . . . . . . .	COORD	 000000A5 _DATA	
-scoreString  . . . . . . . . . .	Byte	 00000333 _DATA	
+restartMessage . . . . . . . . .	Byte	 00000447 _DATA	
+restart_pos  . . . . . . . . . .	COORD	 000000A9 _DATA	
+scoreString  . . . . . . . . . .	Byte	 0000041F _DATA	
 score_pos  . . . . . . . . . . .	COORD	 00000099 _DATA	
-score  . . . . . . . . . . . . .	DWord	 0000032B _DATA	
-velocity . . . . . . . . . . . .	Word	 00000193 _DATA	
+score  . . . . . . . . . . . . .	DWord	 000003F7 _DATA	
+spaceMessage . . . . . . . . . .	Byte	 0000047A _DATA	
+upMessage  . . . . . . . . . . .	Byte	 00000480 _DATA	
+velocity . . . . . . . . . . . .	Word	 00000197 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
-xyBound  . . . . . . . . . . . .	COORD	 000000B1 _DATA	
-xyPosition . . . . . . . . . . .	COORD	 000000AD _DATA	
+xyBound  . . . . . . . . . . . .	COORD	 000000B5 _DATA	
+xyPosition . . . . . . . . . . .	COORD	 000000B1 _DATA	
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   0 Warnings

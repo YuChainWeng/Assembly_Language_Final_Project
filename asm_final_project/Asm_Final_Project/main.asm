@@ -21,9 +21,10 @@ INCLUDE Irvine32.inc
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
-    highscore_pos COORD <35,0>
-    score_pos COORD <55,0>
+    highscore_pos COORD <37,0>
+    score_pos COORD <57,0>
     gameOver_pos COORD <47,2>
+    intro_pos COORD <37,15>
     exit_pos COORD <44,4>
     restart_pos COORD <42,5>
     floor_pos COORD <0,12>
@@ -31,26 +32,29 @@ INCLUDE Irvine32.inc
     xyBound COORD <80,25> ; 螢幕邊界
     cellsWritten DWORD ?
     attributes_floor WORD 100 DUP(0Fh)
-    ;attributes0 WORD BoxWidth DUP(0Ch)
     attributes0 WORD BoxWidth DUP(0Ah)
     attributes1 WORD BoxWidth DUP(0Ah)
     attributes2 WORD BoxWidth DUP(0Ah)
-    ;attributes1 WORD (BoxWidth-1) DUP(0Eh),0Ah
-    ;attributes2 WORD BoxWidth DUP(0Bh)
     velocity WORD 0  ; 速度，控制跳躍上升和下降
     gravity WORD 1   ; 重力，會讓速度每次減少 1
     keyState DWORD 0
 
     redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
     blueColor WORD 100 DUP(01h) ; 0A表示藍色
+    purpleColor WORD 100 DUP(05h) ; 05表示紫色
 
     score DWORD 0
     highscore DWORD 0
+    introString BYTE "Press SPACE or UP ARROW to jump", 0
     scoreString BYTE "Score: 0000", 0
     highscoreString BYTE "High Score: 0000", 0
     gameOverMessage BYTE "Game Over!", 0
-    restartMessage BYTE "Press Enter to restart", 0
-    exitMessage BYTE "Press Esc to exit", 0
+    restartMessage BYTE "Press ENTER to restart", 0
+    enterMessage BYTE "ENTER", 0
+    exitMessage BYTE "Press ESC to exit", 0
+    escMessage BYTE "ESC", 0
+    spaceMessage BYTE "SPACE", 0
+    upMessage BYTE "UP ARROW", 0
 
     hConsole HANDLE ?                ; Handle to the console
     cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
@@ -72,6 +76,7 @@ main PROC
     ; 畫出初始的方塊
     call DrawBox
     call DrawCactus
+    
 
 
     ; 主迴圈
@@ -186,6 +191,7 @@ CheckCollision PROC
 
     ; 呼叫 FormatHighScore 來顯示更新後的 high score
     call FormatHighScore
+    call DrawHighScore
 
 NoUpdateHighScore:
     ; 如果發生碰撞，返回 1，表示遊戲結束
@@ -234,10 +240,22 @@ GameOverMsg PROC
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR gameOverMessage, 10, gameOver_pos, ADDR cellsWritten
     
     ; 顯示 "Press Enter to restart" 和 "Press Esc to exit" 訊息
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, restart_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 17, exit_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 17, exit_pos, ADDR cellsWritten
+    add exit_pos.x, 6
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 3, exit_pos , ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR escMessage, 3, exit_pos , ADDR cellsWritten
+    sub exit_pos.x, 6
+
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 23, restart_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR restartMessage, 23, restart_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 40, exit_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
+    add restart_pos.x, 6
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, restart_pos , ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, restart_pos , ADDR cellsWritten
+    sub restart_pos.x, 6
+
+    
+
     
     ; 等待玩家按下 Enter 或 Esc 鍵
     call WaitForEnter
@@ -297,6 +315,19 @@ L1:
     ret
 DrawBox ENDP
 
+DrawIntro PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 31, intro_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR introString, 31, intro_pos, ADDR cellsWritten
+    add intro_pos.x, 6
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 5, intro_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR spaceMessage, 5, intro_pos, ADDR cellsWritten
+    add intro_pos.x, 9
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 8, intro_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR upMessage, 8, intro_pos, ADDR cellsWritten
+    sub intro_pos.x, 15
+    ret
+DrawIntro ENDP
+
 DrawCactus PROC
     ; Draw the cactus at its current position
     ; Draw top part
@@ -333,6 +364,7 @@ DrawHighScore ENDP
 DrawBackground PROC
     call Clrscr
     call DrawBox
+    call DrawIntro
     call MoveCactus
     call DrawScore
     call DrawHighScore
