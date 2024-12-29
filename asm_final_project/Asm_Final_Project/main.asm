@@ -14,34 +14,50 @@ INCLUDE Irvine32.inc
     cactusTop    BYTE '  ', '|', ' ', 0    ; The top part of the cactus
     cactusMiddle BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
     cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
-    cactus_pos    COORD <37, 10>           ; Cactus position
+    cactus_pos    COORD <37, 16>           ; Cactus position
     cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 
-    cactus_speed WORD 5 ; ¥P¤H´xªº³t«×
+    dinosaurFirstLine BYTE '     ____', 0
+    dinosaurSecondLine BYTE '    | o__| ', 0
+    dinosaurThirdLine BYTE '    | |_ ', 0
+    dinosaurFourthLine BYTE '/\__/ |- ', 0
+    dinosaurFifthLine BYTE '\____/ ', 0
+    dinosaurFirstLeg BYTE 'L', 0
+    dinosaurSecondLeg BYTE 'L', 0
+    dino_pos COORD <3,13> ; èµ·å§‹ä½ç½®
+
+    dinosaurStep BYTE '-', 0
+    
+    dinosaurSquatFirstLine BYTE '         ____ ', 0
+    dinosaurSquatSecondLine BYTE ' /\_____| o__| ', 0
+    dinosaurSquatThirdLine BYTE ' \_______/ ', 0
+    dinosaurSquatFirstLeg BYTE 'L', 0
+    dinosaurSquatSecondLeg BYTE 'L', 0
+    dinosaurSquatFirstHand BYTE '"', 0
+
+    cactus_speed WORD 5 ; ä»™äººæŒçš„é€Ÿåº¦
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
     highscore_pos COORD <37,0>
     score_pos COORD <57,0>
     gameOver_pos COORD <47,2>
-    intro_pos COORD <37,15>
+    intro_pos COORD <37,21>
     exit_pos COORD <44,4>
     restart_pos COORD <42,5>
-    floor_pos COORD <0,12>
-    xyPosition COORD <3,10> ; °_©l¦ì¸m
-    xyBound COORD <80,25> ; ¿Ã¹õÃä¬É
+    floor_pos COORD <0,18>
+    xyBound COORD <80,25> ; è¢å¹•é‚Šç•Œ
     cellsWritten DWORD ?
     attributes_floor WORD 100 DUP(0Fh)
-    attributes0 WORD BoxWidth DUP(0Ah)
-    attributes1 WORD BoxWidth DUP(0Ah)
-    attributes2 WORD BoxWidth DUP(0Ah)
-    velocity WORD 0  ; ³t«×¡A±±¨î¸õÅD¤W¤É©M¤U­°
-    gravity WORD 1   ; ­«¤O¡A·|Åı³t«×¨C¦¸´î¤Ö 1
+    velocity WORD 0  ; é€Ÿåº¦ï¼Œæ§åˆ¶è·³èºä¸Šå‡å’Œä¸‹é™
+    gravity WORD 1   ; é‡åŠ›ï¼Œæœƒè®“é€Ÿåº¦æ¯æ¬¡æ¸›å°‘ 1
     keyState DWORD 0
 
-    redColor WORD 100 DUP(0Ch)  ; 0Cªí¥Ü¬õ¦â
-    blueColor WORD 100 DUP(01h) ; 0Aªí¥ÜÂÅ¦â
-    purpleColor WORD 100 DUP(05h) ; 05ªí¥Üµµ¦â
+    brownColor WORD 100 DUP(06h) ; 06è¡¨ç¤ºæ£•è‰²
+    greenColor WORD 100 DUP(0Ah) ; 0Aè¡¨ç¤ºç¶ è‰²
+    redColor WORD 100 DUP(0Ch)  ; 0Cè¡¨ç¤ºç´…è‰²
+    blueColor WORD 100 DUP(01h) ; 0Aè¡¨ç¤ºè—è‰²
+    purpleColor WORD 100 DUP(05h) ; 05è¡¨ç¤ºç´«è‰²
 
     score DWORD 0
     highscore DWORD 0
@@ -64,182 +80,259 @@ main EQU start@0
 .code
     SetConsoleOutputCP PROTO STDCALL :DWORD
     GetAsyncKeyState PROTO STDCALL :DWORD
-    Sleep PROTO STDCALL :DWORD  ; ©µ¿ğ¨ç¼Æ
+    Sleep PROTO STDCALL :DWORD  ; å»¶é²å‡½æ•¸
 
 main PROC
     INVOKE SetConsoleOutputCP, 437
 
-    ; ¨ú±o±±¨î¥xªº¿é¥X±±¨î
+    ; å–å¾—æ§åˆ¶å°çš„è¼¸å‡ºæ§åˆ¶
     INVOKE GetStdHandle, STD_OUTPUT_HANDLE
     mov outputHandle, eax
 
-    ; µe¥Xªì©lªº¤è¶ô
-    call DrawBox
+    ; ç•«å‡ºåˆå§‹èƒŒæ™¯
+    call DrawDinosaur
     call DrawCactus
     
-
-
-    ; ¥D°j°é
+    ; ä¸»è¿´åœˆ
 mainLoop:
-    ; ¥[¤J©µ¿ğ¡AÁ×§K²¾°Ê³t«×¹L§Ö
-    INVOKE Sleep, 75  ; ©µ¿ğ 75 ²@¬í
+    ; åŠ å…¥å»¶é²ï¼Œé¿å…ç§»å‹•é€Ÿåº¦éå¿«
+    INVOKE Sleep, 75  ; å»¶é² 75 æ¯«ç§’
     
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, floor_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, floor_pos, ADDR cellsWritten
+    ;INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, floor_pos, ADDR cellsWritten
+    ;INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, floor_pos, ADDR cellsWritten
+    ;call DrawFloor
     
     inc score
     call FormatScore
-    ;´î¦^µe¤è¶ô©Ò¦ì²¾ªº2®æ
-    dec xyPosition.y
-    dec xyPosition.y
-    call DrawBackground
+    ;æ¸›å›ç•«æ–¹å¡Šæ‰€ä½ç§»çš„2æ ¼
+    sub dino_pos.y, 5
+    sub dino_pos.x, 4
+    call DrawStandLeftStepBackground
+    INVOKE Sleep, 100
+    sub dino_pos.x, 4
+    sub dino_pos.y, 5
+    call DrawStandRightStepBackground
     call CheckJumpKey
     mov eax, 0
-    ; ÀË¬d¬O§_¸I¼²¨ì¥P¤H´x
+    ; æª¢æŸ¥æ˜¯å¦ç¢°æ’åˆ°ä»™äººæŒ
     call CheckCollision
     cmp eax, 1
-    je GameOver ; ¦pªG¸I¼²¨ì¥P¤H´x¡A«h¹CÀ¸µ²§ô
-    ; ¦pªG¨S¦³ÀË´ú¨ì¥ô¦ó«öÁä¡A«h­«·s¦^¨ì¥D°j°é
+    je GameOver ; å¦‚æœç¢°æ’åˆ°ä»™äººæŒï¼Œå‰‡éŠæˆ²çµæŸ
+    ; å¦‚æœæ²’æœ‰æª¢æ¸¬åˆ°ä»»ä½•æŒ‰éµï¼Œå‰‡é‡æ–°å›åˆ°ä¸»è¿´åœˆ
     jmp mainLoop
 
 Gameover:
     call GameOverMsg
     jmp mainLoop
-  
-    
 
-; **ÀË´ú¤WÁä©MªÅ¥ÕÁäªº¸õÅD**
+; **æª¢æ¸¬ä¸Šéµå’Œç©ºç™½éµçš„è·³èº**
 CheckJumpKey PROC
-    ; ÀË´ú¤WÁä (VK_UP)
+    ; æª¢æ¸¬ä¸Šéµ (VK_UP)
     INVOKE GetAsyncKeyState, VK_UP
     test eax, 8000h
-    jnz DoJump  ; ¦pªG«ö¤U¤WÁä¡A°õ¦æ¸õÅD
+    jnz DoJump  ; å¦‚æœæŒ‰ä¸‹ä¸Šéµï¼ŒåŸ·è¡Œè·³èº
 
-    ; ÀË´úªÅ¥ÕÁä (VK_SPACE)
+    ; æª¢æ¸¬ç©ºç™½éµ (VK_SPACE)
     INVOKE GetAsyncKeyState, VK_SPACE
     test eax, 8000h
-    jnz DoJump  ; ¦pªG«ö¤UªÅ¥ÕÁä¡A°õ¦æ¸õÅD
+    jnz DoJump  ; å¦‚æœæŒ‰ä¸‹ç©ºç™½éµï¼ŒåŸ·è¡Œè·³èº
+
+    ;check down key
+    INVOKE GetAsyncKeyState, VK_DOWN
+    test eax, 8000h
+    jnz DoSquat  ; å¦‚æœæŒ‰ä¸‹ä¸‹éµï¼ŒåŸ·è¡Œè¹²ä¸‹
     ret
 
 DoJump:
     call Jump
-    call WaitForRelease ; µ¥«İ«öÁäÄÀ©ñ¡AÁ×§K­«½Æ¸õÅD
+    call WaitForRelease ; ç­‰å¾…æŒ‰éµé‡‹æ”¾ï¼Œé¿å…é‡è¤‡è·³èº
+    ret
+
+DoSquat:
+    call Squat
     ret
 CheckJumpKey ENDP
 
-; **¸õÅDªº°Ê§@ (¿W¥ß¥X¤@­Ó¤lµ{¦¡)**
-; **¸õÅDªº°Ê§@¡A¥[¤J­«¤O®ÄªG**
+; **è·³èºçš„å‹•ä½œ (ç¨ç«‹å‡ºä¸€å€‹å­ç¨‹å¼)**
+; **è·³èºçš„å‹•ä½œï¼ŒåŠ å…¥é‡åŠ›æ•ˆæœ**
 Jump PROC
-    ; ³]©wªì©l³t«× (¨Ò¦p³t«× 6 ¥i¥H´ú¸Õ¸õ±o¦h°ª)
-    mov velocity, 6
-    mov gravity, 2  ; ­«¤O¡A¨C¦¸§ó·s³t«×®É·|´î¤Ö
+    ; è¨­å®šåˆå§‹é€Ÿåº¦ (ä¾‹å¦‚é€Ÿåº¦ 6 å¯ä»¥æ¸¬è©¦è·³å¾—å¤šé«˜)
+    mov velocity, 12
+    mov gravity, 3  ; é‡åŠ›ï¼Œæ¯æ¬¡æ›´æ–°é€Ÿåº¦æ™‚æœƒæ¸›å°‘
 
 JumpLoop:
-    ; §ó·s Y ®y¼Ğ¡A¼ÒÀÀ¦V¤W©M¦V¤U¹B°Ê
-    mov ax, velocity
-    sub xyPosition.y, ax  ; y = y - velocity
+    ; æª¢æŸ¥ä¸‹éµæ˜¯å¦è¢«æŒ‰ä¸‹
+    INVOKE GetAsyncKeyState, VK_DOWN
+    test eax, 8000h
+    jz NormalDescent  ; å¦‚æœæ²’æœ‰æŒ‰ä¸‹ä¸‹éµï¼Œä½¿ç”¨æ­£å¸¸é‡åŠ›
     
-    ; §ó·s¦¨¤U¤@®É¨èªºµe­±
+    ; å¦‚æœæŒ‰ä¸‹ä¸‹éµï¼ŒåŠ å¿«ä¸‹é™é€Ÿåº¦
+    mov gravity, 7    ; å¢åŠ é‡åŠ›å€¼ä½¿ä¸‹é™æ›´å¿«
+    
+NormalDescent:
+    ; æ›´æ–° Y åº§æ¨™ï¼Œæ¨¡æ“¬å‘ä¸Šå’Œå‘ä¸‹é‹å‹•
+    mov ax, velocity
+    sub dino_pos.y, ax  ; y = y - velocity
+    sub dino_pos.x, 4
+    
+    ; æ›´æ–°æˆä¸‹ä¸€æ™‚åˆ»çš„ç•«é¢
     call DrawBackground
-    ;Ä~Äò¼W¥[score
+    ;ç¹¼çºŒå¢åŠ score
     inc score
     call FormatScore
     
-    ; ¼ÒÀÀ­«¤O®ÄªG¡A³t«×·|³vº¥´î¤Ö
+    ; æ¨¡æ“¬é‡åŠ›æ•ˆæœï¼Œé€Ÿåº¦æœƒé€æ¼¸æ¸›å°‘
     mov ax, velocity      ; Load velocity into AX
     sub ax, gravity       ; Add gravity to velocity
     mov velocity, ax      ; Store updated velocity back to memory
     
-    ; ÀË¬d®£Às¬O§_¤w¸g¦^¨ì¦a­±
-    cmp xyPosition.y, 10  ; °²³]¦a­± y ®y¼Ğ¬° 10
-    jge EndJump           ; ¦pªG y >= 10¡A«hµ²§ô¸õÅD
+    ; æª¢æŸ¥æé¾æ˜¯å¦å·²ç¶“å›åˆ°åœ°é¢
+    cmp dino_pos.y, 13  ; å‡è¨­åœ°é¢ y åº§æ¨™ç‚º 11
+    jge CheckForSquat    ; å¦‚æœ y >= 11ï¼Œæª¢æŸ¥æ˜¯å¦éœ€è¦è¹²ä¸‹
     
-    ; ©µ¿ğ¡AÅı°Ê§@¤£·|¤Ó§Ö
+    ; å»¶é²ï¼Œè®“å‹•ä½œä¸æœƒå¤ªå¿«
     INVOKE Sleep, 100
-    jmp JumpLoop  ; Ä~Äò¤U¤@´V
+    jmp JumpLoop  ; ç¹¼çºŒä¸‹ä¸€å¹€
 
-EndJump:
-    ; ½T«O®£Às¦^¨ì¦a­±
-    mov xyPosition.y, 10
+CheckForSquat:
+    ; ç¢ºä¿æé¾å›åˆ°åœ°é¢ä½ç½®
+    mov dino_pos.y, 18
+    ; æª¢æŸ¥ä¸‹éµæ˜¯å¦ä»è¢«æŒ‰è‘—
+    INVOKE GetAsyncKeyState, VK_DOWN
+    test eax, 8000h
+    jnz GoToSquat       ; å¦‚æœä¸‹éµä»è¢«æŒ‰è‘—ï¼ŒåŸ·è¡Œè¹²ä¸‹å‹•ä½œ
+    
+    ; å¦‚æœæ²’æœ‰æŒ‰ä¸‹éµï¼Œæ¢å¾©æ­£å¸¸ç«™ç«‹å§¿å‹¢
+    sub dino_pos.x, 4
+    sub dino_pos.y, 5
     call DrawBackground
+    ret
+
+GoToSquat:
+    ; é‡ç½®é‡åŠ›å€¼ç‚ºæ­£å¸¸å€¼
+    mov gravity, 3
+    ; ç›´æ¥è·³è½‰åˆ°è¹²ä¸‹ç¨‹åº
+    call Squat
     ret
 Jump ENDP
 
+Squat PROC
+    ; é€²å…¥è¹²ä¸‹å¾ªç’°
+SquatLoop:
+    ; æª¢æŸ¥ä¸‹éµæ˜¯å¦ä»ç„¶è¢«æŒ‰è‘—
+    INVOKE GetAsyncKeyState, VK_DOWN
+    test eax, 8000h
+    jz RestoreNormalStance  ; å¦‚æœæ”¾é–‹æŒ‰éµï¼Œæ¢å¾©æ­£å¸¸å§¿å‹¢
+
+    ;INVOKE GetAsyncKeyState, VK_UP
+    ;test eax, 8000h
+    ;jnz jump
+
+    ; å¦‚æœä»åœ¨æŒ‰è‘—ï¼Œç¹¼çºŒè¹²ä¸‹ç‹€æ…‹
+    sub dino_pos.x, 7
+    sub dino_pos.y, 3
+    call DrawSquatFirstStepBackground
+    INVOKE Sleep, 100
+    sub dino_pos.x, 7
+    sub dino_pos.y, 3
+    call DrawSquatSecondStepBackground
+    
+    ; å¢åŠ åˆ†æ•¸
+    inc score
+    call FormatScore
+    
+    ; æª¢æŸ¥ç¢°æ’
+    call CheckCollision
+    cmp eax, 1
+    je GameOverMsg
+    
+    ; æ·»åŠ é©ç•¶çš„å»¶é²
+    INVOKE Sleep, 75
+    
+    ; ç¹¼çºŒå¾ªç’°
+    jmp SquatLoop
+
+RestoreNormalStance:
+    ; æ¢å¾©æ­£å¸¸å§¿å‹¢
+    sub dino_pos.x, 4
+    sub dino_pos.y, 5
+    call DrawBackground
+    ret
+Squat ENDP
+    
 CheckCollision PROC
-    ; ÀË¬d¬O§_¸I¼²¨ì¥P¤H´x
+    ; æª¢æŸ¥æ˜¯å¦ç¢°æ’åˆ°ä»™äººæŒ
     mov ax, cactus_pos.x          ; Get the cactus's x position
-    mov cx, xyPosition.x         ; Get the dinosaur's x position
+    mov cx, dino_pos.x         ; Get the dinosaur's x position
     sub ax, 1
     sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge NoCollision               ; Jump to NoCollision if no collision on x-axis
 
     mov ax, cactus_pos.y          ; Get the cactus's y position
-    mov cx, xyPosition.y         ; Get the dinosaur's y position
+    mov cx, dino_pos.y         ; Get the dinosaur's y position
     sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge NoCollision               ; Jump to NoCollision if no collision on y-axis
 
-    ; ¦pªGµo¥Í¸I¼²¡AÀË¬d¤À¼Æ¬O§_°ª©ó highScore
+    ; å¦‚æœç™¼ç”Ÿç¢°æ’ï¼Œæª¢æŸ¥åˆ†æ•¸æ˜¯å¦é«˜æ–¼ highScore
     mov eax, score                 ; Load current score into eax
     mov ebx, highscore             ; Load high score into ebx
     cmp eax, ebx                   ; Compare current score with high score
     jle NoUpdateHighScore         ; Jump if current score is not greater than high score
 
-    ; §ó·s high score
+    ; æ›´æ–° high score
     mov highscore, eax             ; Update high score
 
-    ; ©I¥s FormatHighScore ¨ÓÅã¥Ü§ó·s«áªº high score
+    ; å‘¼å« FormatHighScore ä¾†é¡¯ç¤ºæ›´æ–°å¾Œçš„ high score
     call FormatHighScore
     call DrawHighScore
 
 NoUpdateHighScore:
-    ; ¦pªGµo¥Í¸I¼²¡Aªğ¦^ 1¡Aªí¥Ü¹CÀ¸µ²§ô
+    ; å¦‚æœç™¼ç”Ÿç¢°æ’ï¼Œè¿”å› 1ï¼Œè¡¨ç¤ºéŠæˆ²çµæŸ
     mov eax, 1                    ; Set eax to 1 indicating collision happened
     ret
 
 NoCollision:
-    ; ¦pªG¨S¦³¸I¼²¡Aªğ¦^ 0
+    ; å¦‚æœæ²’æœ‰ç¢°æ’ï¼Œè¿”å› 0
     mov eax, 0                    ; Set eax to 0 indicating no collision
     ret
 CheckCollision ENDP
 
 
-
-
-; **­«¸m¹CÀ¸ÅÜ¼Æ¡AÅı¹CÀ¸­«·s¶}©l**
+; **é‡ç½®éŠæˆ²è®Šæ•¸ï¼Œè®“éŠæˆ²é‡æ–°é–‹å§‹**
 RestartGame PROC
-    ; ­«¸m¤À¼Æ
+    ; é‡ç½®åˆ†æ•¸
     mov score, 0
     mov BYTE PTR [scoreString + 7], '0'
     mov BYTE PTR [scoreString + 8], '0'
     mov BYTE PTR [scoreString + 9], '0'
     mov BYTE PTR [scoreString + 10], '0'
-    ; ­«¸m®£Àsªº¦ì¸m
-    mov xyPosition.x, 3     ; °_©l¦ì¸m X
-    mov xyPosition.y, 10    ; ®£Às¦ì¸m Y¡]¦b¦a­±¤W¡^
+    ; é‡ç½®æé¾çš„ä½ç½®
+    mov dino_pos.x, 3     ; èµ·å§‹ä½ç½® X
+    mov dino_pos.y, 13    ; æé¾ä½ç½® Yï¼ˆåœ¨åœ°é¢ä¸Šï¼‰
 
-    ; ­«¸m¥P¤H´xªº¦ì¸m
-    mov cactus_pos.x, 70    ; ¥P¤H´x¦b¿Ã¹õ¥kÃä
-    mov cactus_pos.y, 12    ; ¥P¤H´xªº¦a­±°ª«×
+    ; é‡ç½®ä»™äººæŒçš„ä½ç½®
+    mov cactus_pos.x, 70    ; ä»™äººæŒåœ¨è¢å¹•å³é‚Š
+    mov cactus_pos.y, 18    ; ä»™äººæŒçš„åœ°é¢é«˜åº¦
 
-    ; ­«¸m¨ä¥L¹CÀ¸ÅÜ¼Æ
-    mov velocity, 6         ; °±¤î®£Àsªº¸õÅD³t«×
-    mov gravity, 2          ; ­«¤O­«¸m
-    mov cactus_speed, 5     ; ¥P¤H´xªº³t«×
+    ; é‡ç½®å…¶ä»–éŠæˆ²è®Šæ•¸
+    mov velocity, 6         ; åœæ­¢æé¾çš„è·³èºé€Ÿåº¦
+    mov gravity, 2          ; é‡åŠ›é‡ç½®
+    mov cactus_speed, 5     ; ä»™äººæŒçš„é€Ÿåº¦
     
-    ; ­«·sÃ¸»sµe­±
+    ; é‡æ–°ç¹ªè£½ç•«é¢
     call DrawBackground
     ret
 RestartGame ENDP
 
-; **¹CÀ¸µ²§ô**
+; **éŠæˆ²çµæŸ**
 GameOverMsg PROC
-    ; Åã¥Ü "Game Over!" °T®§
+    ; é¡¯ç¤º "Game Over!" è¨Šæ¯
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR redColor, 10, gameOver_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR gameOverMessage, 10, gameOver_pos, ADDR cellsWritten
     
-    ; Åã¥Ü "Press Enter to restart" ©M "Press Esc to exit" °T®§
+    ; é¡¯ç¤º "Press Enter to restart" å’Œ "Press Esc to exit" è¨Šæ¯
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 17, exit_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 17, exit_pos, ADDR cellsWritten
     add exit_pos.x, 6
@@ -253,67 +346,169 @@ GameOverMsg PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, restart_pos , ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, restart_pos , ADDR cellsWritten
     sub restart_pos.x, 6
-
     
-
-    
-    ; µ¥«İª±®a«ö¤U Enter ©Î Esc Áä
+    ; ç­‰å¾…ç©å®¶æŒ‰ä¸‹ Enter æˆ– Esc éµ
     call WaitForEnter
     ret
 GameOverMsg ENDP
 
 WaitForEnter PROC
-    ; ÀË´ú¬O§_«ö¤U Enter ©Î Esc Áä
+    ; æª¢æ¸¬æ˜¯å¦æŒ‰ä¸‹ Enter æˆ– Esc éµ
 WaitLoop:
     INVOKE GetAsyncKeyState, VK_RETURN
-    test eax, 8000h        ; ÀË¬d¬O§_«ö¤U Enter Áä
-    jnz RestartGame        ; ¦pªG«ö¤U Enter¡A­«±Ò¹CÀ¸
+    test eax, 8000h        ; æª¢æŸ¥æ˜¯å¦æŒ‰ä¸‹ Enter éµ
+    jnz RestartGame        ; å¦‚æœæŒ‰ä¸‹ Enterï¼Œé‡å•ŸéŠæˆ²
 
     INVOKE GetAsyncKeyState, VK_ESCAPE
-    test eax, 8000h        ; ÀË¬d¬O§_«ö¤U Esc Áä
-    jnz ExitGame           ; ¦pªG«ö¤U Esc¡A°h¥X¹CÀ¸
+    test eax, 8000h        ; æª¢æŸ¥æ˜¯å¦æŒ‰ä¸‹ Esc éµ
+    jnz ExitGame           ; å¦‚æœæŒ‰ä¸‹ Escï¼Œé€€å‡ºéŠæˆ²
 
-    jmp WaitLoop           ; ¦pªG¨S¦³«ö¤U¥ô¦óÁä¡AÄ~Äòµ¥«İ
+    jmp WaitLoop           ; å¦‚æœæ²’æœ‰æŒ‰ä¸‹ä»»ä½•éµï¼Œç¹¼çºŒç­‰å¾…
 WaitForEnter ENDP
 
-; **µ²§ô¹CÀ¸**
+; **çµæŸéŠæˆ²**
 ExitGame PROC
-    ; Åã¥Ü°h¥X°T®§
+    ; é¡¯ç¤ºé€€å‡ºè¨Šæ¯
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, exit_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
-    ; µ²§ôµ{¦¡
+    ; çµæŸç¨‹å¼
     INVOKE ExitProcess, 0
 ExitGame ENDP
 
-; Ã¸»s¤è¶ô
-DrawBox PROC
-    ; ²M°£¿Ã¹õ
-    ;call MoveCactus
+DrawFloor PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, floorLength, floor_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floor, floorLength, floor_pos, ADDR cellsWritten
-    ; ¤WÃä®Ø
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes0, BoxWidth, xyPosition, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxTop, BoxWidth, xyPosition, ADDR cellsWritten
-
-    inc xyPosition.y    ; ²¾°Ê¨ì¤U¤@¦æ
-
-    ; ¤¤¶¡ªº¤º®e
-    mov ecx, BoxHeight - 2
-L1: 
-    push ecx
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, BoxWidth, xyPosition, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBody, BoxWidth, xyPosition, ADDR cellsWritten
-    inc xyPosition.y
-    pop ecx
-    loop L1
-
-    ; ¤UÃä®Ø
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes2, BoxWidth, xyPosition, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR boxBottom, BoxWidth, xyPosition, ADDR cellsWritten
-    ;INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
-    ;INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactus, 1, cactus_pos, ADDR cellsWritten
     ret
-DrawBox ENDP
+DrawFloor ENDP
+
+DrawDinosaur PROC
+    call DrawFloor
+    ; Draw the dinosaur at its current position 
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLeg, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLeg, 1, dino_pos, ADDR cellsWritten
+    ret
+DrawDinosaur ENDP
+
+DrawDinosaurStandLeftStep PROC
+    call DrawFloor
+    ; Draw the dinosaur at its current position 
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLeg, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
+    ret
+DrawDinosaurStandLeftStep ENDP
+
+DrawDinosaurStandRightStep PROC
+    call DrawFloor
+    ; Draw the dinosaur at its current position 
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLeg, 1, dino_pos, ADDR cellsWritten
+    ret
+DrawDinosaurStandRightStep ENDP
+
+DrawSquatFirstStep PROC
+    call DrawFloor
+    ; Draw the dinosaur at its current position 
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 15, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLine, 15, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 17, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLine, 17, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatThirdLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    add dino_pos.x, 3
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLeg, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstHand, 1, dino_pos, ADDR cellsWritten
+    ret
+DrawSquatFirstStep ENDP
+
+DrawSquatSecondStep PROC
+    call DrawFloor
+    ; Draw the dinosaur at its current position 
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 15, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLine, 15, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 17, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLine, 17, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatThirdLine, 11, dino_pos, ADDR cellsWritten
+    inc dino_pos.y
+    add dino_pos.x, 3
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLeg, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
+    add dino_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstHand, 1, dino_pos, ADDR cellsWritten
+    ret
+DrawSquatSecondStep ENDP
 
 DrawIntro PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 31, intro_pos, ADDR cellsWritten
@@ -331,19 +526,19 @@ DrawIntro ENDP
 DrawCactus PROC
     ; Draw the cactus at its current position
     ; Draw top part
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 3, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 3, cactus_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 3, cactus_pos, ADDR cellsWritten
 
     ; Move down to the next line for middle part
     inc cactus_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 6, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 6, cactus_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 6, cactus_pos, ADDR cellsWritten
 
     ; Move down to the next line for bottom part
     inc cactus_pos.y
     inc cactus_pos.x
     inc cactus_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes1, 1, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 1, cactus_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusBottom, 1, cactus_pos, ADDR cellsWritten
     ret
 DrawCactus ENDP
@@ -360,10 +555,11 @@ DrawHighScore PROC
     ret
 DrawHighScore ENDP
 
-;Ã¸»s¤U¤@®É¨èªº­I´º(²¾°Ê¥P¤H´x)
+;ç¹ªè£½ä¸‹ä¸€æ™‚åˆ»çš„èƒŒæ™¯(ç§»å‹•ä»™äººæŒ)
 DrawBackground PROC
     call Clrscr
-    call DrawBox
+    call DrawFloor
+    call DrawDinosaur
     call DrawIntro
     call MoveCactus
     call DrawScore
@@ -371,14 +567,58 @@ DrawBackground PROC
     ret
 DrawBackground ENDP
 
+DrawStandLeftStepBackground PROC
+    call Clrscr
+    call DrawFloor
+    call DrawDinosaurStandLeftStep
+    call DrawIntro
+    call MoveCactus
+    call DrawScore
+    call DrawHighScore
+    ret
+DrawStandLeftStepBackground ENDP
+
+DrawStandRightStepBackground PROC
+    call Clrscr
+    call DrawFloor
+    call DrawDinosaurStandRightStep
+    call DrawIntro
+    call MoveCactus
+    call DrawScore
+    call DrawHighScore
+    ret
+DrawStandRightStepBackground ENDP
+
+DrawSquatFirstStepBackground PROC
+    call Clrscr
+    call DrawFloor
+    call DrawSquatFirstStep
+    call DrawIntro
+    call MoveCactus
+    call DrawScore
+    call DrawHighScore
+    ret
+DrawSquatFirstStepBackground ENDP
+
+DrawSquatSecondStepBackground PROC
+    call Clrscr
+    call DrawFloor
+    call DrawSquatSecondStep
+    call DrawIntro
+    call MoveCactus
+    call DrawScore
+    call DrawHighScore
+    ret
+DrawSquatSecondStepBackground ENDP
+
 MoveCactus PROC
-    ; ²¾°Ê¥P¤H´x
+    ; ç§»å‹•ä»™äººæŒ
     mov ax, cactus_speed
     sub cactus_pos.x, ax
     dec cactus_pos.y
     dec cactus_pos.y
     call DrawCactus
-    ; ¦pªG¥P¤H´x¶V¹L¿Ã¹õÃä¬É¡A«h­«·s¥Í¦¨
+    ; å¦‚æœä»™äººæŒè¶Šéè¢å¹•é‚Šç•Œï¼Œå‰‡é‡æ–°ç”Ÿæˆ
     cmp cactus_pos.x, 0
 
     jl resetCactus
@@ -388,17 +628,17 @@ resetCactus:
     mov eax, 20
     call RandomRange
     add eax, 50
-    mov cactus_pos.x, ax ; ­«·s¥Í¦¨¥P¤H´x
+    mov cactus_pos.x, ax ; é‡æ–°ç”Ÿæˆä»™äººæŒ
     ret
 MoveCactus ENDP
 
-; µ¥«İ«öÁäÄÀ©ñ
+; ç­‰å¾…æŒ‰éµé‡‹æ”¾
 WaitForRelease PROC
-    ; ecx = µêÀÀÁäªº¥N½X
+    ; ecx = è™›æ“¬éµçš„ä»£ç¢¼
 WaitLoop:
     INVOKE GetAsyncKeyState, ecx
     test eax, 8000h
-    jnz WaitLoop ; ¦pªGÁÙ¦b«öµÛ«öÁä¡AÄ~Äòµ¥«İ
+    jnz WaitLoop ; å¦‚æœé‚„åœ¨æŒ‰è‘—æŒ‰éµï¼Œç¹¼çºŒç­‰å¾…
     ret
 WaitForRelease ENDP
 
