@@ -11,20 +11,33 @@ INCLUDE Irvine32.inc
     boxBody   BYTE 0B3h, (BoxWidth - 2) DUP(' '), 0B3h
     boxBottom BYTE 0C0h, (BoxWidth - 2) DUP(0C4h), 0D9h
 
-    cactusTop    BYTE '  ', '|', ' ', 0    ; The top part of the cactus
-    cactusMiddle BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
+    cactusTop     BYTE '  ', '|', ' ', 0    ; The top part of the cactus
+    cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
     cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
     cactus_pos    COORD <37, 16>           ; Cactus position
     cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 
-    dinosaurFirstLine BYTE '     ____', 0
+    dinosaurFirstLine  BYTE '     ____', 0
     dinosaurSecondLine BYTE '    | o__| ', 0
-    dinosaurThirdLine BYTE '    | |_ ', 0
+    dinosaurThirdLine  BYTE '    | |_ ', 0
     dinosaurFourthLine BYTE '/\__/ |- ', 0
-    dinosaurFifthLine BYTE '\____/ ', 0
-    dinosaurFirstLeg BYTE 'L', 0
-    dinosaurSecondLeg BYTE 'L', 0
+    dinosaurFifthLine  BYTE '\____/ ', 0
+    dinosaurFirstLeg   BYTE 'L', 0
+    dinosaurSecondLeg  BYTE 'L', 0
     dino_pos COORD <3,13> ; 起始位置
+    title1 BYTE  '       _      _                _  _____      ', 0
+    title2 BYTE  '      | |    |_|   _      _   | ||  ___|     ', 0
+    title3 BYTE  '      | |     _  _| |_  _| |_ | || |___      ', 0
+    title4 BYTE  '      | |    | ||_   _||_   _|| ||  ___|     ', 0
+    title5 BYTE  '      | |___ | |  | |    | |  | || |___      ', 0
+    title6 BYTE  '      |_____||_|  |_|    |_|  |_||_____|     ', 0
+    title7 BYTE  ' _____   _                                   ', 0
+    title8 BYTE  '|  __ \ |_|                                   ', 0
+    title9 BYTE  '| |  | | _  _ __   ___  ___  __ _  _   _  _ _', 0
+    title10 BYTE '| |  | || || |_ \ / _ \/ __|/ _` || | | || |/', 0
+    title11 BYTE '| |__| || || | | ||(_)|\__ \|(_| || | | || | ', 0
+    title12 BYTE '|_____/ |_||_| |_|\___/|___/\__,_| \____||_| ', 0
+
 
     dinosaurStep BYTE '-', 0
     
@@ -39,12 +52,14 @@ INCLUDE Irvine32.inc
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
+    title_pos COORD <30,2>
     highscore_pos COORD <37,0>
     score_pos COORD <57,0>
     gameOver_pos COORD <47,2>
     intro_pos COORD <37,21>
     exit_pos COORD <44,4>
     restart_pos COORD <42,5>
+    start_pos COORD <42,19>
     floor_pos COORD <0,18>
     xyBound COORD <80,25> ; 螢幕邊界
     cellsWritten DWORD ?
@@ -66,6 +81,7 @@ INCLUDE Irvine32.inc
     highscoreString BYTE "High Score: 0000", 0
     gameOverMessage BYTE "Game Over!", 0
     restartMessage BYTE "Press ENTER to restart", 0
+    startMessage BYTE "Press ENTER to start", 0
     enterMessage BYTE "ENTER", 0
     exitMessage BYTE "Press ESC to exit", 0
     escMessage BYTE "ESC", 0
@@ -90,18 +106,15 @@ main PROC
     mov outputHandle, eax
 
     ; 畫出初始背景
-    call DrawDinosaur
-    call DrawCactus
-    
+    ;call DrawDinosaur
+    call DrawTitle
+    call DrawIntro
+    call DrawStartMessage
+    call WaitForStart
     ; 主迴圈
 mainLoop:
     ; 加入延遲，避免移動速度過快
     INVOKE Sleep, 75  ; 延遲 75 毫秒
-    
-    ;INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 1, floor_pos, ADDR cellsWritten
-    ;INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floorFix, 1, floor_pos, ADDR cellsWritten
-    ;call DrawFloor
-    
     inc score
     call FormatScore
     ;減回畫方塊所位移的2格
@@ -365,7 +378,14 @@ WaitLoop:
 
     jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
 WaitForEnter ENDP
-
+WaitForStart PROC
+    ; 檢測是否按下 Enter鍵
+WaitForStartLoop:
+    INVOKE GetAsyncKeyState, VK_RETURN
+    test eax, 8000h        ; 檢查是否按下 Enter 鍵
+    jnz RestartGame          ; 如果按下 Enter，開始遊戲
+    jmp WaitForStartLoop   ; 如果沒有按下任何鍵，繼續等待
+WaitForStart ENDP
 ; **結束遊戲**
 ExitGame PROC
     ; 顯示退出訊息
@@ -522,6 +542,15 @@ DrawIntro PROC
     sub intro_pos.x, 15
     ret
 DrawIntro ENDP
+DrawStartMessage PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, start_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR startMessage, 20, start_pos, ADDR cellsWritten
+    add start_pos.x, 6
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, start_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, start_pos, ADDR cellsWritten
+    sub start_pos.x, 6
+    ret
+DrawStartMessage ENDP
 
 DrawCactus PROC
     ; Draw the cactus at its current position
@@ -611,6 +640,7 @@ DrawSquatSecondStepBackground PROC
     ret
 DrawSquatSecondStepBackground ENDP
 
+
 MoveCactus PROC
     ; 移動仙人掌
     mov ax, cactus_speed
@@ -675,6 +705,55 @@ FormatHighScore PROC
         jnz L1
     ret
 FormatHighScore ENDP
-
+DrawTitle PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title1, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title2, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title3, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title4, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title5, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title6, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title7, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title8, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title9, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title10, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title11, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title12, 45, title_pos, ADDR cellsWritten
+    INVOKE sleep, 150
+    ret
+DrawTitle ENDP
 main ENDP
 END main
