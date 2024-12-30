@@ -51,7 +51,7 @@ INCLUDE Irvine32.inc
     bird_pos COORD <50, 11> ; 起始位置
     bird_speed WORD 7 ; 鳥的速度
 
-    cactus_speed WORD 3 ; 仙人掌的速度
+    cactus_speed WORD 10 ;仙人掌的速度
 
     outputHandle DWORD 0
     bytesWritten DWORD 0
@@ -174,7 +174,7 @@ CheckJumpKey ENDP
 Jump PROC
     ; 設定初始速度
     mov velocity, 14
-    mov gravity, 5  ; 重力，每次更新速度時會減少
+    mov gravity, 4  ; 重力，每次更新速度時會減少
 
 JumpLoop:
     ; 檢查下鍵是否被按下
@@ -291,17 +291,36 @@ CheckCollision PROC
     ; 檢查是否碰撞到仙人掌
     mov ax, cactus_pos.x          ; Get the cactus's x position
     mov cx, dino_pos.x         ; Get the dinosaur's x position
-    sub ax, 1
+    add cx, 3                     ; Add 3 to the cactus's x position to account for its width
     sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
-    jge NoCollision               ; Jump to NoCollision if no collision on x-axis
+    jge DetBirdCollision          ; Jump to DetBirdCollision if no collision on x-axis
 
     mov ax, cactus_pos.y          ; Get the cactus's y position
     mov cx, dino_pos.y         ; Get the dinosaur's y position
     sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
-    jge NoCollision               ; Jump to NoCollision if no collision on y-axis
+    jge DetBirdCollision          ; Jump to DetBirdCollision if no collision on y-axis
+    jmp CollisionDetected         ; Jump to CollisionDetected if collision detected
 
+    DetBirdCollision:
+    mov ax, bird_pos.x
+    mov cx, dino_pos.x
+    add cx, 3
+    sub ax, cx
+    cmp ax, 3
+    jge NoCollision
+
+    mov ax, bird_pos.y
+    mov cx, dino_pos.y
+    add cx,15
+    sub ax, cx
+    call abs
+    cmp ax, 1
+    jge NoCollision
+
+
+CollisionDetected:
     ; 如果發生碰撞，檢查分數是否高於 highScore
     mov eax, score                 ; Load current score into eax
     mov ebx, highscore             ; Load high score into ebx
@@ -327,6 +346,14 @@ NoCollision:
     mov eax, 0                    ; Set eax to 0 indicating no collision
     ret
 CheckCollision ENDP
+
+abs PROC
+    cmp eax, 0
+    jge NoNeg
+    neg eax
+    NoNeg:
+    ret
+    abs ENDP
 
 
 ; **重置遊戲變數，讓遊戲重新開始**
