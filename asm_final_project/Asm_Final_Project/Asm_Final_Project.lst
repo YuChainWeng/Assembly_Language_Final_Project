@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:38:47
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:59:29
 main.asm						     Page 1 - 1
 
 
@@ -32,7 +32,7 @@ main.asm						     Page 1 - 1
  0000006E 7C 5F 7C 5F 7C	    cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
 	   00
  00000074 7C 00			    cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
- 00000076 0025 0010		    cactus_pos    COORD <37, 16>           ; Cactus position
+ 00000076 001E 0010		    cactus_pos    COORD <30, 16>           ; Cactus position
  0000007A 00000003		    cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 				
  0000007E 20 20 20 20 20	    dinosaurFirstLine  BYTE '     ____', 0
@@ -198,10 +198,11 @@ main.asm						     Page 1 - 1
  00000335 20 20 20 5C 5F	    birdFlyDownSecondLine BYTE '   \__/', 0
 	   5F 2F 00
  0000033D 20 20 7C 2F 00	    birdFlyDownThirdLine BYTE '  |/', 0
- 00000342 0046 000D		    bird_pos COORD <70, 13> ; 起始位置
- 00000346 0005			    bird_speed WORD 5 ; 鳥的速度
+ 00000342 005A 000D		    bird_pos COORD <90, 13> ; 起始位置
+ 00000346 0007			    bird_speed WORD 7 ; 鳥的速度
 				
- 00000348 0004			    cactus_speed WORD 4 ; 仙人掌的速度
+ 00000348 0003			    cactus_speed WORD 3 ; 仙人掌的速度
+				
  0000034A 00000000		    outputHandle DWORD 0
  0000034E 00000000		    bytesWritten DWORD 0
  00000352 00000000		    count DWORD 0
@@ -574,16 +575,16 @@ main.asm						     Page 1 - 1
 	   000D
 				
 				    ; 重置仙人掌的位置
- 00000297  66| C7 05		    mov cactus_pos.x, 70    ; 仙人掌在螢幕右邊
+ 00000297  66| C7 05		    mov cactus_pos.x, 80    ; 仙人掌在螢幕右邊
 	   00000076 R
-	   0046
+	   0050
  000002A0  66| C7 05		    mov cactus_pos.y, 18    ; 仙人掌的地面高度
 	   00000078 R
 	   0012
 				
- 000002A9  66| C7 05		    mov bird_pos.x, 70
+ 000002A9  66| C7 05		    mov bird_pos.x, 50
 	   00000342 R
-	   0046
+	   0032
  000002B2  66| C7 05		    mov bird_pos.y, 13
 	   00000344 R
 	   000D
@@ -1083,13 +1084,14 @@ main.asm						     Page 1 - 1
  00001601  C3			    ret
 				
  00001602			resetCactus:
- 00001602  B8 00000014		    mov eax, 20
+ 00001602  B8 00000033		    mov eax, 51           
  00001607  E8 00000000 E	    call RandomRange
- 0000160C  83 C0 32		    add eax, 50
- 0000160F  66| A3		    mov cactus_pos.x, ax ; 重新生成仙人掌
+ 0000160C  83 C0 32		    add eax, 50           
+ 0000160F  66| A3		    mov cactus_pos.x, ax  ; 重新生成仙人掌位置
 	   00000076 R
  00001615  C3			    ret
  00001616			MoveCactus ENDP
+				
 				
  00001616			MoveBird PROC
 				    ; 移動小鳥
@@ -1113,9 +1115,9 @@ main.asm						     Page 1 - 1
  00001656  C3			    ret
 				
  00001657			    resetBird:
- 00001657  B8 00000014		    mov eax, 20
+ 00001657  B8 00000029		    mov eax, 41           
  0000165C  E8 00000000 E	    call RandomRange
- 00001661  83 C0 32		    add eax, 50
+ 00001661  83 C0 46		    add eax, 70 
  00001664  66| A3		    mov bird_pos.x, ax ; 重新生成小鳥
 	   00000342 R
  0000166A  C3			    ret
@@ -1167,7 +1169,7 @@ main.asm						     Page 1 - 1
 				
  000016C5			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:38:47
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:59:29
 main.asm						     Symbols 2 - 1
 
 

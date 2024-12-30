@@ -8,7 +8,7 @@ INCLUDE Irvine32.inc
     cactusTop     BYTE '  ', '|', ' ', 0    ; The top part of the cactus
     cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
     cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
-    cactus_pos    COORD <37, 16>           ; Cactus position
+    cactus_pos    COORD <30, 16>           ; Cactus position
     cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 
     dinosaurFirstLine  BYTE '     ____', 0
@@ -48,10 +48,11 @@ INCLUDE Irvine32.inc
     birdFlyDownFirstLine BYTE '<o)____', 0
     birdFlyDownSecondLine BYTE '   \__/', 0
     birdFlyDownThirdLine BYTE '  |/', 0
-    bird_pos COORD <70, 13> ; 起始位置
-    bird_speed WORD 5 ; 鳥的速度
+    bird_pos COORD <90, 13> ; 起始位置
+    bird_speed WORD 7 ; 鳥的速度
 
-    cactus_speed WORD 4 ; 仙人掌的速度
+    cactus_speed WORD 3 ; 仙人掌的速度
+
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
@@ -341,10 +342,10 @@ RestartGame PROC
     mov dino_pos.y, 13    ; 恐龍位置 Y（在地面上）
 
     ; 重置仙人掌的位置
-    mov cactus_pos.x, 70    ; 仙人掌在螢幕右邊
+    mov cactus_pos.x, 80    ; 仙人掌在螢幕右邊
     mov cactus_pos.y, 18    ; 仙人掌的地面高度
 
-    mov bird_pos.x, 70
+    mov bird_pos.x, 50
     mov bird_pos.y, 13
 
     ; 重置其他遊戲變數
@@ -766,12 +767,13 @@ MoveCactus PROC
     ret
 
 resetCactus:
-    mov eax, 20
+    mov eax, 51           
     call RandomRange
-    add eax, 50
-    mov cactus_pos.x, ax ; 重新生成仙人掌
+    add eax, 50           
+    mov cactus_pos.x, ax  ; 重新生成仙人掌位置
     ret
 MoveCactus ENDP
+
 
 MoveBird PROC
     ; 移動小鳥
@@ -789,9 +791,9 @@ MoveBird PROC
     ret
 
     resetBird:
-    mov eax, 20
+    mov eax, 41           
     call RandomRange
-    add eax, 50
+    add eax, 70 
     mov bird_pos.x, ax ; 重新生成小鳥
     ret
 MoveBird ENDP
