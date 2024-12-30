@@ -45,9 +45,10 @@ INCLUDE Irvine32.inc
     birdFlyUpSecondLine BYTE ' <o)_| \_', 0
     birdFlyUpThirdLine BYTE '  \__/', 0
 
+    birdDeleteFirstLine BYTE '       ', 0
     birdFlyDownFirstLine BYTE '<o)____', 0
     birdFlyDownSecondLine BYTE '   \__/', 0
-    birdFlyDownThirdLine BYTE '  |/', 0
+    birdFlyDownThirdLine BYTE ' |/', 0
     bird_pos COORD <50, 11> ; 起始位置
     bird_speed WORD 7 ; 鳥的速度
 
@@ -77,6 +78,7 @@ INCLUDE Irvine32.inc
     redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
     blueColor WORD 100 DUP(01h) ; 0A表示藍色
     purpleColor WORD 100 DUP(05h) ; 05表示紫色
+    darkBlueColor WORD 100 DUP(09h) ; 09表示深藍色
 
     score DWORD 0
     highscore DWORD 0
@@ -290,14 +292,14 @@ Squat ENDP
 CheckCollision PROC
     ; 檢查是否碰撞到仙人掌
     mov ax, cactus_pos.x          ; Get the cactus's x position
-    mov cx, dino_pos.x         ; Get the dinosaur's x position
+    mov cx, dino_pos.x            ; Get the dinosaur's x position
     add cx, 3                     ; Add 3 to the cactus's x position to account for its width
     sub ax, cx                    ; Calculate the horizontal distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge DetBirdCollision          ; Jump to DetBirdCollision if no collision on x-axis
 
     mov ax, cactus_pos.y          ; Get the cactus's y position
-    mov cx, dino_pos.y         ; Get the dinosaur's y position
+    mov cx, dino_pos.y            ; Get the dinosaur's y position
     sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
     cmp ax, 3                     ; If the difference is 3 or more, no collision
     jge DetBirdCollision          ; Jump to DetBirdCollision if no collision on y-axis
@@ -306,17 +308,17 @@ CheckCollision PROC
     DetBirdCollision:
     mov ax, bird_pos.x
     mov cx, dino_pos.x
-    add cx, 3
+    add cx, 5
     sub ax, cx
     cmp ax, 3
     jge NoCollision
 
     mov ax, bird_pos.y
     mov cx, dino_pos.y
-    add cx,15
+    add cx, 5
     sub ax, cx
     call abs
-    cmp ax, 1
+    cmp ax, 3
     jge NoCollision
 
 
@@ -348,12 +350,12 @@ NoCollision:
 CheckCollision ENDP
 
 abs PROC
-    cmp eax, 0
+    cmp ax, 0
     jge NoNeg
-    neg eax
+    neg ax
     NoNeg:
     ret
-    abs ENDP
+abs ENDP
 
 
 ; **重置遊戲變數，讓遊戲重新開始**
@@ -631,34 +633,38 @@ DrawSquatSecondStep ENDP
 
 DrawBirdFlyUp PROC
     ; Draw the bird at its current position
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 7, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 7, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 7, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 10, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 10, bird_pos, ADDR cellsWritten
     ; Move down to the next line for bottom part
     inc bird_pos.y
     inc bird_pos.x
     inc bird_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 6, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 6, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpThirdLine, 6, bird_pos, ADDR cellsWritten
     ret
 DrawBirdFlyUp ENDP
 
 DrawBirdFlyDown PROC
+    dec bird_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 7, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 7, bird_pos, ADDR cellsWritten
     ; Draw the bird at its current position
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 9, bird_pos, ADDR cellsWritten
+    inc bird_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 9, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 9, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 9, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 9, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 9, bird_pos, ADDR cellsWritten
     ; Move down to the next line for bottom part
     inc bird_pos.y
     inc bird_pos.x
     inc bird_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 4, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 4, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownThirdLine, 4, bird_pos, ADDR cellsWritten
     ret
 DrawBirdFlyDown ENDP
