@@ -5,7 +5,7 @@ INCLUDE Irvine32.inc
     floor BYTE 100 DUP(0C4h)
     floorFix  BYTE 0C4h
 
-    cactusTop     BYTE '  ', '|', ' ', 0    ; The top part of the cactus
+    cactusTop     BYTE '|', 0    ; The top part of the cactus
     cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
     cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
     cactus_pos    COORD <80, 18>           ; Cactus position
@@ -41,8 +41,8 @@ INCLUDE Irvine32.inc
     title11 BYTE '| |__| || || | | ||(_)|\__ \|(_| || | | || | ', 0
     title12 BYTE '|_____/ |_||_| |_|\___/|___/\__,_| \____||_| ', 0
     
-    birdFlyUpFirstLine BYTE '     |\', 0
-    birdFlyUpSecondLine BYTE ' <o)_| \_', 0
+    birdFlyUpFirstLine BYTE '    |\', 0
+    birdFlyUpSecondLine BYTE '<o)_| \_', 0
     birdFlyUpThirdLine BYTE '  \__/', 0
 
     birdDeleteFirstLine BYTE '       ', 0
@@ -354,7 +354,7 @@ abs PROC
     jge NoNeg
     neg ax
     NoNeg:
-    ret
+        ret
 abs ENDP
 
 
@@ -633,12 +633,13 @@ DrawSquatSecondStep ENDP
 
 DrawBirdFlyUp PROC
     ; Draw the bird at its current position
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 7, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 7, bird_pos, ADDR cellsWritten
+    ;inc bird_pos.x
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 6, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 6, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 10, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 10, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 8, bird_pos, ADDR cellsWritten
     ; Move down to the next line for bottom part
     inc bird_pos.y
     inc bird_pos.x
@@ -654,12 +655,13 @@ DrawBirdFlyDown PROC
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 7, bird_pos, ADDR cellsWritten
     ; Draw the bird at its current position
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 9, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 9, bird_pos, ADDR cellsWritten
+    dec bird_pos.x
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 8, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 9, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 9, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 8, bird_pos, ADDR cellsWritten
     ; Move down to the next line for bottom part
     inc bird_pos.y
     inc bird_pos.x
@@ -695,13 +697,15 @@ DrawStartMessage ENDP
 DrawCactus PROC
     ; Draw the cactus at its current position
     ; Draw top part
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 3, cactus_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 3, cactus_pos, ADDR cellsWritten
+    add cactus_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 1, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 1, cactus_pos, ADDR cellsWritten
+    sub cactus_pos.x, 2
 
     ; Move down to the next line for middle part
     inc cactus_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 6, cactus_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 6, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 5, cactus_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 5, cactus_pos, ADDR cellsWritten
 
     ; Move down to the next line for bottom part
     inc cactus_pos.y
