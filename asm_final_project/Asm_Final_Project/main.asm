@@ -4,12 +4,6 @@ INCLUDE Irvine32.inc
     floorLength DWORD 100
     floor BYTE 100 DUP(0C4h)
     floorFix  BYTE 0C4h
-    BoxWidth  = 3
-    BoxHeight = 3
-
-    boxTop    BYTE 0DAh, (BoxWidth - 2) DUP(0C4h), 0BFh
-    boxBody   BYTE 0B3h, (BoxWidth - 2) DUP(' '), 0B3h
-    boxBottom BYTE 0C0h, (BoxWidth - 2) DUP(0C4h), 0D9h
 
     cactusTop     BYTE '  ', '|', ' ', 0    ; The top part of the cactus
     cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
@@ -24,7 +18,16 @@ INCLUDE Irvine32.inc
     dinosaurFifthLine  BYTE '\____/ ', 0
     dinosaurFirstLeg   BYTE 'L', 0
     dinosaurSecondLeg  BYTE 'L', 0
+    dinosaurStep BYTE '-', 0
     dino_pos COORD <3,13> ; 起始位置
+
+    dinosaurSquatFirstLine BYTE '         ____ ', 0
+    dinosaurSquatSecondLine BYTE ' /\_____| o__| ', 0
+    dinosaurSquatThirdLine BYTE ' \_______/ ', 0
+    dinosaurSquatFirstLeg BYTE 'L', 0
+    dinosaurSquatSecondLeg BYTE 'L', 0
+    dinosaurSquatFirstHand BYTE '"', 0
+
     title1 BYTE  '       _      _                _  _____      ', 0
     title2 BYTE  '      | |    |_|   _      _   | ||  ___|     ', 0
     title3 BYTE  '      | |     _  _| |_  _| |_ | || |___      ', 0
@@ -37,18 +40,18 @@ INCLUDE Irvine32.inc
     title10 BYTE '| |  | || || |_ \ / _ \/ __|/ _` || | | || |/', 0
     title11 BYTE '| |__| || || | | ||(_)|\__ \|(_| || | | || | ', 0
     title12 BYTE '|_____/ |_||_| |_|\___/|___/\__,_| \____||_| ', 0
-
-
-    dinosaurStep BYTE '-', 0
     
-    dinosaurSquatFirstLine BYTE '         ____ ', 0
-    dinosaurSquatSecondLine BYTE ' /\_____| o__| ', 0
-    dinosaurSquatThirdLine BYTE ' \_______/ ', 0
-    dinosaurSquatFirstLeg BYTE 'L', 0
-    dinosaurSquatSecondLeg BYTE 'L', 0
-    dinosaurSquatFirstHand BYTE '"', 0
+    birdFlyUpFirstLine BYTE '     |\', 0
+    birdFlyUpSecondLine BYTE ' <o)_| \_', 0
+    birdFlyUpThirdLine BYTE '  \__/', 0
 
-    cactus_speed WORD 5 ; 仙人掌的速度
+    birdFlyDownFirstLine BYTE '<o)____', 0
+    birdFlyDownSecondLine BYTE '   \__/', 0
+    birdFlyDownThirdLine BYTE '  |/', 0
+    bird_pos COORD <70, 13> ; 起始位置
+    bird_speed WORD 5 ; 鳥的速度
+
+    cactus_speed WORD 4 ; 仙人掌的速度
     outputHandle DWORD 0
     bytesWritten DWORD 0
     count DWORD 0
@@ -106,7 +109,6 @@ main PROC
     mov outputHandle, eax
 
     ; 畫出初始背景
-    ;call DrawDinosaur
     call DrawTitle
     call DrawIntro
     call DrawStartMessage
@@ -114,14 +116,14 @@ main PROC
     ; 主迴圈
 mainLoop:
     ; 加入延遲，避免移動速度過快
-    INVOKE Sleep, 75  ; 延遲 75 毫秒
+    INVOKE Sleep, 25  ; 延遲 75 毫秒
     inc score
     call FormatScore
     ;減回畫方塊所位移的2格
     sub dino_pos.y, 5
     sub dino_pos.x, 4
     call DrawStandLeftStepBackground
-    INVOKE Sleep, 100
+    INVOKE Sleep, 50
     sub dino_pos.x, 4
     sub dino_pos.y, 5
     call DrawStandRightStepBackground
@@ -169,9 +171,9 @@ CheckJumpKey ENDP
 ; **跳躍的動作 (獨立出一個子程式)**
 ; **跳躍的動作，加入重力效果**
 Jump PROC
-    ; 設定初始速度 (例如速度 6 可以測試跳得多高)
-    mov velocity, 12
-    mov gravity, 3  ; 重力，每次更新速度時會減少
+    ; 設定初始速度
+    mov velocity, 14
+    mov gravity, 5  ; 重力，每次更新速度時會減少
 
 JumpLoop:
     ; 檢查下鍵是否被按下
@@ -180,40 +182,54 @@ JumpLoop:
     jz NormalDescent  ; 如果沒有按下下鍵，使用正常重力
     
     ; 如果按下下鍵，加快下降速度
-    mov gravity, 7    ; 增加重力值使下降更快
+    mov gravity, 10    ; 增加重力值使下降更快
     
 NormalDescent:
-    ; 更新 Y 座標，模擬向上和向下運動
+    ; 計算下一個位置
     mov ax, velocity
-    sub dino_pos.y, ax  ; y = y - velocity
+    mov bx, dino_pos.y
+    mov cx, bx        ; 保存當前位置
+    sub bx, ax       ; 計算新的位置
+    
+    ; 檢查是否會超過地面(14)
+    cmp bx, 14
+    jg LandOnGround   ; 如果新位置會超過地面，直接著陸
+    
+    ; 如果不會超過地面，更新位置
+    mov dino_pos.y, bx
     sub dino_pos.x, 4
     
-    ; 更新成下一時刻的畫面
-    call DrawBackground
-    ;繼續增加score
+    ; 增加分數並立即更新顯示
     inc score
     call FormatScore
+  
+    ; 繪製更新後的背景
+    call DrawBackground
     
     ; 模擬重力效果，速度會逐漸減少
-    mov ax, velocity      ; Load velocity into AX
-    sub ax, gravity       ; Add gravity to velocity
-    mov velocity, ax      ; Store updated velocity back to memory
+    mov ax, velocity
+    sub ax, gravity
+    mov velocity, ax
     
-    ; 檢查恐龍是否已經回到地面
-    cmp dino_pos.y, 13  ; 假設地面 y 座標為 11
-    jge CheckForSquat    ; 如果 y >= 11，檢查是否需要蹲下
+    ; 檢查是否已經到達地面
+    cmp dino_pos.y, 18
+    jge CheckForSquat
     
-    ; 延遲，讓動作不會太快
-    INVOKE Sleep, 100
-    jmp JumpLoop  ; 繼續下一幀
+    ; 增加適當的延遲以控制動畫速度
+    INVOKE Sleep, 50
+    
+    jmp JumpLoop
+
+LandOnGround:
+    ; 直接設定到地面位置
+    mov dino_pos.y, 18
+    jmp CheckForSquat
 
 CheckForSquat:
-    ; 確保恐龍回到地面位置
-    mov dino_pos.y, 18
     ; 檢查下鍵是否仍被按著
     INVOKE GetAsyncKeyState, VK_DOWN
     test eax, 8000h
-    jnz GoToSquat       ; 如果下鍵仍被按著，執行蹲下動作
+    jnz GoToSquat     ; 如果下鍵仍被按著，執行蹲下動作
     
     ; 如果沒有按下鍵，恢復正常站立姿勢
     sub dino_pos.x, 4
@@ -223,7 +239,7 @@ CheckForSquat:
 
 GoToSquat:
     ; 重置重力值為正常值
-    mov gravity, 3
+    mov gravity, 5
     ; 直接跳轉到蹲下程序
     call Squat
     ret
@@ -245,7 +261,7 @@ SquatLoop:
     sub dino_pos.x, 7
     sub dino_pos.y, 3
     call DrawSquatFirstStepBackground
-    INVOKE Sleep, 100
+    INVOKE Sleep, 50
     sub dino_pos.x, 7
     sub dino_pos.y, 3
     call DrawSquatSecondStepBackground
@@ -258,9 +274,6 @@ SquatLoop:
     call CheckCollision
     cmp eax, 1
     je GameOverMsg
-    
-    ; 添加適當的延遲
-    INVOKE Sleep, 75
     
     ; 繼續循環
     jmp SquatLoop
@@ -300,6 +313,8 @@ CheckCollision PROC
     ; 呼叫 FormatHighScore 來顯示更新後的 high score
     call FormatHighScore
     call DrawHighScore
+    call FormatScore
+    call DrawScore
 
 NoUpdateHighScore:
     ; 如果發生碰撞，返回 1，表示遊戲結束
@@ -328,6 +343,9 @@ RestartGame PROC
     ; 重置仙人掌的位置
     mov cactus_pos.x, 70    ; 仙人掌在螢幕右邊
     mov cactus_pos.y, 18    ; 仙人掌的地面高度
+
+    mov bird_pos.x, 70
+    mov bird_pos.y, 13
 
     ; 重置其他遊戲變數
     mov velocity, 6         ; 停止恐龍的跳躍速度
@@ -378,6 +396,7 @@ WaitLoop:
 
     jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
 WaitForEnter ENDP
+
 WaitForStart PROC
     ; 檢測是否按下 Enter鍵
 WaitForStartLoop:
@@ -386,6 +405,7 @@ WaitForStartLoop:
     jnz RestartGame          ; 如果按下 Enter，開始遊戲
     jmp WaitForStartLoop   ; 如果沒有按下任何鍵，繼續等待
 WaitForStart ENDP
+
 ; **結束遊戲**
 ExitGame PROC
     ; 顯示退出訊息
@@ -394,6 +414,57 @@ ExitGame PROC
     ; 結束程式
     INVOKE ExitProcess, 0
 ExitGame ENDP
+
+DrawTitle PROC
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title1, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title2, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title3, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title4, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title5, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title6, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title7, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title8, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title9, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title10, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title11, 45, title_pos, ADDR cellsWritten
+    inc title_pos.y
+    INVOKE sleep, 150
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title12, 45, title_pos, ADDR cellsWritten
+    INVOKE sleep, 150
+    ret
+DrawTitle ENDP
 
 DrawFloor PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, floorLength, floor_pos, ADDR cellsWritten
@@ -530,6 +601,40 @@ DrawSquatSecondStep PROC
     ret
 DrawSquatSecondStep ENDP
 
+DrawBirdFlyUp PROC
+    ; Draw the bird at its current position
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 7, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 7, bird_pos, ADDR cellsWritten
+    ; Move down to the next line for middle part
+    inc bird_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 10, bird_pos, ADDR cellsWritten
+    ; Move down to the next line for bottom part
+    inc bird_pos.y
+    inc bird_pos.x
+    inc bird_pos.x
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 6, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpThirdLine, 6, bird_pos, ADDR cellsWritten
+    ret
+DrawBirdFlyUp ENDP
+
+DrawBirdFlyDown PROC
+    ; Draw the bird at its current position
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 9, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 9, bird_pos, ADDR cellsWritten
+    ; Move down to the next line for middle part
+    inc bird_pos.y
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 9, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 9, bird_pos, ADDR cellsWritten
+    ; Move down to the next line for bottom part
+    inc bird_pos.y
+    inc bird_pos.x
+    inc bird_pos.x
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 4, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownThirdLine, 4, bird_pos, ADDR cellsWritten
+    ret
+DrawBirdFlyDown ENDP
+
 DrawIntro PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 31, intro_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR introString, 31, intro_pos, ADDR cellsWritten
@@ -542,6 +647,7 @@ DrawIntro PROC
     sub intro_pos.x, 15
     ret
 DrawIntro ENDP
+
 DrawStartMessage PROC
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, start_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR startMessage, 20, start_pos, ADDR cellsWritten
@@ -591,6 +697,7 @@ DrawBackground PROC
     call DrawDinosaur
     call DrawIntro
     call MoveCactus
+    call MoveBird
     call DrawScore
     call DrawHighScore
     ret
@@ -602,6 +709,7 @@ DrawStandLeftStepBackground PROC
     call DrawDinosaurStandLeftStep
     call DrawIntro
     call MoveCactus
+    call MoveBird
     call DrawScore
     call DrawHighScore
     ret
@@ -613,6 +721,7 @@ DrawStandRightStepBackground PROC
     call DrawDinosaurStandRightStep
     call DrawIntro
     call MoveCactus
+    call MoveBird
     call DrawScore
     call DrawHighScore
     ret
@@ -624,6 +733,7 @@ DrawSquatFirstStepBackground PROC
     call DrawSquatFirstStep
     call DrawIntro
     call MoveCactus
+    call MoveBird
     call DrawScore
     call DrawHighScore
     ret
@@ -635,6 +745,7 @@ DrawSquatSecondStepBackground PROC
     call DrawSquatSecondStep
     call DrawIntro
     call MoveCactus
+    call MoveBird
     call DrawScore
     call DrawHighScore
     ret
@@ -661,6 +772,29 @@ resetCactus:
     mov cactus_pos.x, ax ; 重新生成仙人掌
     ret
 MoveCactus ENDP
+
+MoveBird PROC
+    ; 移動小鳥
+    mov ax, bird_speed
+    sub bird_pos.x, ax
+    sub bird_pos.y, 3
+    call DrawBirdFlyUp
+    INVOKE Sleep, 50
+    sub bird_pos.y, 1
+    sub bird_pos.x, 1
+    call DrawBirdFlyDown
+    ; 如果小鳥越過螢幕邊界，則重新生成
+    cmp bird_pos.x, 0
+    jl resetBird
+    ret
+
+    resetBird:
+    mov eax, 20
+    call RandomRange
+    add eax, 50
+    mov bird_pos.x, ax ; 重新生成小鳥
+    ret
+MoveBird ENDP
 
 ; 等待按鍵釋放
 WaitForRelease PROC
@@ -705,55 +839,6 @@ FormatHighScore PROC
         jnz L1
     ret
 FormatHighScore ENDP
-DrawTitle PROC
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title1, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title2, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title3, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title4, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title5, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title6, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title7, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title8, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title9, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title10, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title11, 45, title_pos, ADDR cellsWritten
-    inc title_pos.y
-    INVOKE sleep, 150
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title12, 45, title_pos, ADDR cellsWritten
-    INVOKE sleep, 150
-    ret
-DrawTitle ENDP
+
 main ENDP
 END main
