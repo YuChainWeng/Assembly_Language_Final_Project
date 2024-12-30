@@ -1,12 +1,12 @@
  Asm_Final_Project
 
- Timestamp is 67723c3a (Mon Dec 30 14:22:50 2024)
+ Timestamp is 677243c1 (Mon Dec 30 14:54:57 2024)
 
  Preferred load address is 00400000
 
  Start         Length     Name                   Class
  0001:00000000 00002800H .text                   CODE
- 0001:00002800 00002e55H .text$mn                CODE
+ 0001:00002800 00002e4bH .text$mn                CODE
  0002:00000000 00000144H .rdata                  DATA
  0002:00000143 00000000H .edata                  DATA
  0002:00000144 00000199H .rdata$zzzdbg           DATA
@@ -107,65 +107,65 @@
  0001:000028c6       _Jump@0                    004038c6 f   main.obj
  0001:0000298b       _Squat@0                   0040398b f   main.obj
  0001:000029fb       _CheckCollision@0          004039fb f   main.obj
- 0001:00002a9a       _abs@0                     00403a9a f   main.obj
- 0001:00002aa4       _RestartGame@0             00403aa4 f   main.obj
- 0001:00002b21       _GameOverMsg@0             00403b21 f   main.obj
- 0001:00002c69       _WaitForEnter@0            00403c69 f   main.obj
- 0001:00002c8b       _WaitForStart@0            00403c8b f   main.obj
- 0001:00002c9f       _ExitGame@0                00403c9f f   main.obj
- 0001:00002ce0       _DrawTitle@0               00403ce0 f   main.obj
- 0001:0000305e       _DrawFloor@0               0040405e f   main.obj
- 0001:000030a1       _DrawDinosaur@0            004040a1 f   main.obj
- 0001:00003270       _DrawDinosaurStandLeftStep@0 00404270 f   main.obj
- 0001:0000343f       _DrawDinosaurStandRightStep@0 0040443f f   main.obj
- 0001:0000360e       _DrawSquatFirstStep@0      0040460e f   main.obj
- 0001:0000379d       _DrawSquatSecondStep@0     0040479d f   main.obj
- 0001:0000392c       _DrawBirdFlyUp@0           0040492c f   main.obj
- 0001:00003a17       _DrawBirdFlyDown@0         00404a17 f   main.obj
- 0001:00003b2b       _DrawIntro@0               00404b2b f   main.obj
- 0001:00003bf2       _DrawStartMessage@0        00404bf2 f   main.obj
- 0001:00003c77       _DrawCactus@0              00404c77 f   main.obj
- 0001:00003d52       _DrawScore@0               00404d52 f   main.obj
- 0001:00003d8d       _DrawHighScore@0           00404d8d f   main.obj
- 0001:00003dc8       _DrawBackground@0          00404dc8 f   main.obj
- 0001:00003df1       _DrawStandLeftStepBackground@0 00404df1 f   main.obj
- 0001:00003e1a       _DrawStandRightStepBackground@0 00404e1a f   main.obj
- 0001:00003e43       _DrawSquatFirstStepBackground@0 00404e43 f   main.obj
- 0001:00003e6c       _DrawSquatSecondStepBackground@0 00404e6c f   main.obj
- 0001:00003e95       _MoveCactus@0              00404e95 f   main.obj
- 0001:00003ed4       _MoveBird@0                00404ed4 f   main.obj
- 0001:00003f3c       _WaitForRelease@0          00404f3c f   main.obj
- 0001:00003f4a       _FormatScore@0             00404f4a f   main.obj
- 0001:00003f70       _FormatHighScore@0         00404f70 f   main.obj
- 0001:0000457b       _ExitProcess@4             0040557b f   kernel32:KERNEL32.dll
- 0001:00004581       _GetStdHandle@4            00405581 f   kernel32:KERNEL32.dll
- 0001:00004587       _Sleep@4                   00405587 f   kernel32:KERNEL32.dll
- 0001:0000458d       _WriteConsoleOutputCharacterA@20 0040558d f   kernel32:KERNEL32.dll
- 0001:00004593       _WriteConsoleOutputAttribute@20 00405593 f   kernel32:KERNEL32.dll
- 0001:00004599       _SetConsoleOutputCP@4      00405599 f   kernel32:KERNEL32.dll
- 0001:0000459f       _CloseHandle@4             0040559f f   kernel32:KERNEL32.dll
- 0001:000045a5       _CreateFileA@28            004055a5 f   kernel32:KERNEL32.dll
- 0001:000045ab       _FormatMessageA@28         004055ab f   kernel32:KERNEL32.dll
- 0001:000045b1       _FlushConsoleInputBuffer@4 004055b1 f   kernel32:KERNEL32.dll
- 0001:000045b7       _GetCommandLineA@0         004055b7 f   kernel32:KERNEL32.dll
- 0001:000045bd       _GetConsoleMode@8          004055bd f   kernel32:KERNEL32.dll
- 0001:000045c3       _GetConsoleScreenBufferInfo@8 004055c3 f   kernel32:KERNEL32.dll
- 0001:000045c9       _GetLastError@0            004055c9 f   kernel32:KERNEL32.dll
- 0001:000045cf       _GetLocalTime@4            004055cf f   kernel32:KERNEL32.dll
- 0001:000045d5       _GetSystemTime@4           004055d5 f   kernel32:KERNEL32.dll
- 0001:000045db       _LocalFree@4               004055db f   kernel32:KERNEL32.dll
- 0001:000045e1       _PeekConsoleInputA@16      004055e1 f   kernel32:KERNEL32.dll
- 0001:000045e7       _ReadConsoleA@20           004055e7 f   kernel32:KERNEL32.dll
- 0001:000045ed       _ReadConsoleInputA@16      004055ed f   kernel32:KERNEL32.dll
- 0001:000045f3       _ReadFile@20               004055f3 f   kernel32:KERNEL32.dll
- 0001:000045f9       _SetConsoleCursorPosition@8 004055f9 f   kernel32:KERNEL32.dll
- 0001:000045ff       _SetConsoleMode@8          004055ff f   kernel32:KERNEL32.dll
- 0001:00004605       _SetConsoleTextAttribute@8 00405605 f   kernel32:KERNEL32.dll
- 0001:0000460b       _SystemTimeToFileTime@8    0040560b f   kernel32:KERNEL32.dll
- 0001:00004611       _WriteConsoleA@20          00405611 f   kernel32:KERNEL32.dll
- 0001:00004617       _WriteFile@20              00405617 f   kernel32:KERNEL32.dll
- 0001:0000461d       _GetAsyncKeyState@4        0040561d f   user32:USER32.dll
- 0001:00004623       _MessageBoxA@16            00405623 f   user32:USER32.dll
+ 0001:00002a82       _abs@0                     00403a82 f   main.obj
+ 0001:00002a8c       _RestartGame@0             00403a8c f   main.obj
+ 0001:00002b09       _GameOverMsg@0             00403b09 f   main.obj
+ 0001:00002c51       _WaitForEnter@0            00403c51 f   main.obj
+ 0001:00002c73       _WaitForStart@0            00403c73 f   main.obj
+ 0001:00002c87       _ExitGame@0                00403c87 f   main.obj
+ 0001:00002cc8       _DrawTitle@0               00403cc8 f   main.obj
+ 0001:00003046       _DrawFloor@0               00404046 f   main.obj
+ 0001:00003089       _DrawDinosaur@0            00404089 f   main.obj
+ 0001:00003258       _DrawDinosaurStandLeftStep@0 00404258 f   main.obj
+ 0001:00003427       _DrawDinosaurStandRightStep@0 00404427 f   main.obj
+ 0001:000035f6       _DrawSquatFirstStep@0      004045f6 f   main.obj
+ 0001:00003785       _DrawSquatSecondStep@0     00404785 f   main.obj
+ 0001:00003914       _DrawBirdFlyUp@0           00404914 f   main.obj
+ 0001:000039ff       _DrawBirdFlyDown@0         004049ff f   main.obj
+ 0001:00003b23       _DrawIntro@0               00404b23 f   main.obj
+ 0001:00003bea       _DrawStartMessage@0        00404bea f   main.obj
+ 0001:00003c6f       _DrawCactus@0              00404c6f f   main.obj
+ 0001:00003d4a       _DrawScore@0               00404d4a f   main.obj
+ 0001:00003d85       _DrawHighScore@0           00404d85 f   main.obj
+ 0001:00003dc0       _DrawBackground@0          00404dc0 f   main.obj
+ 0001:00003de9       _DrawStandLeftStepBackground@0 00404de9 f   main.obj
+ 0001:00003e12       _DrawStandRightStepBackground@0 00404e12 f   main.obj
+ 0001:00003e3b       _DrawSquatFirstStepBackground@0 00404e3b f   main.obj
+ 0001:00003e64       _DrawSquatSecondStepBackground@0 00404e64 f   main.obj
+ 0001:00003e8d       _MoveCactus@0              00404e8d f   main.obj
+ 0001:00003ecc       _MoveBird@0                00404ecc f   main.obj
+ 0001:00003f34       _WaitForRelease@0          00404f34 f   main.obj
+ 0001:00003f42       _FormatScore@0             00404f42 f   main.obj
+ 0001:00003f68       _FormatHighScore@0         00404f68 f   main.obj
+ 0001:00004571       _ExitProcess@4             00405571 f   kernel32:KERNEL32.dll
+ 0001:00004577       _GetStdHandle@4            00405577 f   kernel32:KERNEL32.dll
+ 0001:0000457d       _Sleep@4                   0040557d f   kernel32:KERNEL32.dll
+ 0001:00004583       _WriteConsoleOutputCharacterA@20 00405583 f   kernel32:KERNEL32.dll
+ 0001:00004589       _WriteConsoleOutputAttribute@20 00405589 f   kernel32:KERNEL32.dll
+ 0001:0000458f       _SetConsoleOutputCP@4      0040558f f   kernel32:KERNEL32.dll
+ 0001:00004595       _CloseHandle@4             00405595 f   kernel32:KERNEL32.dll
+ 0001:0000459b       _CreateFileA@28            0040559b f   kernel32:KERNEL32.dll
+ 0001:000045a1       _FormatMessageA@28         004055a1 f   kernel32:KERNEL32.dll
+ 0001:000045a7       _FlushConsoleInputBuffer@4 004055a7 f   kernel32:KERNEL32.dll
+ 0001:000045ad       _GetCommandLineA@0         004055ad f   kernel32:KERNEL32.dll
+ 0001:000045b3       _GetConsoleMode@8          004055b3 f   kernel32:KERNEL32.dll
+ 0001:000045b9       _GetConsoleScreenBufferInfo@8 004055b9 f   kernel32:KERNEL32.dll
+ 0001:000045bf       _GetLastError@0            004055bf f   kernel32:KERNEL32.dll
+ 0001:000045c5       _GetLocalTime@4            004055c5 f   kernel32:KERNEL32.dll
+ 0001:000045cb       _GetSystemTime@4           004055cb f   kernel32:KERNEL32.dll
+ 0001:000045d1       _LocalFree@4               004055d1 f   kernel32:KERNEL32.dll
+ 0001:000045d7       _PeekConsoleInputA@16      004055d7 f   kernel32:KERNEL32.dll
+ 0001:000045dd       _ReadConsoleA@20           004055dd f   kernel32:KERNEL32.dll
+ 0001:000045e3       _ReadConsoleInputA@16      004055e3 f   kernel32:KERNEL32.dll
+ 0001:000045e9       _ReadFile@20               004055e9 f   kernel32:KERNEL32.dll
+ 0001:000045ef       _SetConsoleCursorPosition@8 004055ef f   kernel32:KERNEL32.dll
+ 0001:000045f5       _SetConsoleMode@8          004055f5 f   kernel32:KERNEL32.dll
+ 0001:000045fb       _SetConsoleTextAttribute@8 004055fb f   kernel32:KERNEL32.dll
+ 0001:00004601       _SystemTimeToFileTime@8    00405601 f   kernel32:KERNEL32.dll
+ 0001:00004607       _WriteConsoleA@20          00405607 f   kernel32:KERNEL32.dll
+ 0001:0000460d       _WriteFile@20              0040560d f   kernel32:KERNEL32.dll
+ 0001:00004613       _GetAsyncKeyState@4        00405613 f   user32:USER32.dll
+ 0001:00004619       _MessageBoxA@16            00405619 f   user32:USER32.dll
  0004:00000000       __imp__ExitProcess@4       0040a000     kernel32:KERNEL32.dll
  0004:00000004       __imp__GetStdHandle@4      0040a004     kernel32:KERNEL32.dll
  0004:00000008       __imp__Sleep@4             0040a008     kernel32:KERNEL32.dll
@@ -279,51 +279,51 @@
  0003:00000314       birdFlyUpSecondLine        00408314     main.obj
  0003:0000031d       birdFlyUpThirdLine         0040831d     main.obj
  0003:00000322       birdDeleteFirstLine        00408322     main.obj
- 0003:0000032a       birdFlyDownFirstLine       0040832a     main.obj
- 0003:00000332       birdFlyDownSecondLine      00408332     main.obj
- 0003:00000338       birdFlyDownThirdLine       00408338     main.obj
- 0003:0000033b       bird_pos                   0040833b     main.obj
- 0003:0000033f       bird_speed                 0040833f     main.obj
- 0003:00000341       cactus_speed               00408341     main.obj
- 0003:00000343       outputHandle               00408343     main.obj
- 0003:00000347       bytesWritten               00408347     main.obj
- 0003:0000034b       count                      0040834b     main.obj
- 0003:0000034f       title_pos                  0040834f     main.obj
- 0003:00000353       highscore_pos              00408353     main.obj
- 0003:00000357       score_pos                  00408357     main.obj
- 0003:0000035b       gameOver_pos               0040835b     main.obj
- 0003:0000035f       intro_pos                  0040835f     main.obj
- 0003:00000363       exit_pos                   00408363     main.obj
- 0003:00000367       restart_pos                00408367     main.obj
- 0003:0000036b       start_pos                  0040836b     main.obj
- 0003:0000036f       floor_pos                  0040836f     main.obj
- 0003:00000373       xyBound                    00408373     main.obj
- 0003:00000377       cellsWritten               00408377     main.obj
- 0003:0000037b       attributes_floor           0040837b     main.obj
- 0003:00000443       velocity                   00408443     main.obj
- 0003:00000445       gravity                    00408445     main.obj
- 0003:00000447       keyState                   00408447     main.obj
- 0003:0000044b       brownColor                 0040844b     main.obj
- 0003:00000513       greenColor                 00408513     main.obj
- 0003:000005db       redColor                   004085db     main.obj
- 0003:000006a3       blueColor                  004086a3     main.obj
- 0003:0000076b       purpleColor                0040876b     main.obj
- 0003:00000833       darkBlueColor              00408833     main.obj
- 0003:000008fb       score                      004088fb     main.obj
- 0003:000008ff       highscore                  004088ff     main.obj
- 0003:00000903       introString                00408903     main.obj
- 0003:00000923       scoreString                00408923     main.obj
- 0003:0000092f       highscoreString            0040892f     main.obj
- 0003:00000940       gameOverMessage            00408940     main.obj
- 0003:0000094b       restartMessage             0040894b     main.obj
- 0003:00000962       startMessage               00408962     main.obj
- 0003:00000977       enterMessage               00408977     main.obj
- 0003:0000097d       exitMessage                0040897d     main.obj
- 0003:0000098f       escMessage                 0040898f     main.obj
- 0003:00000993       spaceMessage               00408993     main.obj
- 0003:00000999       upMessage                  00408999     main.obj
- 0003:000009a2       hConsole                   004089a2     main.obj
- 0003:000009a6       cursorInfo                 004089a6     main.obj
+ 0003:00000325       birdFlyDownFirstLine       00408325     main.obj
+ 0003:0000032d       birdFlyDownSecondLine      0040832d     main.obj
+ 0003:00000333       birdFlyDownThirdLine       00408333     main.obj
+ 0003:00000336       bird_pos                   00408336     main.obj
+ 0003:0000033a       bird_speed                 0040833a     main.obj
+ 0003:0000033c       cactus_speed               0040833c     main.obj
+ 0003:0000033e       outputHandle               0040833e     main.obj
+ 0003:00000342       bytesWritten               00408342     main.obj
+ 0003:00000346       count                      00408346     main.obj
+ 0003:0000034a       title_pos                  0040834a     main.obj
+ 0003:0000034e       highscore_pos              0040834e     main.obj
+ 0003:00000352       score_pos                  00408352     main.obj
+ 0003:00000356       gameOver_pos               00408356     main.obj
+ 0003:0000035a       intro_pos                  0040835a     main.obj
+ 0003:0000035e       exit_pos                   0040835e     main.obj
+ 0003:00000362       restart_pos                00408362     main.obj
+ 0003:00000366       start_pos                  00408366     main.obj
+ 0003:0000036a       floor_pos                  0040836a     main.obj
+ 0003:0000036e       xyBound                    0040836e     main.obj
+ 0003:00000372       cellsWritten               00408372     main.obj
+ 0003:00000376       attributes_floor           00408376     main.obj
+ 0003:0000043e       velocity                   0040843e     main.obj
+ 0003:00000440       gravity                    00408440     main.obj
+ 0003:00000442       keyState                   00408442     main.obj
+ 0003:00000446       brownColor                 00408446     main.obj
+ 0003:0000050e       greenColor                 0040850e     main.obj
+ 0003:000005d6       redColor                   004085d6     main.obj
+ 0003:0000069e       blueColor                  0040869e     main.obj
+ 0003:00000766       purpleColor                00408766     main.obj
+ 0003:0000082e       darkBlueColor              0040882e     main.obj
+ 0003:000008f6       score                      004088f6     main.obj
+ 0003:000008fa       highscore                  004088fa     main.obj
+ 0003:000008fe       introString                004088fe     main.obj
+ 0003:0000091e       scoreString                0040891e     main.obj
+ 0003:0000092a       highscoreString            0040892a     main.obj
+ 0003:0000093b       gameOverMessage            0040893b     main.obj
+ 0003:00000946       restartMessage             00408946     main.obj
+ 0003:0000095d       startMessage               0040895d     main.obj
+ 0003:00000972       enterMessage               00408972     main.obj
+ 0003:00000978       exitMessage                00408978     main.obj
+ 0003:0000098a       escMessage                 0040898a     main.obj
+ 0003:0000098e       spaceMessage               0040898e     main.obj
+ 0003:00000994       upMessage                  00408994     main.obj
+ 0003:0000099d       hConsole                   0040899d     main.obj
+ 0003:000009a1       cursorInfo                 004089a1     main.obj
  0003:00000ba0       InitFlag                   00408ba0     Irvine32:Irvine32.obj
  0003:00000ba1       xtable                     00408ba1     Irvine32:Irvine32.obj
  0003:00000bb1       blanks                     00408bb1     Irvine32:Irvine32.obj

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 14:22:50
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 14:54:57
 main.asm						     Page 1 - 1
 
 
@@ -191,101 +191,100 @@ main.asm						     Page 1 - 1
 	   20 5C 5F 00
  0000031D 5C 5F 5F 2F 00	    birdFlyUpThirdLine BYTE '\__/', 0
 				
- 00000322 20 20 20 20 20	    birdDeleteFirstLine BYTE '       ', 0
-	   20 20 00
- 0000032A 3C 6F 29 5F 5F	    birdFlyDownFirstLine BYTE '<o)____', 0
+ 00000322 20 20 00		    birdDeleteFirstLine BYTE '  ', 0
+ 00000325 3C 6F 29 5F 5F	    birdFlyDownFirstLine BYTE '<o)____', 0
 	   5F 5F 00
- 00000332 5C 5F 5F 2F 20	    birdFlyDownSecondLine BYTE '\__/ ', 0
+ 0000032D 5C 5F 5F 2F 20	    birdFlyDownSecondLine BYTE '\__/ ', 0
 	   00
- 00000338 7C 2F 00		    birdFlyDownThirdLine BYTE '|/', 0
- 0000033B 0032 000B		    bird_pos COORD <50, 11> ; 起始位置
- 0000033F 0007			    bird_speed WORD 7 ; 鳥的速度
+ 00000333 7C 2F 00		    birdFlyDownThirdLine BYTE '|/', 0
+ 00000336 0032 000B		    bird_pos COORD <50, 11> ; 起始位置
+ 0000033A 0007			    bird_speed WORD 7 ; 鳥的速度
 				
- 00000341 000A			    cactus_speed WORD 10 ;仙人掌的速度
+ 0000033C 000A			    cactus_speed WORD 10 ;仙人掌的速度
 				
- 00000343 00000000		    outputHandle DWORD 0
- 00000347 00000000		    bytesWritten DWORD 0
- 0000034B 00000000		    count DWORD 0
- 0000034F 001E 0002		    title_pos COORD <30,2>
- 00000353 0025 0000		    highscore_pos COORD <37,0>
- 00000357 0039 0000		    score_pos COORD <57,0>
- 0000035B 002F 0002		    gameOver_pos COORD <47,2>
- 0000035F 0025 0015		    intro_pos COORD <37,21>
- 00000363 002C 0004		    exit_pos COORD <44,4>
- 00000367 002A 0005		    restart_pos COORD <42,5>
- 0000036B 002A 0013		    start_pos COORD <42,19>
- 0000036F 0000 0012		    floor_pos COORD <0,18>
- 00000373 0050 0019		    xyBound COORD <80,25> ; 螢幕邊界
- 00000377 00000000		    cellsWritten DWORD ?
- 0000037B  00000064 [		    attributes_floor WORD 100 DUP(0Fh)
+ 0000033E 00000000		    outputHandle DWORD 0
+ 00000342 00000000		    bytesWritten DWORD 0
+ 00000346 00000000		    count DWORD 0
+ 0000034A 001E 0002		    title_pos COORD <30,2>
+ 0000034E 0025 0000		    highscore_pos COORD <37,0>
+ 00000352 0039 0000		    score_pos COORD <57,0>
+ 00000356 002F 0002		    gameOver_pos COORD <47,2>
+ 0000035A 0025 0015		    intro_pos COORD <37,21>
+ 0000035E 002C 0004		    exit_pos COORD <44,4>
+ 00000362 002A 0005		    restart_pos COORD <42,5>
+ 00000366 002A 0013		    start_pos COORD <42,19>
+ 0000036A 0000 0012		    floor_pos COORD <0,18>
+ 0000036E 0050 0019		    xyBound COORD <80,25> ; 螢幕邊界
+ 00000372 00000000		    cellsWritten DWORD ?
+ 00000376  00000064 [		    attributes_floor WORD 100 DUP(0Fh)
 	    000F
 	   ]
- 00000443 0000			    velocity WORD 0  ; 速度，控制跳躍上升和下降
- 00000445 0001			    gravity WORD 1   ; 重力，會讓速度每次減少 1
- 00000447 00000000		    keyState DWORD 0
+ 0000043E 0000			    velocity WORD 0  ; 速度，控制跳躍上升和下降
+ 00000440 0001			    gravity WORD 1   ; 重力，會讓速度每次減少 1
+ 00000442 00000000		    keyState DWORD 0
 				
- 0000044B  00000064 [		    brownColor WORD 100 DUP(06h) ; 06表示棕色
+ 00000446  00000064 [		    brownColor WORD 100 DUP(06h) ; 06表示棕色
 	    0006
 	   ]
- 00000513  00000064 [		    greenColor WORD 100 DUP(0Ah) ; 0A表示綠色
+ 0000050E  00000064 [		    greenColor WORD 100 DUP(0Ah) ; 0A表示綠色
 	    000A
 	   ]
- 000005DB  00000064 [		    redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
+ 000005D6  00000064 [		    redColor WORD 100 DUP(0Ch)  ; 0C表示紅色
 	    000C
 	   ]
- 000006A3  00000064 [		    blueColor WORD 100 DUP(01h) ; 0A表示藍色
+ 0000069E  00000064 [		    blueColor WORD 100 DUP(01h) ; 0A表示藍色
 	    0001
 	   ]
- 0000076B  00000064 [		    purpleColor WORD 100 DUP(05h) ; 05表示紫色
+ 00000766  00000064 [		    purpleColor WORD 100 DUP(05h) ; 05表示紫色
 	    0005
 	   ]
- 00000833  00000064 [		    darkBlueColor WORD 100 DUP(09h) ; 09表示深藍色
+ 0000082E  00000064 [		    darkBlueColor WORD 100 DUP(09h) ; 09表示深藍色
 	    0009
 	   ]
 				
- 000008FB 00000000		    score DWORD 0
- 000008FF 00000000		    highscore DWORD 0
- 00000903 50 72 65 73 73	    introString BYTE "Press SPACE or UP ARROW to jump", 0
+ 000008F6 00000000		    score DWORD 0
+ 000008FA 00000000		    highscore DWORD 0
+ 000008FE 50 72 65 73 73	    introString BYTE "Press SPACE or UP ARROW to jump", 0
 	   20 53 50 41 43
 	   45 20 6F 72 20
 	   55 50 20 41 52
 	   52 4F 57 20 74
 	   6F 20 6A 75 6D
 	   70 00
- 00000923 53 63 6F 72 65	    scoreString BYTE "Score: 0000", 0
+ 0000091E 53 63 6F 72 65	    scoreString BYTE "Score: 0000", 0
 	   3A 20 30 30 30
 	   30 00
- 0000092F 48 69 67 68 20	    highscoreString BYTE "High Score: 0000", 0
+ 0000092A 48 69 67 68 20	    highscoreString BYTE "High Score: 0000", 0
 	   53 63 6F 72 65
 	   3A 20 30 30 30
 	   30 00
- 00000940 47 61 6D 65 20	    gameOverMessage BYTE "Game Over!", 0
+ 0000093B 47 61 6D 65 20	    gameOverMessage BYTE "Game Over!", 0
 	   4F 76 65 72 21
 	   00
- 0000094B 50 72 65 73 73	    restartMessage BYTE "Press ENTER to restart", 0
+ 00000946 50 72 65 73 73	    restartMessage BYTE "Press ENTER to restart", 0
 	   20 45 4E 54 45
 	   52 20 74 6F 20
 	   72 65 73 74 61
 	   72 74 00
- 00000962 50 72 65 73 73	    startMessage BYTE "Press ENTER to start", 0
+ 0000095D 50 72 65 73 73	    startMessage BYTE "Press ENTER to start", 0
 	   20 45 4E 54 45
 	   52 20 74 6F 20
 	   73 74 61 72 74
 	   00
- 00000977 45 4E 54 45 52	    enterMessage BYTE "ENTER", 0
+ 00000972 45 4E 54 45 52	    enterMessage BYTE "ENTER", 0
 	   00
- 0000097D 50 72 65 73 73	    exitMessage BYTE "Press ESC to exit", 0
+ 00000978 50 72 65 73 73	    exitMessage BYTE "Press ESC to exit", 0
 	   20 45 53 43 20
 	   74 6F 20 65 78
 	   69 74 00
- 0000098F 45 53 43 00		    escMessage BYTE "ESC", 0
- 00000993 53 50 41 43 45	    spaceMessage BYTE "SPACE", 0
+ 0000098A 45 53 43 00		    escMessage BYTE "ESC", 0
+ 0000098E 53 50 41 43 45	    spaceMessage BYTE "SPACE", 0
 	   00
- 00000999 55 50 20 41 52	    upMessage BYTE "UP ARROW", 0
+ 00000994 55 50 20 41 52	    upMessage BYTE "UP ARROW", 0
 	   52 4F 57 00
 				
- 000009A2 00000000		    hConsole HANDLE ?                ; Handle to the console
- 000009A6 00000000		    cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
+ 0000099D 00000000		    hConsole HANDLE ?                ; Handle to the console
+ 000009A1 00000000		    cursorInfo CONSOLE_CURSOR_INFO <> ; Structure to store cursor info
 	   00000000
 				
  = start@0			main EQU start@0
@@ -300,31 +299,31 @@ main.asm						     Page 1 - 1
 				
 				    ; 取得控制台的輸出控制
 				    INVOKE GetStdHandle, STD_OUTPUT_HANDLE
- 00000011  A3 00000343 R	    mov outputHandle, eax
+ 00000011  A3 0000033E R	    mov outputHandle, eax
 				
 				    ; 畫出初始背景
- 00000016  E8 000004C5		    call DrawTitle
- 0000001B  E8 0000130B		    call DrawIntro
- 00000020  E8 000013CD		    call DrawStartMessage
- 00000025  E8 00000461		    call WaitForStart
+ 00000016  E8 000004AD		    call DrawTitle
+ 0000001B  E8 00001303		    call DrawIntro
+ 00000020  E8 000013C5		    call DrawStartMessage
+ 00000025  E8 00000449		    call WaitForStart
 				    ; 主迴圈
  0000002A			mainLoop:
 				    ; 加入延遲，避免移動速度過快
 				    INVOKE Sleep, 25  ; 延遲 75 毫秒
- 00000031  FF 05 000008FB R	    inc score
- 00000037  E8 0000170E		    call FormatScore
+ 00000031  FF 05 000008F6 R	    inc score
+ 00000037  E8 00001706		    call FormatScore
 				    ;減回畫方塊所位移的2格
  0000003C  66| 83 2D		    sub dino_pos.y, 5
 	   000000B5 R 05
  00000044  66| 83 2D		    sub dino_pos.x, 4
 	   000000B3 R 04
- 0000004C  E8 000015A0		    call DrawStandLeftStepBackground
+ 0000004C  E8 00001598		    call DrawStandLeftStepBackground
 				    INVOKE Sleep, 50
  00000058  66| 83 2D		    sub dino_pos.x, 4
 	   000000B3 R 04
  00000060  66| 83 2D		    sub dino_pos.y, 5
 	   000000B5 R 05
- 00000068  E8 000015AD		    call DrawStandRightStepBackground
+ 00000068  E8 000015A5		    call DrawStandRightStepBackground
  0000006D  E8 00000018		    call CheckJumpKey
  00000072  B8 00000000		    mov eax, 0
 				    ; 檢查是否碰撞到仙人掌
@@ -335,7 +334,7 @@ main.asm						     Page 1 - 1
  00000081  EB A7		    jmp mainLoop
 				
  00000083			Gameover:
- 00000083  E8 00000299		    call GameOverMsg
+ 00000083  E8 00000281		    call GameOverMsg
  00000088  EB A0		    jmp mainLoop
 				
 				; **檢測上鍵和空白鍵的跳躍**
@@ -358,7 +357,7 @@ main.asm						     Page 1 - 1
 				
  000000B5			DoJump:
  000000B5  E8 0000000C		    call Jump
- 000000BA  E8 0000167D		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
+ 000000BA  E8 00001675		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
  000000BF  C3			    ret
 				
  000000C0			DoSquat:
@@ -371,10 +370,10 @@ main.asm						     Page 1 - 1
  000000C6			Jump PROC
 				    ; 設定初始速度
  000000C6  66| C7 05		    mov velocity, 14
-	   00000443 R
+	   0000043E R
 	   000E
  000000CF  66| C7 05		    mov gravity, 4  ; 重力，每次更新速度時會減少
-	   00000445 R
+	   00000440 R
 	   0004
 				
  000000D8			JumpLoop:
@@ -385,13 +384,13 @@ main.asm						     Page 1 - 1
 				    
 				    ; 如果按下下鍵，加快下降速度
  000000E6  66| C7 05		    mov gravity, 10    ; 增加重力值使下降更快
-	   00000445 R
+	   00000440 R
 	   000A
 				    
  000000EF			NormalDescent:
 				    ; 計算下一個位置
  000000EF  66| A1		    mov ax, velocity
-	   00000443 R
+	   0000043E R
  000000F5  66| 8B 1D		    mov bx, dino_pos.y
 	   000000B5 R
  000000FC  66| 8B CB		    mov cx, bx        ; 保存當前位置
@@ -408,19 +407,19 @@ main.asm						     Page 1 - 1
 	   000000B3 R 04
 				    
 				    ; 增加分數並立即更新顯示
- 00000117  FF 05 000008FB R	    inc score
- 0000011D  E8 00001628		    call FormatScore
+ 00000117  FF 05 000008F6 R	    inc score
+ 0000011D  E8 00001620		    call FormatScore
 				  
 				    ; 繪製更新後的背景
- 00000122  E8 000014A1		    call DrawBackground
+ 00000122  E8 00001499		    call DrawBackground
 				    
 				    ; 模擬重力效果，速度會逐漸減少
  00000127  66| A1		    mov ax, velocity
-	   00000443 R
+	   0000043E R
  0000012D  66| 2B 05		    sub ax, gravity
-	   00000445 R
+	   00000440 R
  00000134  66| A3		    mov velocity, ax
-	   00000443 R
+	   0000043E R
 				    
 				    ; 檢查是否已經到達地面
  0000013A  66| 83 3D		    cmp dino_pos.y, 18
@@ -450,13 +449,13 @@ main.asm						     Page 1 - 1
 	   000000B3 R 04
  0000016E  66| 83 2D		    sub dino_pos.y, 5
 	   000000B5 R 05
- 00000176  E8 0000144D		    call DrawBackground
+ 00000176  E8 00001445		    call DrawBackground
  0000017B  C3			    ret
 				
  0000017C			GoToSquat:
 				    ; 重置重力值為正常值
  0000017C  66| C7 05		    mov gravity, 5
-	   00000445 R
+	   00000440 R
 	   0005
 				    ; 直接跳轉到蹲下程序
  00000185  E8 00000001		    call Squat
@@ -480,22 +479,22 @@ main.asm						     Page 1 - 1
 	   000000B3 R 07
  000001A1  66| 83 2D		    sub dino_pos.y, 3
 	   000000B5 R 03
- 000001A9  E8 00001495		    call DrawSquatFirstStepBackground
+ 000001A9  E8 0000148D		    call DrawSquatFirstStepBackground
 				    INVOKE Sleep, 50
  000001B5  66| 83 2D		    sub dino_pos.x, 7
 	   000000B3 R 07
  000001BD  66| 83 2D		    sub dino_pos.y, 3
 	   000000B5 R 03
- 000001C5  E8 000014A2		    call DrawSquatSecondStepBackground
+ 000001C5  E8 0000149A		    call DrawSquatSecondStepBackground
 				    
 				    ; 增加分數
- 000001CA  FF 05 000008FB R	    inc score
- 000001D0  E8 00001575		    call FormatScore
+ 000001CA  FF 05 000008F6 R	    inc score
+ 000001D0  E8 0000156D		    call FormatScore
 				    
 				    ; 檢查碰撞
  000001D5  E8 00000021		    call CheckCollision
  000001DA  83 F8 01		    cmp eax, 1
- 000001DD  0F 84 0000013E	    je GameOverMsg
+ 000001DD  0F 84 00000126	    je GameOverMsg
 				    
 				    ; 繼續循環
  000001E3  EB A6		    jmp SquatLoop
@@ -506,7 +505,7 @@ main.asm						     Page 1 - 1
 	   000000B3 R 04
  000001ED  66| 83 2D		    sub dino_pos.y, 5
 	   000000B5 R 05
- 000001F5  E8 000013CE		    call DrawBackground
+ 000001F5  E8 000013C6		    call DrawBackground
  000001FA  C3			    ret
  000001FB			Squat ENDP
 				    
@@ -528,119 +527,121 @@ main.asm						     Page 1 - 1
  00000222  66| 2B C1		    sub ax, cx                    ; Calculate the vertical distance between cactus and dinosaur
  00000225  66| 83 F8 03		    cmp ax, 3                     ; If the difference is 3 or more, no collision
  00000229  7D 02		    jge DetBirdCollision          ; Jump to DetBirdCollision if no collision on y-axis
- 0000022B  EB 39		    jmp CollisionDetected         ; Jump to CollisionDetected if collision detected
+ 0000022B  EB 21		    jmp CollisionDetected         ; Jump to CollisionDetected if collision detected
 				
  0000022D			    DetBirdCollision:
- 0000022D  66| A1		    mov ax, bird_pos.x
-	   0000033B R
- 00000233  66| 8B 0D		    mov cx, dino_pos.x
-	   000000B3 R
- 0000023A  66| 83 C1 05		    add cx, 5
- 0000023E  66| 2B C1		    sub ax, cx
- 00000241  66| 83 F8 03		    cmp ax, 3
- 00000245  7D 4D		    jge NoCollision
+				    ; 檢查與鳥的水平距離是否超出碰撞範圍
+				    ;mov ax, bird_pos.x
+				    ;mov cx, dino_pos.x
+				    ;add cx, 5                     ; 考慮鳥的寬度
+				    ;sub ax, cx                    ; 計算水平距離
+				    ;cmp ax, 3
+				    ;jge NoCollision               ; 如果水平距離大於等於 3，跳過垂直檢查
 				
- 00000247  66| A1		    mov ax, bird_pos.y
-	   0000033D R
- 0000024D  66| 8B 0D		    mov cx, dino_pos.y
+				    ; 檢查與鳥的垂直距離是否超出碰撞範圍
+ 0000022D  66| A1		    mov ax, bird_pos.y
+	   00000338 R
+ 00000233  66| 8B 0D		    mov cx, dino_pos.y
 	   000000B5 R
- 00000254  66| 83 C1 05		    add cx, 5
- 00000258  66| 2B C1		    sub ax, cx
- 0000025B  E8 0000003A		    call abs
- 00000260  66| 83 F8 03		    cmp ax, 3
- 00000264  7D 2E		    jge NoCollision
+ 0000023A  66| 83 C1 05		    add cx, 5                     ; 考慮鳥的高度
+ 0000023E  66| 2B C1		    sub ax, cx                    ; 計算垂直距離
+ 00000241  E8 0000003C		    call abs                      ; 取絕對值
+ 00000246  66| 83 F8 03		    cmp ax, 3
+ 0000024A  7D 30		    jge NoCollision               ; 如果垂直距離大於等於 3，跳到無碰撞
 				
+				    ; 如果水平和垂直距離都符合碰撞條件
+ 0000024C  EB 00		    jmp CollisionDetected         ; 跳到碰撞處理
 				
- 00000266			CollisionDetected:
-				    ; 如果發生碰撞，檢查分數是否高於 highScore
- 00000266  A1 000008FB R	    mov eax, score                 ; Load current score into eax
- 0000026B  8B 1D 000008FF R	    mov ebx, highscore             ; Load high score into ebx
- 00000271  3B C3		    cmp eax, ebx                   ; Compare current score with high score
- 00000273  7E 19		    jle NoUpdateHighScore         ; Jump if current score is not greater than high score
+ 0000024E			    CollisionDetected:
+				        ; 如果發生碰撞，檢查分數是否高於 highScore
+ 0000024E  A1 000008F6 R	        mov eax, score                 ; Load current score into eax
+ 00000253  8B 1D 000008FA R	        mov ebx, highscore             ; Load high score into ebx
+ 00000259  3B C3		        cmp eax, ebx                   ; Compare current score with high score
+ 0000025B  7E 19		        jle NoUpdateHighScore         ; Jump if current score is not greater than high score
 				
-				    ; 更新 high score
- 00000275  A3 000008FF R	    mov highscore, eax             ; Update high score
+				        ; 更新 high score
+ 0000025D  A3 000008FA R	        mov highscore, eax             ; Update high score
 				
-				    ; 呼叫 FormatHighScore 來顯示更新後的 high score
- 0000027A  E8 000014F1		    call FormatHighScore
- 0000027F  E8 00001309		    call DrawHighScore
- 00000284  E8 000014C1		    call FormatScore
- 00000289  E8 000012C4		    call DrawScore
+				        ; 呼叫 FormatHighScore 來顯示更新後的 high score
+ 00000262  E8 00001501		        call FormatHighScore
+ 00000267  E8 00001319		        call DrawHighScore
+ 0000026C  E8 000014D1		        call FormatScore
+ 00000271  E8 000012D4		        call DrawScore
 				
- 0000028E			NoUpdateHighScore:
-				    ; 如果發生碰撞，返回 1，表示遊戲結束
- 0000028E  B8 00000001		    mov eax, 1                    ; Set eax to 1 indicating collision happened
- 00000293  C3			    ret
+ 00000276			    NoUpdateHighScore:
+				        ; 如果發生碰撞，返回 1，表示遊戲結束
+ 00000276  B8 00000001		        mov eax, 1                    ; Set eax to 1 indicating collision happened
+ 0000027B  C3			        ret
 				
- 00000294			NoCollision:
-				    ; 如果沒有碰撞，返回 0
- 00000294  B8 00000000		    mov eax, 0                    ; Set eax to 0 indicating no collision
- 00000299  C3			    ret
- 0000029A			CheckCollision ENDP
+ 0000027C			    NoCollision:
+				        ; 如果沒有碰撞，返回 0
+ 0000027C  B8 00000000		        mov eax, 0                    ; Set eax to 0 indicating no collision
+ 00000281  C3			        ret
+ 00000282			CheckCollision ENDP
 				
- 0000029A			abs PROC
- 0000029A  66| 83 F8 00		    cmp ax, 0
- 0000029E  7D 03		    jge NoNeg
- 000002A0  66| F7 D8		    neg ax
- 000002A3			    NoNeg:
- 000002A3  C3			        ret
- 000002A4			abs ENDP
+ 00000282			abs PROC
+ 00000282  66| 83 F8 00		    cmp ax, 0
+ 00000286  7D 03		    jge NoNeg
+ 00000288  66| F7 D8		    neg ax
+ 0000028B			    NoNeg:
+ 0000028B  C3			        ret
+ 0000028C			abs ENDP
 				
 				
 				; **重置遊戲變數，讓遊戲重新開始**
- 000002A4			RestartGame PROC
+ 0000028C			RestartGame PROC
 				    ; 重置分數
- 000002A4  C7 05 000008FB R	    mov score, 0
+ 0000028C  C7 05 000008F6 R	    mov score, 0
 	   00000000
- 000002AE  C6 05 0000092A R	    mov BYTE PTR [scoreString + 7], '0'
+ 00000296  C6 05 00000925 R	    mov BYTE PTR [scoreString + 7], '0'
 	   30
- 000002B5  C6 05 0000092B R	    mov BYTE PTR [scoreString + 8], '0'
+ 0000029D  C6 05 00000926 R	    mov BYTE PTR [scoreString + 8], '0'
 	   30
- 000002BC  C6 05 0000092C R	    mov BYTE PTR [scoreString + 9], '0'
+ 000002A4  C6 05 00000927 R	    mov BYTE PTR [scoreString + 9], '0'
 	   30
- 000002C3  C6 05 0000092D R	    mov BYTE PTR [scoreString + 10], '0'
+ 000002AB  C6 05 00000928 R	    mov BYTE PTR [scoreString + 10], '0'
 	   30
 				    ; 重置恐龍的位置
- 000002CA  66| C7 05		    mov dino_pos.x, 3     ; 起始位置 X
+ 000002B2  66| C7 05		    mov dino_pos.x, 3     ; 起始位置 X
 	   000000B3 R
 	   0003
- 000002D3  66| C7 05		    mov dino_pos.y, 13    ; 恐龍位置 Y（在地面上）
+ 000002BB  66| C7 05		    mov dino_pos.y, 13    ; 恐龍位置 Y（在地面上）
 	   000000B5 R
 	   000D
 				
 				    ; 重置仙人掌的位置
- 000002DC  66| C7 05		    mov cactus_pos.x, 80    ; 仙人掌在螢幕右邊
+ 000002C4  66| C7 05		    mov cactus_pos.x, 80    ; 仙人掌在螢幕右邊
 	   00000073 R
 	   0050
- 000002E5  66| C7 05		    mov cactus_pos.y, 18    ; 仙人掌的地面高度
+ 000002CD  66| C7 05		    mov cactus_pos.y, 18    ; 仙人掌的地面高度
 	   00000075 R
 	   0012
 				
- 000002EE  66| C7 05		    mov bird_pos.x, 50
-	   0000033B R
+ 000002D6  66| C7 05		    mov bird_pos.x, 50
+	   00000336 R
 	   0032
- 000002F7  66| C7 05		    mov bird_pos.y, 11
-	   0000033D R
+ 000002DF  66| C7 05		    mov bird_pos.y, 11
+	   00000338 R
 	   000B
 				
 				    ; 重置其他遊戲變數
- 00000300  66| C7 05		    mov velocity, 6         ; 停止恐龍的跳躍速度
-	   00000443 R
+ 000002E8  66| C7 05		    mov velocity, 6         ; 停止恐龍的跳躍速度
+	   0000043E R
 	   0006
- 00000309  66| C7 05		    mov gravity, 2          ; 重力重置
-	   00000445 R
+ 000002F1  66| C7 05		    mov gravity, 2          ; 重力重置
+	   00000440 R
 	   0002
- 00000312  66| C7 05		    mov cactus_speed, 5     ; 仙人掌的速度
-	   00000341 R
+ 000002FA  66| C7 05		    mov cactus_speed, 5     ; 仙人掌的速度
+	   0000033C R
 	   0005
 				    
 				    ; 重新繪製畫面
- 0000031B  E8 000012A8		    call DrawBackground
- 00000320  C3			    ret
- 00000321			RestartGame ENDP
+ 00000303  E8 000012B8		    call DrawBackground
+ 00000308  C3			    ret
+ 00000309			RestartGame ENDP
 				
 				; **遊戲結束**
- 00000321			GameOverMsg PROC
+ 00000309			GameOverMsg PROC
 				    ; 顯示 "Game Over!" 訊息
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR redColor, 10, gameOver_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR gameOverMessage, 10, gameOver_pos, ADDR cellsWritten
@@ -648,587 +649,591 @@ main.asm						     Page 1 - 1
 				    ; 顯示 "Press Enter to restart" 和 "Press Esc to exit" 訊息
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 17, exit_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 17, exit_pos, ADDR cellsWritten
- 00000395  66| 83 05		    add exit_pos.x, 6
-	   00000363 R 06
+ 0000037D  66| 83 05		    add exit_pos.x, 6
+	   0000035E R 06
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 3, exit_pos , ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR escMessage, 3, exit_pos , ADDR cellsWritten
- 000003D7  66| 83 2D		    sub exit_pos.x, 6
-	   00000363 R 06
+ 000003BF  66| 83 2D		    sub exit_pos.x, 6
+	   0000035E R 06
 				
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 23, restart_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR restartMessage, 23, restart_pos, ADDR cellsWritten
- 00000419  66| 83 05		    add restart_pos.x, 6
-	   00000367 R 06
+ 00000401  66| 83 05		    add restart_pos.x, 6
+	   00000362 R 06
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, restart_pos , ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, restart_pos , ADDR cellsWritten
- 0000045B  66| 83 2D		    sub restart_pos.x, 6
-	   00000367 R 06
+ 00000443  66| 83 2D		    sub restart_pos.x, 6
+	   00000362 R 06
 				    
 				    ; 等待玩家按下 Enter 或 Esc 鍵
- 00000463  E8 00000001		    call WaitForEnter
- 00000468  C3			    ret
- 00000469			GameOverMsg ENDP
+ 0000044B  E8 00000001		    call WaitForEnter
+ 00000450  C3			    ret
+ 00000451			GameOverMsg ENDP
 				
- 00000469			WaitForEnter PROC
+ 00000451			WaitForEnter PROC
 				    ; 檢測是否按下 Enter 或 Esc 鍵
- 00000469			WaitLoop:
+ 00000451			WaitLoop:
 				    INVOKE GetAsyncKeyState, VK_RETURN
- 00000470  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
- 00000475  0F 85 FFFFFE29	    jnz RestartGame        ; 如果按下 Enter，重啟遊戲
+ 00000458  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
+ 0000045D  0F 85 FFFFFE29	    jnz RestartGame        ; 如果按下 Enter，重啟遊戲
 				
 				    INVOKE GetAsyncKeyState, VK_ESCAPE
- 00000482  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Esc 鍵
- 00000487  75 16		    jnz ExitGame           ; 如果按下 Esc，退出遊戲
+ 0000046A  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Esc 鍵
+ 0000046F  75 16		    jnz ExitGame           ; 如果按下 Esc，退出遊戲
 				
- 00000489  EB DE		    jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
- 0000048B			WaitForEnter ENDP
+ 00000471  EB DE		    jmp WaitLoop           ; 如果沒有按下任何鍵，繼續等待
+ 00000473			WaitForEnter ENDP
 				
- 0000048B			WaitForStart PROC
+ 00000473			WaitForStart PROC
 				    ; 檢測是否按下 Enter鍵
- 0000048B			WaitForStartLoop:
+ 00000473			WaitForStartLoop:
 				    INVOKE GetAsyncKeyState, VK_RETURN
- 00000492  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
- 00000497  0F 85 FFFFFE07	    jnz RestartGame          ; 如果按下 Enter，開始遊戲
- 0000049D  EB EC		    jmp WaitForStartLoop   ; 如果沒有按下任何鍵，繼續等待
- 0000049F			WaitForStart ENDP
+ 0000047A  A9 00008000		    test eax, 8000h        ; 檢查是否按下 Enter 鍵
+ 0000047F  0F 85 FFFFFE07	    jnz RestartGame          ; 如果按下 Enter，開始遊戲
+ 00000485  EB EC		    jmp WaitForStartLoop   ; 如果沒有按下任何鍵，繼續等待
+ 00000487			WaitForStart ENDP
 				
 				; **結束遊戲**
- 0000049F			ExitGame PROC
+ 00000487			ExitGame PROC
 				    ; 顯示退出訊息
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, exit_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR exitMessage, 23, exit_pos, ADDR cellsWritten
 				    ; 結束程式
 				    INVOKE ExitProcess, 0
- 000004E0			ExitGame ENDP
+ 000004C8			ExitGame ENDP
 				
- 000004E0			DrawTitle PROC
+ 000004C8			DrawTitle PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title1, 45, title_pos, ADDR cellsWritten
- 0000051A  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 00000502  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title2, 45, title_pos, ADDR cellsWritten
- 00000565  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 0000054D  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title3, 45, title_pos, ADDR cellsWritten
- 000005B0  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 00000598  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title4, 45, title_pos, ADDR cellsWritten
- 000005FB  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 000005E3  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title5, 45, title_pos, ADDR cellsWritten
- 00000646  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 0000062E  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title6, 45, title_pos, ADDR cellsWritten
- 00000691  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 00000679  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title7, 45, title_pos, ADDR cellsWritten
- 000006DC  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 000006C4  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title8, 45, title_pos, ADDR cellsWritten
- 00000727  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 0000070F  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title9, 45, title_pos, ADDR cellsWritten
- 00000772  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 0000075A  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title10, 45, title_pos, ADDR cellsWritten
- 000007BD  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 000007A5  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title11, 45, title_pos, ADDR cellsWritten
- 00000808  66| FF 05		    inc title_pos.y
-	   00000351 R
+ 000007F0  66| FF 05		    inc title_pos.y
+	   0000034C R
 				    INVOKE sleep, 150
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 100, title_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR title12, 45, title_pos, ADDR cellsWritten
 				    INVOKE sleep, 150
- 0000085D  C3			    ret
- 0000085E			DrawTitle ENDP
+ 00000845  C3			    ret
+ 00000846			DrawTitle ENDP
 				
- 0000085E			DrawFloor PROC
+ 00000846			DrawFloor PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, floorLength, floor_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR floor, floorLength, floor_pos, ADDR cellsWritten
- 000008A0  C3			    ret
- 000008A1			DrawFloor ENDP
+ 00000888  C3			    ret
+ 00000889			DrawFloor ENDP
 				
- 000008A1			DrawDinosaur PROC
- 000008A1  E8 FFFFFFB8		    call DrawFloor
+ 00000889			DrawDinosaur PROC
+ 00000889  E8 FFFFFFB8		    call DrawFloor
 				    ; Draw the dinosaur at its current position 
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
- 000008E0  66| FF 05		    inc dino_pos.y
+ 000008C8  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
- 00000921  66| FF 05		    inc dino_pos.y
+ 00000909  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
- 00000962  66| FF 05		    inc dino_pos.y
+ 0000094A  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
- 000009A3  66| FF 05		    inc dino_pos.y
+ 0000098B  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
- 000009E4  66| FF 05		    inc dino_pos.y
+ 000009CC  66| FF 05		    inc dino_pos.y
 	   000000B5 R
- 000009EB  66| 83 05		    add dino_pos.x, 2
+ 000009D3  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLeg, 1, dino_pos, ADDR cellsWritten
- 00000A2D  66| 83 05		    add dino_pos.x, 2
+ 00000A15  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLeg, 1, dino_pos, ADDR cellsWritten
- 00000A6F  C3			    ret
- 00000A70			DrawDinosaur ENDP
+ 00000A57  C3			    ret
+ 00000A58			DrawDinosaur ENDP
 				
- 00000A70			DrawDinosaurStandLeftStep PROC
- 00000A70  E8 FFFFFDE9		    call DrawFloor
+ 00000A58			DrawDinosaurStandLeftStep PROC
+ 00000A58  E8 FFFFFDE9		    call DrawFloor
 				    ; Draw the dinosaur at its current position 
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
- 00000AAF  66| FF 05		    inc dino_pos.y
+ 00000A97  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
- 00000AF0  66| FF 05		    inc dino_pos.y
+ 00000AD8  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
- 00000B31  66| FF 05		    inc dino_pos.y
+ 00000B19  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
- 00000B72  66| FF 05		    inc dino_pos.y
+ 00000B5A  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
- 00000BB3  66| FF 05		    inc dino_pos.y
+ 00000B9B  66| FF 05		    inc dino_pos.y
 	   000000B5 R
- 00000BBA  66| 83 05		    add dino_pos.x, 2
+ 00000BA2  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLeg, 1, dino_pos, ADDR cellsWritten
- 00000BFC  66| 83 05		    add dino_pos.x, 2
+ 00000BE4  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
- 00000C3E  C3			    ret
- 00000C3F			DrawDinosaurStandLeftStep ENDP
+ 00000C26  C3			    ret
+ 00000C27			DrawDinosaurStandLeftStep ENDP
 				
- 00000C3F			DrawDinosaurStandRightStep PROC
- 00000C3F  E8 FFFFFC1A		    call DrawFloor
+ 00000C27			DrawDinosaurStandRightStep PROC
+ 00000C27  E8 FFFFFC1A		    call DrawFloor
 				    ; Draw the dinosaur at its current position 
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFirstLine, 11, dino_pos, ADDR cellsWritten
- 00000C7E  66| FF 05		    inc dino_pos.y
+ 00000C66  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLine, 11, dino_pos, ADDR cellsWritten
- 00000CBF  66| FF 05		    inc dino_pos.y
+ 00000CA7  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurThirdLine, 8, dino_pos, ADDR cellsWritten
- 00000D00  66| FF 05		    inc dino_pos.y
+ 00000CE8  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 10, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFourthLine, 10, dino_pos, ADDR cellsWritten
- 00000D41  66| FF 05		    inc dino_pos.y
+ 00000D29  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 8, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurFifthLine, 8, dino_pos, ADDR cellsWritten
- 00000D82  66| FF 05		    inc dino_pos.y
+ 00000D6A  66| FF 05		    inc dino_pos.y
 	   000000B5 R
- 00000D89  66| 83 05		    add dino_pos.x, 2
+ 00000D71  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
- 00000DCB  66| 83 05		    add dino_pos.x, 2
+ 00000DB3  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSecondLeg, 1, dino_pos, ADDR cellsWritten
- 00000E0D  C3			    ret
- 00000E0E			DrawDinosaurStandRightStep ENDP
+ 00000DF5  C3			    ret
+ 00000DF6			DrawDinosaurStandRightStep ENDP
 				
- 00000E0E			DrawSquatFirstStep PROC
- 00000E0E  E8 FFFFFA4B		    call DrawFloor
+ 00000DF6			DrawSquatFirstStep PROC
+ 00000DF6  E8 FFFFFA4B		    call DrawFloor
 				    ; Draw the dinosaur at its current position 
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 15, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLine, 15, dino_pos, ADDR cellsWritten
- 00000E4D  66| FF 05		    inc dino_pos.y
+ 00000E35  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 17, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLine, 17, dino_pos, ADDR cellsWritten
- 00000E8E  66| FF 05		    inc dino_pos.y
+ 00000E76  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatThirdLine, 11, dino_pos, ADDR cellsWritten
- 00000ECF  66| FF 05		    inc dino_pos.y
+ 00000EB7  66| FF 05		    inc dino_pos.y
 	   000000B5 R
- 00000ED6  66| 83 05		    add dino_pos.x, 3
+ 00000EBE  66| 83 05		    add dino_pos.x, 3
 	   000000B3 R 03
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
- 00000F18  66| 83 05		    add dino_pos.x, 2
+ 00000F00  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLeg, 1, dino_pos, ADDR cellsWritten
- 00000F5A  66| 83 05		    add dino_pos.x, 2
+ 00000F42  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstHand, 1, dino_pos, ADDR cellsWritten
- 00000F9C  C3			    ret
- 00000F9D			DrawSquatFirstStep ENDP
+ 00000F84  C3			    ret
+ 00000F85			DrawSquatFirstStep ENDP
 				
- 00000F9D			DrawSquatSecondStep PROC
- 00000F9D  E8 FFFFF8BC		    call DrawFloor
+ 00000F85			DrawSquatSecondStep PROC
+ 00000F85  E8 FFFFF8BC		    call DrawFloor
 				    ; Draw the dinosaur at its current position 
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 15, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLine, 15, dino_pos, ADDR cellsWritten
- 00000FDC  66| FF 05		    inc dino_pos.y
+ 00000FC4  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 17, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatSecondLine, 17, dino_pos, ADDR cellsWritten
- 0000101D  66| FF 05		    inc dino_pos.y
+ 00001005  66| FF 05		    inc dino_pos.y
 	   000000B5 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 11, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatThirdLine, 11, dino_pos, ADDR cellsWritten
- 0000105E  66| FF 05		    inc dino_pos.y
+ 00001046  66| FF 05		    inc dino_pos.y
 	   000000B5 R
- 00001065  66| 83 05		    add dino_pos.x, 3
+ 0000104D  66| 83 05		    add dino_pos.x, 3
 	   000000B3 R 03
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstLeg, 1, dino_pos, ADDR cellsWritten
- 000010A7  66| 83 05		    add dino_pos.x, 2
+ 0000108F  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurStep, 1, dino_pos, ADDR cellsWritten
- 000010E9  66| 83 05		    add dino_pos.x, 2
+ 000010D1  66| 83 05		    add dino_pos.x, 2
 	   000000B3 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR brownColor, 1, dino_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR dinosaurSquatFirstHand, 1, dino_pos, ADDR cellsWritten
- 0000112B  C3			    ret
- 0000112C			DrawSquatSecondStep ENDP
+ 00001113  C3			    ret
+ 00001114			DrawSquatSecondStep ENDP
 				
- 0000112C			DrawBirdFlyUp PROC
+ 00001114			DrawBirdFlyUp PROC
 				    ; Draw the bird at its current position
- 0000112C  66| 83 05		    add bird_pos.x, 4
-	   0000033B R 04
+ 00001114  66| 83 05		    add bird_pos.x, 4
+	   00000336 R 04
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 2, bird_pos, ADDR cellsWritten
 				    ; Move down to the next line for middle part
- 0000116E  66| 83 2D		    sub bird_pos.x, 4
-	   0000033B R 04
- 00001176  66| FF 05		    inc bird_pos.y
-	   0000033D R
+ 00001156  66| 83 2D		    sub bird_pos.x, 4
+	   00000336 R 04
+ 0000115E  66| FF 05		    inc bird_pos.y
+	   00000338 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 8, bird_pos, ADDR cellsWritten
 				    ; Move down to the next line for bottom part
- 000011B7  66| FF 05		    inc bird_pos.y
-	   0000033D R
- 000011BE  66| FF 05		    inc bird_pos.x
-	   0000033B R
- 000011C5  66| FF 05		    inc bird_pos.x
-	   0000033B R
- 000011CC  66| 83 05		    add bird_pos.x, 2
-	   0000033B R 02
+ 0000119F  66| FF 05		    inc bird_pos.y
+	   00000338 R
+ 000011A6  66| FF 05		    inc bird_pos.x
+	   00000336 R
+ 000011AD  66| FF 05		    inc bird_pos.x
+	   00000336 R
+ 000011B4  66| 83 05		    add bird_pos.x, 2
+	   00000336 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 4, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpThirdLine, 4, bird_pos, ADDR cellsWritten
- 0000120E  66| 83 2D		    sub bird_pos.x, 2
-	   0000033B R 02
- 00001216  C3			    ret
- 00001217			DrawBirdFlyUp ENDP
+ 000011F6  66| 83 2D		    sub bird_pos.x, 2
+	   00000336 R 02
+ 000011FE  C3			    ret
+ 000011FF			DrawBirdFlyUp ENDP
 				
- 00001217			DrawBirdFlyDown PROC
- 00001217  66| FF 0D		    dec bird_pos.y
-	   0000033D R
-				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 7, bird_pos, ADDR cellsWritten
-				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 7, bird_pos, ADDR cellsWritten
+ 000011FF			DrawBirdFlyDown PROC
+ 000011FF  66| FF 0D		    dec bird_pos.y
+	   00000338 R
+ 00001206  66| 83 05		    add bird_pos.x, 3
+	   00000336 R 03
+				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
+				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 2, bird_pos, ADDR cellsWritten
 				    ; Draw the bird at its current position
- 00001258  66| FF 05		    inc bird_pos.y
-	   0000033D R
- 0000125F  66| FF 0D		    dec bird_pos.x
-	   0000033B R
+ 00001248  66| 83 2D		    sub bird_pos.x, 3
+	   00000336 R 03
+ 00001250  66| FF 05		    inc bird_pos.y
+	   00000338 R
+ 00001257  66| FF 0D		    dec bird_pos.x
+	   00000336 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 8, bird_pos, ADDR cellsWritten
 				    ; Move down to the next line for middle part
- 000012A0  66| FF 05		    inc bird_pos.y
-	   0000033D R
- 000012A7  66| 83 05		    add bird_pos.x, 3
-	   0000033B R 03
+ 00001298  66| FF 05		    inc bird_pos.y
+	   00000338 R
+ 0000129F  66| 83 05		    add bird_pos.x, 3
+	   00000336 R 03
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 5, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 5, bird_pos, ADDR cellsWritten
 				    ; Move down to the next line for bottom part
- 000012E9  66| FF 05		    inc bird_pos.y
-	   0000033D R
+ 000012E1  66| FF 05		    inc bird_pos.y
+	   00000338 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownThirdLine, 2, bird_pos, ADDR cellsWritten
- 0000132A  C3			    ret
- 0000132B			DrawBirdFlyDown ENDP
+ 00001322  C3			    ret
+ 00001323			DrawBirdFlyDown ENDP
 				
- 0000132B			DrawIntro PROC
+ 00001323			DrawIntro PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 31, intro_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR introString, 31, intro_pos, ADDR cellsWritten
- 00001365  66| 83 05		    add intro_pos.x, 6
-	   0000035F R 06
+ 0000135D  66| 83 05		    add intro_pos.x, 6
+	   0000035A R 06
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 5, intro_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR spaceMessage, 5, intro_pos, ADDR cellsWritten
- 000013A7  66| 83 05		    add intro_pos.x, 9
-	   0000035F R 09
+ 0000139F  66| 83 05		    add intro_pos.x, 9
+	   0000035A R 09
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR purpleColor, 8, intro_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR upMessage, 8, intro_pos, ADDR cellsWritten
- 000013E9  66| 83 2D		    sub intro_pos.x, 15
-	   0000035F R 0F
- 000013F1  C3			    ret
- 000013F2			DrawIntro ENDP
+ 000013E1  66| 83 2D		    sub intro_pos.x, 15
+	   0000035A R 0F
+ 000013E9  C3			    ret
+ 000013EA			DrawIntro ENDP
 				
- 000013F2			DrawStartMessage PROC
+ 000013EA			DrawStartMessage PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, start_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR startMessage, 20, start_pos, ADDR cellsWritten
- 0000142C  66| 83 05		    add start_pos.x, 6
-	   0000036B R 06
+ 00001424  66| 83 05		    add start_pos.x, 6
+	   00000366 R 06
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR blueColor, 5, start_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR enterMessage, 5, start_pos, ADDR cellsWritten
- 0000146E  66| 83 2D		    sub start_pos.x, 6
-	   0000036B R 06
- 00001476  C3			    ret
- 00001477			DrawStartMessage ENDP
+ 00001466  66| 83 2D		    sub start_pos.x, 6
+	   00000366 R 06
+ 0000146E  C3			    ret
+ 0000146F			DrawStartMessage ENDP
 				
- 00001477			DrawCactus PROC
+ 0000146F			DrawCactus PROC
 				    ; Draw the cactus at its current position
 				    ; Draw top part
- 00001477  66| 83 05		    add cactus_pos.x, 2
+ 0000146F  66| 83 05		    add cactus_pos.x, 2
 	   00000073 R 02
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 1, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusTop, 1, cactus_pos, ADDR cellsWritten
- 000014B9  66| 83 2D		    sub cactus_pos.x, 2
+ 000014B1  66| 83 2D		    sub cactus_pos.x, 2
 	   00000073 R 02
 				
 				    ; Move down to the next line for middle part
- 000014C1  66| FF 05		    inc cactus_pos.y
+ 000014B9  66| FF 05		    inc cactus_pos.y
 	   00000075 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 5, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusMiddle, 5, cactus_pos, ADDR cellsWritten
 				
 				    ; Move down to the next line for bottom part
- 00001502  66| FF 05		    inc cactus_pos.y
+ 000014FA  66| FF 05		    inc cactus_pos.y
 	   00000075 R
- 00001509  66| FF 05		    inc cactus_pos.x
+ 00001501  66| FF 05		    inc cactus_pos.x
 	   00000073 R
- 00001510  66| FF 05		    inc cactus_pos.x
+ 00001508  66| FF 05		    inc cactus_pos.x
 	   00000073 R
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR greenColor, 1, cactus_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR cactusBottom, 1, cactus_pos, ADDR cellsWritten
- 00001551  C3			    ret
- 00001552			DrawCactus ENDP
+ 00001549  C3			    ret
+ 0000154A			DrawCactus ENDP
 				
- 00001552			DrawScore PROC
+ 0000154A			DrawScore PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, score_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR scoreString, 12, score_pos, ADDR cellsWritten
- 0000158C  C3			    ret
- 0000158D			DrawScore ENDP
+ 00001584  C3			    ret
+ 00001585			DrawScore ENDP
 				
- 0000158D			DrawHighScore PROC
+ 00001585			DrawHighScore PROC
 				    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR attributes_floor, 40, highscore_pos, ADDR cellsWritten
 				    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR highscoreString, 17, highscore_pos, ADDR cellsWritten
- 000015C7  C3			    ret
- 000015C8			DrawHighScore ENDP
+ 000015BF  C3			    ret
+ 000015C0			DrawHighScore ENDP
 				
 				;繪製下一時刻的背景(移動仙人掌)
- 000015C8			DrawBackground PROC
- 000015C8  E8 00000000 E	    call Clrscr
- 000015CD  E8 FFFFF28C		    call DrawFloor
- 000015D2  E8 FFFFF2CA		    call DrawDinosaur
- 000015D7  E8 FFFFFD4F		    call DrawIntro
- 000015DC  E8 000000B4		    call MoveCactus
- 000015E1  E8 000000EE		    call MoveBird
- 000015E6  E8 FFFFFF67		    call DrawScore
- 000015EB  E8 FFFFFF9D		    call DrawHighScore
- 000015F0  C3			    ret
- 000015F1			DrawBackground ENDP
+ 000015C0			DrawBackground PROC
+ 000015C0  E8 00000000 E	    call Clrscr
+ 000015C5  E8 FFFFF27C		    call DrawFloor
+ 000015CA  E8 FFFFF2BA		    call DrawDinosaur
+ 000015CF  E8 FFFFFD4F		    call DrawIntro
+ 000015D4  E8 000000B4		    call MoveCactus
+ 000015D9  E8 000000EE		    call MoveBird
+ 000015DE  E8 FFFFFF67		    call DrawScore
+ 000015E3  E8 FFFFFF9D		    call DrawHighScore
+ 000015E8  C3			    ret
+ 000015E9			DrawBackground ENDP
 				
- 000015F1			DrawStandLeftStepBackground PROC
- 000015F1  E8 00000000 E	    call Clrscr
- 000015F6  E8 FFFFF263		    call DrawFloor
- 000015FB  E8 FFFFF470		    call DrawDinosaurStandLeftStep
- 00001600  E8 FFFFFD26		    call DrawIntro
- 00001605  E8 0000008B		    call MoveCactus
- 0000160A  E8 000000C5		    call MoveBird
- 0000160F  E8 FFFFFF3E		    call DrawScore
- 00001614  E8 FFFFFF74		    call DrawHighScore
- 00001619  C3			    ret
- 0000161A			DrawStandLeftStepBackground ENDP
+ 000015E9			DrawStandLeftStepBackground PROC
+ 000015E9  E8 00000000 E	    call Clrscr
+ 000015EE  E8 FFFFF253		    call DrawFloor
+ 000015F3  E8 FFFFF460		    call DrawDinosaurStandLeftStep
+ 000015F8  E8 FFFFFD26		    call DrawIntro
+ 000015FD  E8 0000008B		    call MoveCactus
+ 00001602  E8 000000C5		    call MoveBird
+ 00001607  E8 FFFFFF3E		    call DrawScore
+ 0000160C  E8 FFFFFF74		    call DrawHighScore
+ 00001611  C3			    ret
+ 00001612			DrawStandLeftStepBackground ENDP
 				
- 0000161A			DrawStandRightStepBackground PROC
- 0000161A  E8 00000000 E	    call Clrscr
- 0000161F  E8 FFFFF23A		    call DrawFloor
- 00001624  E8 FFFFF616		    call DrawDinosaurStandRightStep
- 00001629  E8 FFFFFCFD		    call DrawIntro
- 0000162E  E8 00000062		    call MoveCactus
- 00001633  E8 0000009C		    call MoveBird
- 00001638  E8 FFFFFF15		    call DrawScore
- 0000163D  E8 FFFFFF4B		    call DrawHighScore
- 00001642  C3			    ret
- 00001643			DrawStandRightStepBackground ENDP
+ 00001612			DrawStandRightStepBackground PROC
+ 00001612  E8 00000000 E	    call Clrscr
+ 00001617  E8 FFFFF22A		    call DrawFloor
+ 0000161C  E8 FFFFF606		    call DrawDinosaurStandRightStep
+ 00001621  E8 FFFFFCFD		    call DrawIntro
+ 00001626  E8 00000062		    call MoveCactus
+ 0000162B  E8 0000009C		    call MoveBird
+ 00001630  E8 FFFFFF15		    call DrawScore
+ 00001635  E8 FFFFFF4B		    call DrawHighScore
+ 0000163A  C3			    ret
+ 0000163B			DrawStandRightStepBackground ENDP
 				
- 00001643			DrawSquatFirstStepBackground PROC
- 00001643  E8 00000000 E	    call Clrscr
- 00001648  E8 FFFFF211		    call DrawFloor
- 0000164D  E8 FFFFF7BC		    call DrawSquatFirstStep
- 00001652  E8 FFFFFCD4		    call DrawIntro
- 00001657  E8 00000039		    call MoveCactus
- 0000165C  E8 00000073		    call MoveBird
- 00001661  E8 FFFFFEEC		    call DrawScore
- 00001666  E8 FFFFFF22		    call DrawHighScore
- 0000166B  C3			    ret
- 0000166C			DrawSquatFirstStepBackground ENDP
+ 0000163B			DrawSquatFirstStepBackground PROC
+ 0000163B  E8 00000000 E	    call Clrscr
+ 00001640  E8 FFFFF201		    call DrawFloor
+ 00001645  E8 FFFFF7AC		    call DrawSquatFirstStep
+ 0000164A  E8 FFFFFCD4		    call DrawIntro
+ 0000164F  E8 00000039		    call MoveCactus
+ 00001654  E8 00000073		    call MoveBird
+ 00001659  E8 FFFFFEEC		    call DrawScore
+ 0000165E  E8 FFFFFF22		    call DrawHighScore
+ 00001663  C3			    ret
+ 00001664			DrawSquatFirstStepBackground ENDP
 				
- 0000166C			DrawSquatSecondStepBackground PROC
- 0000166C  E8 00000000 E	    call Clrscr
- 00001671  E8 FFFFF1E8		    call DrawFloor
- 00001676  E8 FFFFF922		    call DrawSquatSecondStep
- 0000167B  E8 FFFFFCAB		    call DrawIntro
- 00001680  E8 00000010		    call MoveCactus
- 00001685  E8 0000004A		    call MoveBird
- 0000168A  E8 FFFFFEC3		    call DrawScore
- 0000168F  E8 FFFFFEF9		    call DrawHighScore
- 00001694  C3			    ret
- 00001695			DrawSquatSecondStepBackground ENDP
+ 00001664			DrawSquatSecondStepBackground PROC
+ 00001664  E8 00000000 E	    call Clrscr
+ 00001669  E8 FFFFF1D8		    call DrawFloor
+ 0000166E  E8 FFFFF912		    call DrawSquatSecondStep
+ 00001673  E8 FFFFFCAB		    call DrawIntro
+ 00001678  E8 00000010		    call MoveCactus
+ 0000167D  E8 0000004A		    call MoveBird
+ 00001682  E8 FFFFFEC3		    call DrawScore
+ 00001687  E8 FFFFFEF9		    call DrawHighScore
+ 0000168C  C3			    ret
+ 0000168D			DrawSquatSecondStepBackground ENDP
 				
 				
- 00001695			MoveCactus PROC
+ 0000168D			MoveCactus PROC
 				    ; 移動仙人掌
- 00001695  66| A1		    mov ax, cactus_speed
-	   00000341 R
- 0000169B  66| 29 05		    sub cactus_pos.x, ax
+ 0000168D  66| A1		    mov ax, cactus_speed
+	   0000033C R
+ 00001693  66| 29 05		    sub cactus_pos.x, ax
 	   00000073 R
- 000016A2  66| FF 0D		    dec cactus_pos.y
+ 0000169A  66| FF 0D		    dec cactus_pos.y
 	   00000075 R
- 000016A9  66| FF 0D		    dec cactus_pos.y
+ 000016A1  66| FF 0D		    dec cactus_pos.y
 	   00000075 R
- 000016B0  E8 FFFFFDC2		    call DrawCactus
+ 000016A8  E8 FFFFFDC2		    call DrawCactus
 				    ; 如果仙人掌越過螢幕邊界，則重新生成
- 000016B5  66| 83 3D		    cmp cactus_pos.x, 0
+ 000016AD  66| 83 3D		    cmp cactus_pos.x, 0
 	   00000073 R 00
 				
- 000016BD  7C 01		    jl resetCactus
- 000016BF  C3			    ret
+ 000016B5  7C 01		    jl resetCactus
+ 000016B7  C3			    ret
 				
- 000016C0			resetCactus:
- 000016C0  B8 00000033		    mov eax, 51           
- 000016C5  E8 00000000 E	    call RandomRange
- 000016CA  83 C0 32		    add eax, 50           
- 000016CD  66| A3		    mov cactus_pos.x, ax  ; 重新生成仙人掌位置
+ 000016B8			resetCactus:
+ 000016B8  B8 00000033		    mov eax, 51           
+ 000016BD  E8 00000000 E	    call RandomRange
+ 000016C2  83 C0 32		    add eax, 50           
+ 000016C5  66| A3		    mov cactus_pos.x, ax  ; 重新生成仙人掌位置
 	   00000073 R
- 000016D3  C3			    ret
- 000016D4			MoveCactus ENDP
+ 000016CB  C3			    ret
+ 000016CC			MoveCactus ENDP
 				
 				
- 000016D4			MoveBird PROC
+ 000016CC			MoveBird PROC
 				    ; 移動小鳥
- 000016D4  66| A1		    mov ax, bird_speed
-	   0000033F R
- 000016DA  66| 29 05		    sub bird_pos.x, ax
-	   0000033B R
- 000016E1  66| 83 2D		    sub bird_pos.y, 3
-	   0000033D R 03
- 000016E9  E8 FFFFFA3E		    call DrawBirdFlyUp
+ 000016CC  66| A1		    mov ax, bird_speed
+	   0000033A R
+ 000016D2  66| 29 05		    sub bird_pos.x, ax
+	   00000336 R
+ 000016D9  66| 83 2D		    sub bird_pos.y, 3
+	   00000338 R 03
+ 000016E1  E8 FFFFFA2E		    call DrawBirdFlyUp
 				    INVOKE Sleep, 50
- 000016F5  66| 83 2D		    sub bird_pos.y, 1
-	   0000033D R 01
- 000016FD  66| 83 2D		    sub bird_pos.x, 1
-	   0000033B R 01
- 00001705  E8 FFFFFB0D		    call DrawBirdFlyDown
+ 000016ED  66| 83 2D		    sub bird_pos.y, 1
+	   00000338 R 01
+ 000016F5  66| 83 2D		    sub bird_pos.x, 1
+	   00000336 R 01
+ 000016FD  E8 FFFFFAFD		    call DrawBirdFlyDown
 				    ; 如果小鳥越過螢幕邊界，則重新生成
- 0000170A  66| 83 3D		    cmp bird_pos.x, 0
-	   0000033B R 00
- 00001712  7C 01		    jl resetBird
- 00001714  C3			    ret
+ 00001702  66| 83 3D		    cmp bird_pos.x, 0
+	   00000336 R 00
+ 0000170A  7C 01		    jl resetBird
+ 0000170C  C3			    ret
 				
- 00001715			    resetBird:
- 00001715  B8 00000029		    mov eax, 41           
- 0000171A  E8 00000000 E	    call RandomRange
- 0000171F  83 C0 46		    add eax, 70 
- 00001722  66| A3		    mov bird_pos.x, ax ; 重新生成小鳥
-	   0000033B R
+ 0000170D			    resetBird:
+ 0000170D  B8 00000029		    mov eax, 41           
+ 00001712  E8 00000000 E	    call RandomRange
+ 00001717  83 C0 46		    add eax, 70 
+ 0000171A  66| A3		    mov bird_pos.x, ax ; 重新生成小鳥
+	   00000336 R
 				
- 00001728  B8 0000000B		    mov eax, 11           ; 隨機數範圍 0~20
- 0000172D  E8 00000000 E	    call RandomRange
- 00001732  83 C0 05		    add eax, 5           ; 將範圍轉換為 10~30
- 00001735  66| A3		    mov bird_pos.y, ax    ; 重新生成小鳥 y 坐標
-	   0000033D R
+ 00001720  B8 0000000B		    mov eax, 11           ; 隨機數範圍 0~20
+ 00001725  E8 00000000 E	    call RandomRange
+ 0000172A  83 C0 05		    add eax, 5           ; 將範圍轉換為 10~30
+ 0000172D  66| A3		    mov bird_pos.y, ax    ; 重新生成小鳥 y 坐標
+	   00000338 R
 				
- 0000173B  C3			    ret
- 0000173C			MoveBird ENDP
+ 00001733  C3			    ret
+ 00001734			MoveBird ENDP
 				
 				; 等待按鍵釋放
- 0000173C			WaitForRelease PROC
+ 00001734			WaitForRelease PROC
 				    ; ecx = 虛擬鍵的代碼
- 0000173C			WaitLoop:
+ 00001734			WaitLoop:
 				    INVOKE GetAsyncKeyState, ecx
- 00001742  A9 00008000		    test eax, 8000h
- 00001747  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
- 00001749  C3			    ret
- 0000174A			WaitForRelease ENDP
+ 0000173A  A9 00008000		    test eax, 8000h
+ 0000173F  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
+ 00001741  C3			    ret
+ 00001742			WaitForRelease ENDP
 				
- 0000174A			FormatScore PROC
- 0000174A  A1 000008FB R	    mov eax, score
- 0000174F  B9 0000000A		    mov ecx, 10
- 00001754  BF 0000092E R	    mov edi, OFFSET scoreString + 11
- 00001759  C6 07 00		    mov BYTE PTR [edi], 0
- 0000175C  BA 00000000		    mov edx, 0
- 00001761			    L1:
- 00001761  33 D2		    xor edx, edx
- 00001763  F7 F1		        div ecx
- 00001765  80 C2 30		        add dl, '0'
- 00001768  4F			        dec edi
- 00001769  88 17		        mov BYTE PTR [edi], dl
- 0000176B  85 C0		        test eax, eax
- 0000176D  75 F2		        jnz L1
- 0000176F  C3			    ret
- 00001770			FormatScore ENDP
+ 00001742			FormatScore PROC
+ 00001742  A1 000008F6 R	    mov eax, score
+ 00001747  B9 0000000A		    mov ecx, 10
+ 0000174C  BF 00000929 R	    mov edi, OFFSET scoreString + 11
+ 00001751  C6 07 00		    mov BYTE PTR [edi], 0
+ 00001754  BA 00000000		    mov edx, 0
+ 00001759			    L1:
+ 00001759  33 D2		    xor edx, edx
+ 0000175B  F7 F1		        div ecx
+ 0000175D  80 C2 30		        add dl, '0'
+ 00001760  4F			        dec edi
+ 00001761  88 17		        mov BYTE PTR [edi], dl
+ 00001763  85 C0		        test eax, eax
+ 00001765  75 F2		        jnz L1
+ 00001767  C3			    ret
+ 00001768			FormatScore ENDP
 				
- 00001770			FormatHighScore PROC
- 00001770  A1 000008FF R	    mov eax, highscore
- 00001775  B9 0000000A		    mov ecx, 10
- 0000177A  BF 0000093F R	    mov edi, OFFSET highscoreString + 16
- 0000177F  C6 07 00		    mov BYTE PTR [edi], 0
- 00001782  BA 00000000		    mov edx, 0
- 00001787			    L1:
- 00001787  33 D2		    xor edx, edx
- 00001789  F7 F1		        div ecx
- 0000178B  80 C2 30		        add dl, '0'
- 0000178E  4F			        dec edi
- 0000178F  88 17		        mov BYTE PTR [edi], dl
- 00001791  85 C0		        test eax, eax
- 00001793  75 F2		        jnz L1
- 00001795  C3			    ret
- 00001796			FormatHighScore ENDP
+ 00001768			FormatHighScore PROC
+ 00001768  A1 000008FA R	    mov eax, highscore
+ 0000176D  B9 0000000A		    mov ecx, 10
+ 00001772  BF 0000093A R	    mov edi, OFFSET highscoreString + 16
+ 00001777  C6 07 00		    mov BYTE PTR [edi], 0
+ 0000177A  BA 00000000		    mov edx, 0
+ 0000177F			    L1:
+ 0000177F  33 D2		    xor edx, edx
+ 00001781  F7 F1		        div ecx
+ 00001783  80 C2 30		        add dl, '0'
+ 00001786  4F			        dec edi
+ 00001787  88 17		        mov BYTE PTR [edi], dl
+ 00001789  85 C0		        test eax, eax
+ 0000178B  75 F2		        jnz L1
+ 0000178D  C3			    ret
+ 0000178E			FormatHighScore ENDP
 				
- 00001796			main ENDP
+ 0000178E			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 14:22:50
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 14:54:57
 main.asm						     Symbols 2 - 1
 
 
@@ -1322,19 +1327,19 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 000009AE Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00001796 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 000009A9 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000178E Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
-CheckCollision . . . . . . . . .	P Near	 000001FB _TEXT	Length= 0000009F Public STDCALL
+CheckCollision . . . . . . . . .	P Near	 000001FB _TEXT	Length= 00000087 Public STDCALL
   DetBirdCollision . . . . . . .	L Near	 0000022D _TEXT	
-  CollisionDetected  . . . . . .	L Near	 00000266 _TEXT	
-  NoUpdateHighScore  . . . . . .	L Near	 0000028E _TEXT	
-  NoCollision  . . . . . . . . .	L Near	 00000294 _TEXT	
+  CollisionDetected  . . . . . .	L Near	 0000024E _TEXT	
+  NoUpdateHighScore  . . . . . .	L Near	 00000276 _TEXT	
+  NoCollision  . . . . . . . . .	L Near	 0000027C _TEXT	
 CheckJumpKey . . . . . . . . . .	P Near	 0000008A _TEXT	Length= 0000003C Public STDCALL
   DoJump . . . . . . . . . . . .	L Near	 000000B5 _TEXT	
   DoSquat  . . . . . . . . . . .	L Near	 000000C0 _TEXT	
@@ -1345,38 +1350,38 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-DrawBackground . . . . . . . . .	P Near	 000015C8 _TEXT	Length= 00000029 Public STDCALL
-DrawBirdFlyDown  . . . . . . . .	P Near	 00001217 _TEXT	Length= 00000114 Public STDCALL
-DrawBirdFlyUp  . . . . . . . . .	P Near	 0000112C _TEXT	Length= 000000EB Public STDCALL
-DrawCactus . . . . . . . . . . .	P Near	 00001477 _TEXT	Length= 000000DB Public STDCALL
-DrawDinosaurStandLeftStep  . . .	P Near	 00000A70 _TEXT	Length= 000001CF Public STDCALL
-DrawDinosaurStandRightStep . . .	P Near	 00000C3F _TEXT	Length= 000001CF Public STDCALL
-DrawDinosaur . . . . . . . . . .	P Near	 000008A1 _TEXT	Length= 000001CF Public STDCALL
-DrawFloor  . . . . . . . . . . .	P Near	 0000085E _TEXT	Length= 00000043 Public STDCALL
-DrawHighScore  . . . . . . . . .	P Near	 0000158D _TEXT	Length= 0000003B Public STDCALL
-DrawIntro  . . . . . . . . . . .	P Near	 0000132B _TEXT	Length= 000000C7 Public STDCALL
-DrawScore  . . . . . . . . . . .	P Near	 00001552 _TEXT	Length= 0000003B Public STDCALL
-DrawSquatFirstStepBackground . .	P Near	 00001643 _TEXT	Length= 00000029 Public STDCALL
-DrawSquatFirstStep . . . . . . .	P Near	 00000E0E _TEXT	Length= 0000018F Public STDCALL
-DrawSquatSecondStepBackground  .	P Near	 0000166C _TEXT	Length= 00000029 Public STDCALL
-DrawSquatSecondStep  . . . . . .	P Near	 00000F9D _TEXT	Length= 0000018F Public STDCALL
-DrawStandLeftStepBackground  . .	P Near	 000015F1 _TEXT	Length= 00000029 Public STDCALL
-DrawStandRightStepBackground . .	P Near	 0000161A _TEXT	Length= 00000029 Public STDCALL
-DrawStartMessage . . . . . . . .	P Near	 000013F2 _TEXT	Length= 00000085 Public STDCALL
-DrawTitle  . . . . . . . . . . .	P Near	 000004E0 _TEXT	Length= 0000037E Public STDCALL
+DrawBackground . . . . . . . . .	P Near	 000015C0 _TEXT	Length= 00000029 Public STDCALL
+DrawBirdFlyDown  . . . . . . . .	P Near	 000011FF _TEXT	Length= 00000124 Public STDCALL
+DrawBirdFlyUp  . . . . . . . . .	P Near	 00001114 _TEXT	Length= 000000EB Public STDCALL
+DrawCactus . . . . . . . . . . .	P Near	 0000146F _TEXT	Length= 000000DB Public STDCALL
+DrawDinosaurStandLeftStep  . . .	P Near	 00000A58 _TEXT	Length= 000001CF Public STDCALL
+DrawDinosaurStandRightStep . . .	P Near	 00000C27 _TEXT	Length= 000001CF Public STDCALL
+DrawDinosaur . . . . . . . . . .	P Near	 00000889 _TEXT	Length= 000001CF Public STDCALL
+DrawFloor  . . . . . . . . . . .	P Near	 00000846 _TEXT	Length= 00000043 Public STDCALL
+DrawHighScore  . . . . . . . . .	P Near	 00001585 _TEXT	Length= 0000003B Public STDCALL
+DrawIntro  . . . . . . . . . . .	P Near	 00001323 _TEXT	Length= 000000C7 Public STDCALL
+DrawScore  . . . . . . . . . . .	P Near	 0000154A _TEXT	Length= 0000003B Public STDCALL
+DrawSquatFirstStepBackground . .	P Near	 0000163B _TEXT	Length= 00000029 Public STDCALL
+DrawSquatFirstStep . . . . . . .	P Near	 00000DF6 _TEXT	Length= 0000018F Public STDCALL
+DrawSquatSecondStepBackground  .	P Near	 00001664 _TEXT	Length= 00000029 Public STDCALL
+DrawSquatSecondStep  . . . . . .	P Near	 00000F85 _TEXT	Length= 0000018F Public STDCALL
+DrawStandLeftStepBackground  . .	P Near	 000015E9 _TEXT	Length= 00000029 Public STDCALL
+DrawStandRightStepBackground . .	P Near	 00001612 _TEXT	Length= 00000029 Public STDCALL
+DrawStartMessage . . . . . . . .	P Near	 000013EA _TEXT	Length= 00000085 Public STDCALL
+DrawTitle  . . . . . . . . . . .	P Near	 000004C8 _TEXT	Length= 0000037E Public STDCALL
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-ExitGame . . . . . . . . . . . .	P Near	 0000049F _TEXT	Length= 00000041 Public STDCALL
+ExitGame . . . . . . . . . . . .	P Near	 00000487 _TEXT	Length= 00000041 Public STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatHighScore  . . . . . . . .	P Near	 00001770 _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00001787 _TEXT	
+FormatHighScore  . . . . . . . .	P Near	 00001768 _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 0000177F _TEXT	
 FormatMessageA . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatScore  . . . . . . . . . .	P Near	 0000174A _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00001761 _TEXT	
-GameOverMsg  . . . . . . . . . .	P Near	 00000321 _TEXT	Length= 00000148 Public STDCALL
+FormatScore  . . . . . . . . . .	P Near	 00001742 _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00001759 _TEXT	
+GameOverMsg  . . . . . . . . . .	P Near	 00000309 _TEXT	Length= 00000148 Public STDCALL
 GetAsyncKeyState . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandLineA  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandTail . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1412,10 +1417,10 @@ Jump . . . . . . . . . . . . . .	P Near	 000000C6 _TEXT	Length= 000000C5 Public 
   GoToSquat  . . . . . . . . . .	L Near	 0000017C _TEXT	
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-MoveBird . . . . . . . . . . . .	P Near	 000016D4 _TEXT	Length= 00000068 Public STDCALL
-  resetBird  . . . . . . . . . .	L Near	 00001715 _TEXT	
-MoveCactus . . . . . . . . . . .	P Near	 00001695 _TEXT	Length= 0000003F Public STDCALL
-  resetCactus  . . . . . . . . .	L Near	 000016C0 _TEXT	
+MoveBird . . . . . . . . . . . .	P Near	 000016CC _TEXT	Length= 00000068 Public STDCALL
+  resetBird  . . . . . . . . . .	L Near	 0000170D _TEXT	
+MoveCactus . . . . . . . . . . .	P Near	 0000168D _TEXT	Length= 0000003F Public STDCALL
+  resetCactus  . . . . . . . . .	L Near	 000016B8 _TEXT	
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 OpenInputFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1437,7 +1442,7 @@ ReadInt  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 ReadKeyFlush . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadKey  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadString . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-RestartGame  . . . . . . . . . .	P Near	 000002A4 _TEXT	Length= 0000007D Public STDCALL
+RestartGame  . . . . . . . . . .	P Near	 0000028C _TEXT	Length= 0000007D Public STDCALL
 SetConsoleCursorInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleCursorPosition . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleMode . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1461,12 +1466,12 @@ Str_length . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-WaitForEnter . . . . . . . . . .	P Near	 00000469 _TEXT	Length= 00000022 Public STDCALL
-  WaitLoop . . . . . . . . . . .	L Near	 00000469 _TEXT	
-WaitForRelease . . . . . . . . .	P Near	 0000173C _TEXT	Length= 0000000E Public STDCALL
-  WaitLoop . . . . . . . . . . .	L Near	 0000173C _TEXT	
-WaitForStart . . . . . . . . . .	P Near	 0000048B _TEXT	Length= 00000014 Public STDCALL
-  WaitForStartLoop . . . . . . .	L Near	 0000048B _TEXT	
+WaitForEnter . . . . . . . . . .	P Near	 00000451 _TEXT	Length= 00000022 Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 00000451 _TEXT	
+WaitForRelease . . . . . . . . .	P Near	 00001734 _TEXT	Length= 0000000E Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 00001734 _TEXT	
+WaitForStart . . . . . . . . . .	P Near	 00000473 _TEXT	Length= 00000014 Public STDCALL
+  WaitForStartLoop . . . . . . .	L Near	 00000473 _TEXT	
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1485,11 +1490,11 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-abs  . . . . . . . . . . . . . .	P Near	 0000029A _TEXT	Length= 0000000A Public STDCALL
-  NoNeg  . . . . . . . . . . . .	L Near	 000002A3 _TEXT	
+abs  . . . . . . . . . . . . . .	P Near	 00000282 _TEXT	Length= 0000000A Public STDCALL
+  NoNeg  . . . . . . . . . . . .	L Near	 0000028B _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00001796 Public STDCALL
+start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000178E Public STDCALL
   mainLoop . . . . . . . . . . .	L Near	 0000002A _TEXT	
   Gameover . . . . . . . . . . .	L Near	 00000083 _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -1708,33 +1713,33 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
-attributes_floor . . . . . . . .	Word	 0000037B _DATA	
+attributes_floor . . . . . . . .	Word	 00000376 _DATA	
 birdDeleteFirstLine  . . . . . .	Byte	 00000322 _DATA	
-birdFlyDownFirstLine . . . . . .	Byte	 0000032A _DATA	
-birdFlyDownSecondLine  . . . . .	Byte	 00000332 _DATA	
-birdFlyDownThirdLine . . . . . .	Byte	 00000338 _DATA	
+birdFlyDownFirstLine . . . . . .	Byte	 00000325 _DATA	
+birdFlyDownSecondLine  . . . . .	Byte	 0000032D _DATA	
+birdFlyDownThirdLine . . . . . .	Byte	 00000333 _DATA	
 birdFlyUpFirstLine . . . . . . .	Byte	 00000311 _DATA	
 birdFlyUpSecondLine  . . . . . .	Byte	 00000314 _DATA	
 birdFlyUpThirdLine . . . . . . .	Byte	 0000031D _DATA	
-bird_pos . . . . . . . . . . . .	COORD	 0000033B _DATA	
-bird_speed . . . . . . . . . . .	Word	 0000033F _DATA	
+bird_pos . . . . . . . . . . . .	COORD	 00000336 _DATA	
+bird_speed . . . . . . . . . . .	Word	 0000033A _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
-blueColor  . . . . . . . . . . .	Word	 000006A3 _DATA	
+blueColor  . . . . . . . . . . .	Word	 0000069E _DATA	
 blue . . . . . . . . . . . . . .	Number	 00000001h   
-brownColor . . . . . . . . . . .	Word	 0000044B _DATA	
+brownColor . . . . . . . . . . .	Word	 00000446 _DATA	
 brown  . . . . . . . . . . . . .	Number	 00000006h   
-bytesWritten . . . . . . . . . .	DWord	 00000347 _DATA	
+bytesWritten . . . . . . . . . .	DWord	 00000342 _DATA	
 cactusBottom . . . . . . . . . .	Byte	 00000071 _DATA	
 cactusMiddle . . . . . . . . . .	Byte	 0000006B _DATA	
 cactusTop  . . . . . . . . . . .	Byte	 00000069 _DATA	
 cactus_height  . . . . . . . . .	DWord	 00000077 _DATA	
 cactus_pos . . . . . . . . . . .	COORD	 00000073 _DATA	
-cactus_speed . . . . . . . . . .	Word	 00000341 _DATA	
-cellsWritten . . . . . . . . . .	DWord	 00000377 _DATA	
-count  . . . . . . . . . . . . .	DWord	 0000034B _DATA	
-cursorInfo . . . . . . . . . . .	CONSOLE_CURSOR_INFO  000009A6 _DATA	
+cactus_speed . . . . . . . . . .	Word	 0000033C _DATA	
+cellsWritten . . . . . . . . . .	DWord	 00000372 _DATA	
+count  . . . . . . . . . . . . .	DWord	 00000346 _DATA	
+cursorInfo . . . . . . . . . . .	CONSOLE_CURSOR_INFO  000009A1 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-darkBlueColor  . . . . . . . . .	Word	 00000833 _DATA	
+darkBlueColor  . . . . . . . . .	Word	 0000082E _DATA	
 dino_pos . . . . . . . . . . . .	COORD	 000000B3 _DATA	
 dinosaurFifthLine  . . . . . . .	Byte	 000000A5 _DATA	
 dinosaurFirstLeg . . . . . . . .	Byte	 000000AD _DATA	
@@ -1750,28 +1755,28 @@ dinosaurSquatSecondLine  . . . .	Byte	 000000C6 _DATA
 dinosaurSquatThirdLine . . . . .	Byte	 000000D6 _DATA	
 dinosaurStep . . . . . . . . . .	Byte	 000000B1 _DATA	
 dinosaurThirdLine  . . . . . . .	Byte	 00000091 _DATA	
-enterMessage . . . . . . . . . .	Byte	 00000977 _DATA	
-escMessage . . . . . . . . . . .	Byte	 0000098F _DATA	
-exitMessage  . . . . . . . . . .	Byte	 0000097D _DATA	
-exit_pos . . . . . . . . . . . .	COORD	 00000363 _DATA	
+enterMessage . . . . . . . . . .	Byte	 00000972 _DATA	
+escMessage . . . . . . . . . . .	Byte	 0000098A _DATA	
+exitMessage  . . . . . . . . . .	Byte	 00000978 _DATA	
+exit_pos . . . . . . . . . . . .	COORD	 0000035E _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 floorFix . . . . . . . . . . . .	Byte	 00000068 _DATA	
 floorLength  . . . . . . . . . .	DWord	 00000000 _DATA	
-floor_pos  . . . . . . . . . . .	COORD	 0000036F _DATA	
+floor_pos  . . . . . . . . . . .	COORD	 0000036A _DATA	
 floor  . . . . . . . . . . . . .	Byte	 00000004 _DATA	
-gameOverMessage  . . . . . . . .	Byte	 00000940 _DATA	
-gameOver_pos . . . . . . . . . .	COORD	 0000035B _DATA	
-gravity  . . . . . . . . . . . .	Word	 00000445 _DATA	
+gameOverMessage  . . . . . . . .	Byte	 0000093B _DATA	
+gameOver_pos . . . . . . . . . .	COORD	 00000356 _DATA	
+gravity  . . . . . . . . . . . .	Word	 00000440 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
-greenColor . . . . . . . . . . .	Word	 00000513 _DATA	
+greenColor . . . . . . . . . . .	Word	 0000050E _DATA	
 green  . . . . . . . . . . . . .	Number	 00000002h   
-hConsole . . . . . . . . . . . .	DWord	 000009A2 _DATA	
-highscoreString  . . . . . . . .	Byte	 0000092F _DATA	
-highscore_pos  . . . . . . . . .	COORD	 00000353 _DATA	
-highscore  . . . . . . . . . . .	DWord	 000008FF _DATA	
-introString  . . . . . . . . . .	Byte	 00000903 _DATA	
-intro_pos  . . . . . . . . . . .	COORD	 0000035F _DATA	
-keyState . . . . . . . . . . . .	DWord	 00000447 _DATA	
+hConsole . . . . . . . . . . . .	DWord	 0000099D _DATA	
+highscoreString  . . . . . . . .	Byte	 0000092A _DATA	
+highscore_pos  . . . . . . . . .	COORD	 0000034E _DATA	
+highscore  . . . . . . . . . . .	DWord	 000008FA _DATA	
+introString  . . . . . . . . . .	Byte	 000008FE _DATA	
+intro_pos  . . . . . . . . . . .	COORD	 0000035A _DATA	
+keyState . . . . . . . . . . . .	DWord	 00000442 _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -1780,18 +1785,18 @@ lightMagenta . . . . . . . . . .	Number	 0000000Dh
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 main . . . . . . . . . . . . . .	Text   	 start@0
-outputHandle . . . . . . . . . .	DWord	 00000343 _DATA	
-purpleColor  . . . . . . . . . .	Word	 0000076B _DATA	
-redColor . . . . . . . . . . . .	Word	 000005DB _DATA	
+outputHandle . . . . . . . . . .	DWord	 0000033E _DATA	
+purpleColor  . . . . . . . . . .	Word	 00000766 _DATA	
+redColor . . . . . . . . . . . .	Word	 000005D6 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-restartMessage . . . . . . . . .	Byte	 0000094B _DATA	
-restart_pos  . . . . . . . . . .	COORD	 00000367 _DATA	
-scoreString  . . . . . . . . . .	Byte	 00000923 _DATA	
-score_pos  . . . . . . . . . . .	COORD	 00000357 _DATA	
-score  . . . . . . . . . . . . .	DWord	 000008FB _DATA	
-spaceMessage . . . . . . . . . .	Byte	 00000993 _DATA	
-startMessage . . . . . . . . . .	Byte	 00000962 _DATA	
-start_pos  . . . . . . . . . . .	COORD	 0000036B _DATA	
+restartMessage . . . . . . . . .	Byte	 00000946 _DATA	
+restart_pos  . . . . . . . . . .	COORD	 00000362 _DATA	
+scoreString  . . . . . . . . . .	Byte	 0000091E _DATA	
+score_pos  . . . . . . . . . . .	COORD	 00000352 _DATA	
+score  . . . . . . . . . . . . .	DWord	 000008F6 _DATA	
+spaceMessage . . . . . . . . . .	Byte	 0000098E _DATA	
+startMessage . . . . . . . . . .	Byte	 0000095D _DATA	
+start_pos  . . . . . . . . . . .	COORD	 00000366 _DATA	
 title10  . . . . . . . . . . . .	Byte	 00000287 _DATA	
 title11  . . . . . . . . . . . .	Byte	 000002B5 _DATA	
 title12  . . . . . . . . . . . .	Byte	 000002E3 _DATA	
@@ -1804,12 +1809,12 @@ title6 . . . . . . . . . . . . .	Byte	 000001CE _DATA
 title7 . . . . . . . . . . . . .	Byte	 000001FC _DATA	
 title8 . . . . . . . . . . . . .	Byte	 0000022A _DATA	
 title9 . . . . . . . . . . . . .	Byte	 00000259 _DATA	
-title_pos  . . . . . . . . . . .	COORD	 0000034F _DATA	
-upMessage  . . . . . . . . . . .	Byte	 00000999 _DATA	
-velocity . . . . . . . . . . . .	Word	 00000443 _DATA	
+title_pos  . . . . . . . . . . .	COORD	 0000034A _DATA	
+upMessage  . . . . . . . . . . .	Byte	 00000994 _DATA	
+velocity . . . . . . . . . . . .	Word	 0000043E _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
-xyBound  . . . . . . . . . . . .	COORD	 00000373 _DATA	
+xyBound  . . . . . . . . . . . .	COORD	 0000036E _DATA	
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   0 Warnings

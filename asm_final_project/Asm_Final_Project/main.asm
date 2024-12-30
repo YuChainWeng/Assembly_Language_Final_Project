@@ -45,7 +45,7 @@ INCLUDE Irvine32.inc
     birdFlyUpSecondLine BYTE '<o)_| \_', 0
     birdFlyUpThirdLine BYTE '\__/', 0
 
-    birdDeleteFirstLine BYTE '       ', 0
+    birdDeleteFirstLine BYTE '  ', 0
     birdFlyDownFirstLine BYTE '<o)____', 0
     birdFlyDownSecondLine BYTE '\__/ ', 0
     birdFlyDownThirdLine BYTE '|/', 0
@@ -306,47 +306,51 @@ CheckCollision PROC
     jmp CollisionDetected         ; Jump to CollisionDetected if collision detected
 
     DetBirdCollision:
-    mov ax, bird_pos.x
-    mov cx, dino_pos.x
-    add cx, 5
-    sub ax, cx
-    cmp ax, 3
-    jge NoCollision
+    ; 檢查與鳥的水平距離是否超出碰撞範圍
+    ;mov ax, bird_pos.x
+    ;mov cx, dino_pos.x
+    ;add cx, 5                     ; 考慮鳥的寬度
+    ;sub ax, cx                    ; 計算水平距離
+    ;cmp ax, 3
+    ;jge NoCollision               ; 如果水平距離大於等於 3，跳過垂直檢查
 
+    ; 檢查與鳥的垂直距離是否超出碰撞範圍
     mov ax, bird_pos.y
     mov cx, dino_pos.y
-    add cx, 5
-    sub ax, cx
-    call abs
+    add cx, 5                     ; 考慮鳥的高度
+    sub ax, cx                    ; 計算垂直距離
+    call abs                      ; 取絕對值
     cmp ax, 3
-    jge NoCollision
+    jge NoCollision               ; 如果垂直距離大於等於 3，跳到無碰撞
 
+    ; 如果水平和垂直距離都符合碰撞條件
+    jmp CollisionDetected         ; 跳到碰撞處理
 
-CollisionDetected:
-    ; 如果發生碰撞，檢查分數是否高於 highScore
-    mov eax, score                 ; Load current score into eax
-    mov ebx, highscore             ; Load high score into ebx
-    cmp eax, ebx                   ; Compare current score with high score
-    jle NoUpdateHighScore         ; Jump if current score is not greater than high score
+    CollisionDetected:
+        ; 如果發生碰撞，檢查分數是否高於 highScore
+        mov eax, score                 ; Load current score into eax
+        mov ebx, highscore             ; Load high score into ebx
+        cmp eax, ebx                   ; Compare current score with high score
+        jle NoUpdateHighScore         ; Jump if current score is not greater than high score
 
-    ; 更新 high score
-    mov highscore, eax             ; Update high score
+        ; 更新 high score
+        mov highscore, eax             ; Update high score
 
-    ; 呼叫 FormatHighScore 來顯示更新後的 high score
-    call FormatHighScore
-    call DrawHighScore
-    call FormatScore
-    call DrawScore
+        ; 呼叫 FormatHighScore 來顯示更新後的 high score
+        call FormatHighScore
+        call DrawHighScore
+        call FormatScore
+        call DrawScore
 
-NoUpdateHighScore:
-    ; 如果發生碰撞，返回 1，表示遊戲結束
-    mov eax, 1                    ; Set eax to 1 indicating collision happened
-    ret
+    NoUpdateHighScore:
+        ; 如果發生碰撞，返回 1，表示遊戲結束
+        mov eax, 1                    ; Set eax to 1 indicating collision happened
+        ret
 
-NoCollision:
-    ; 如果沒有碰撞，返回 0
-    mov eax, 0                    ; Set eax to 0 indicating no collision
-    ret
+    NoCollision:
+        ; 如果沒有碰撞，返回 0
+        mov eax, 0                    ; Set eax to 0 indicating no collision
+        ret
 CheckCollision ENDP
 
 abs PROC
@@ -654,9 +658,11 @@ DrawBirdFlyUp ENDP
 
 DrawBirdFlyDown PROC
     dec bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 7, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 7, bird_pos, ADDR cellsWritten
+    add bird_pos.x, 3
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdDeleteFirstLine, 2, bird_pos, ADDR cellsWritten
     ; Draw the bird at its current position
+    sub bird_pos.x, 3
     inc bird_pos.y
     dec bird_pos.x
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
