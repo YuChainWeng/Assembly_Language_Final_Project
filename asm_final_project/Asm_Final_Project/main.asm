@@ -41,14 +41,14 @@ INCLUDE Irvine32.inc
     title11 BYTE '| |__| || || | | ||(_)|\__ \|(_| || | | || | ', 0
     title12 BYTE '|_____/ |_||_| |_|\___/|___/\__,_| \____||_| ', 0
     
-    birdFlyUpFirstLine BYTE '    |\', 0
+    birdFlyUpFirstLine BYTE '|\', 0
     birdFlyUpSecondLine BYTE '<o)_| \_', 0
-    birdFlyUpThirdLine BYTE '  \__/', 0
+    birdFlyUpThirdLine BYTE '\__/', 0
 
     birdDeleteFirstLine BYTE '       ', 0
     birdFlyDownFirstLine BYTE '<o)____', 0
-    birdFlyDownSecondLine BYTE '   \__/', 0
-    birdFlyDownThirdLine BYTE ' |/', 0
+    birdFlyDownSecondLine BYTE '\__/ ', 0
+    birdFlyDownThirdLine BYTE '|/', 0
     bird_pos COORD <50, 11> ; 起始位置
     bird_speed WORD 7 ; 鳥的速度
 
@@ -633,10 +633,11 @@ DrawSquatSecondStep ENDP
 
 DrawBirdFlyUp PROC
     ; Draw the bird at its current position
-    ;inc bird_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 6, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 6, bird_pos, ADDR cellsWritten
+    add bird_pos.x, 4
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpFirstLine, 2, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
+    sub bird_pos.x, 4
     inc bird_pos.y
     INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpSecondLine, 8, bird_pos, ADDR cellsWritten
@@ -644,8 +645,10 @@ DrawBirdFlyUp PROC
     inc bird_pos.y
     inc bird_pos.x
     inc bird_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 6, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpThirdLine, 6, bird_pos, ADDR cellsWritten
+    add bird_pos.x, 2
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 4, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyUpThirdLine, 4, bird_pos, ADDR cellsWritten
+    sub bird_pos.x, 2
     ret
 DrawBirdFlyUp ENDP
 
@@ -660,14 +663,13 @@ DrawBirdFlyDown PROC
     INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownFirstLine, 8, bird_pos, ADDR cellsWritten
     ; Move down to the next line for middle part
     inc bird_pos.y
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 8, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 8, bird_pos, ADDR cellsWritten
+    add bird_pos.x, 3
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 5, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownSecondLine, 5, bird_pos, ADDR cellsWritten
     ; Move down to the next line for bottom part
     inc bird_pos.y
-    inc bird_pos.x
-    inc bird_pos.x
-    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 4, bird_pos, ADDR cellsWritten
-    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownThirdLine, 4, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputAttribute, outputHandle, ADDR darkBlueColor, 2, bird_pos, ADDR cellsWritten
+    INVOKE WriteConsoleOutputCharacter, outputHandle, ADDR birdFlyDownThirdLine, 2, bird_pos, ADDR cellsWritten
     ret
 DrawBirdFlyDown ENDP
 
