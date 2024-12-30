@@ -8,7 +8,7 @@ INCLUDE Irvine32.inc
     cactusTop     BYTE '  ', '|', ' ', 0    ; The top part of the cactus
     cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
     cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
-    cactus_pos    COORD <30, 16>           ; Cactus position
+    cactus_pos    COORD <80, 18>           ; Cactus position
     cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 
     dinosaurFirstLine  BYTE '     ____', 0
@@ -48,7 +48,7 @@ INCLUDE Irvine32.inc
     birdFlyDownFirstLine BYTE '<o)____', 0
     birdFlyDownSecondLine BYTE '   \__/', 0
     birdFlyDownThirdLine BYTE '  |/', 0
-    bird_pos COORD <90, 13> ; 起始位置
+    bird_pos COORD <50, 11> ; 起始位置
     bird_speed WORD 7 ; 鳥的速度
 
     cactus_speed WORD 3 ; 仙人掌的速度
@@ -346,7 +346,7 @@ RestartGame PROC
     mov cactus_pos.y, 18    ; 仙人掌的地面高度
 
     mov bird_pos.x, 50
-    mov bird_pos.y, 13
+    mov bird_pos.y, 11
 
     ; 重置其他遊戲變數
     mov velocity, 6         ; 停止恐龍的跳躍速度
@@ -795,6 +795,12 @@ MoveBird PROC
     call RandomRange
     add eax, 70 
     mov bird_pos.x, ax ; 重新生成小鳥
+
+    mov eax, 11           ; 隨機數範圍 0~20
+    call RandomRange
+    add eax, 5           ; 將範圍轉換為 10~30
+    mov bird_pos.y, ax    ; 重新生成小鳥 y 坐標
+
     ret
 MoveBird ENDP
 

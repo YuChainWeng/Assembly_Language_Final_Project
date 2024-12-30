@@ -1,12 +1,12 @@
  Asm_Final_Project
 
- Timestamp is 67721aa1 (Mon Dec 30 11:59:29 2024)
+ Timestamp is 67721ca6 (Mon Dec 30 12:08:06 2024)
 
  Preferred load address is 00400000
 
  Start         Length     Name                   Class
  0001:00000000 000027f0H .text                   CODE
- 0001:000027f0 00002d4fH .text$mn                CODE
+ 0001:000027f0 00002d67H .text$mn                CODE
  0002:00000000 00000144H .rdata                  DATA
  0002:00000143 00000000H .edata                  DATA
  0002:00000144 00000199H .rdata$zzzdbg           DATA
@@ -133,38 +133,38 @@
  0001:00003d9e       _DrawSquatSecondStepBackground@0 00404d9e f   main.obj
  0001:00003dc7       _MoveCactus@0              00404dc7 f   main.obj
  0001:00003e06       _MoveBird@0                00404e06 f   main.obj
- 0001:00003e5b       _WaitForRelease@0          00404e5b f   main.obj
- 0001:00003e69       _FormatScore@0             00404e69 f   main.obj
- 0001:00003e8f       _FormatHighScore@0         00404e8f f   main.obj
- 0001:00004466       _ExitProcess@4             00405466 f   kernel32:KERNEL32.dll
- 0001:0000446c       _GetStdHandle@4            0040546c f   kernel32:KERNEL32.dll
- 0001:00004472       _Sleep@4                   00405472 f   kernel32:KERNEL32.dll
- 0001:00004478       _WriteConsoleOutputCharacterA@20 00405478 f   kernel32:KERNEL32.dll
- 0001:0000447e       _WriteConsoleOutputAttribute@20 0040547e f   kernel32:KERNEL32.dll
- 0001:00004484       _SetConsoleOutputCP@4      00405484 f   kernel32:KERNEL32.dll
- 0001:0000448a       _CloseHandle@4             0040548a f   kernel32:KERNEL32.dll
- 0001:00004490       _CreateFileA@28            00405490 f   kernel32:KERNEL32.dll
- 0001:00004496       _FormatMessageA@28         00405496 f   kernel32:KERNEL32.dll
- 0001:0000449c       _FlushConsoleInputBuffer@4 0040549c f   kernel32:KERNEL32.dll
- 0001:000044a2       _GetCommandLineA@0         004054a2 f   kernel32:KERNEL32.dll
- 0001:000044a8       _GetConsoleMode@8          004054a8 f   kernel32:KERNEL32.dll
- 0001:000044ae       _GetConsoleScreenBufferInfo@8 004054ae f   kernel32:KERNEL32.dll
- 0001:000044b4       _GetLastError@0            004054b4 f   kernel32:KERNEL32.dll
- 0001:000044ba       _GetLocalTime@4            004054ba f   kernel32:KERNEL32.dll
- 0001:000044c0       _GetSystemTime@4           004054c0 f   kernel32:KERNEL32.dll
- 0001:000044c6       _LocalFree@4               004054c6 f   kernel32:KERNEL32.dll
- 0001:000044cc       _PeekConsoleInputA@16      004054cc f   kernel32:KERNEL32.dll
- 0001:000044d2       _ReadConsoleA@20           004054d2 f   kernel32:KERNEL32.dll
- 0001:000044d8       _ReadConsoleInputA@16      004054d8 f   kernel32:KERNEL32.dll
- 0001:000044de       _ReadFile@20               004054de f   kernel32:KERNEL32.dll
- 0001:000044e4       _SetConsoleCursorPosition@8 004054e4 f   kernel32:KERNEL32.dll
- 0001:000044ea       _SetConsoleMode@8          004054ea f   kernel32:KERNEL32.dll
- 0001:000044f0       _SetConsoleTextAttribute@8 004054f0 f   kernel32:KERNEL32.dll
- 0001:000044f6       _SystemTimeToFileTime@8    004054f6 f   kernel32:KERNEL32.dll
- 0001:000044fc       _WriteConsoleA@20          004054fc f   kernel32:KERNEL32.dll
- 0001:00004502       _WriteFile@20              00405502 f   kernel32:KERNEL32.dll
- 0001:00004508       _GetAsyncKeyState@4        00405508 f   user32:USER32.dll
- 0001:0000450e       _MessageBoxA@16            0040550e f   user32:USER32.dll
+ 0001:00003e6e       _WaitForRelease@0          00404e6e f   main.obj
+ 0001:00003e7c       _FormatScore@0             00404e7c f   main.obj
+ 0001:00003ea2       _FormatHighScore@0         00404ea2 f   main.obj
+ 0001:0000447e       _ExitProcess@4             0040547e f   kernel32:KERNEL32.dll
+ 0001:00004484       _GetStdHandle@4            00405484 f   kernel32:KERNEL32.dll
+ 0001:0000448a       _Sleep@4                   0040548a f   kernel32:KERNEL32.dll
+ 0001:00004490       _WriteConsoleOutputCharacterA@20 00405490 f   kernel32:KERNEL32.dll
+ 0001:00004496       _WriteConsoleOutputAttribute@20 00405496 f   kernel32:KERNEL32.dll
+ 0001:0000449c       _SetConsoleOutputCP@4      0040549c f   kernel32:KERNEL32.dll
+ 0001:000044a2       _CloseHandle@4             004054a2 f   kernel32:KERNEL32.dll
+ 0001:000044a8       _CreateFileA@28            004054a8 f   kernel32:KERNEL32.dll
+ 0001:000044ae       _FormatMessageA@28         004054ae f   kernel32:KERNEL32.dll
+ 0001:000044b4       _FlushConsoleInputBuffer@4 004054b4 f   kernel32:KERNEL32.dll
+ 0001:000044ba       _GetCommandLineA@0         004054ba f   kernel32:KERNEL32.dll
+ 0001:000044c0       _GetConsoleMode@8          004054c0 f   kernel32:KERNEL32.dll
+ 0001:000044c6       _GetConsoleScreenBufferInfo@8 004054c6 f   kernel32:KERNEL32.dll
+ 0001:000044cc       _GetLastError@0            004054cc f   kernel32:KERNEL32.dll
+ 0001:000044d2       _GetLocalTime@4            004054d2 f   kernel32:KERNEL32.dll
+ 0001:000044d8       _GetSystemTime@4           004054d8 f   kernel32:KERNEL32.dll
+ 0001:000044de       _LocalFree@4               004054de f   kernel32:KERNEL32.dll
+ 0001:000044e4       _PeekConsoleInputA@16      004054e4 f   kernel32:KERNEL32.dll
+ 0001:000044ea       _ReadConsoleA@20           004054ea f   kernel32:KERNEL32.dll
+ 0001:000044f0       _ReadConsoleInputA@16      004054f0 f   kernel32:KERNEL32.dll
+ 0001:000044f6       _ReadFile@20               004054f6 f   kernel32:KERNEL32.dll
+ 0001:000044fc       _SetConsoleCursorPosition@8 004054fc f   kernel32:KERNEL32.dll
+ 0001:00004502       _SetConsoleMode@8          00405502 f   kernel32:KERNEL32.dll
+ 0001:00004508       _SetConsoleTextAttribute@8 00405508 f   kernel32:KERNEL32.dll
+ 0001:0000450e       _SystemTimeToFileTime@8    0040550e f   kernel32:KERNEL32.dll
+ 0001:00004514       _WriteConsoleA@20          00405514 f   kernel32:KERNEL32.dll
+ 0001:0000451a       _WriteFile@20              0040551a f   kernel32:KERNEL32.dll
+ 0001:00004520       _GetAsyncKeyState@4        00405520 f   user32:USER32.dll
+ 0001:00004526       _MessageBoxA@16            00405526 f   user32:USER32.dll
  0004:00000000       __imp__ExitProcess@4       0040a000     kernel32:KERNEL32.dll
  0004:00000004       __imp__GetStdHandle@4      0040a004     kernel32:KERNEL32.dll
  0004:00000008       __imp__Sleep@4             0040a008     kernel32:KERNEL32.dll

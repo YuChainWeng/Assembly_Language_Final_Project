@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:59:29
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 12:08:05
 main.asm						     Page 1 - 1
 
 
@@ -32,7 +32,7 @@ main.asm						     Page 1 - 1
  0000006E 7C 5F 7C 5F 7C	    cactusMiddle  BYTE '|', '_', '|', '_', '|', 0 ; The middle part of the cactus
 	   00
  00000074 7C 00			    cactusBottom  BYTE  '|', 0    ; The bottom part of the cactus
- 00000076 001E 0010		    cactus_pos    COORD <30, 16>           ; Cactus position
+ 00000076 0050 0012		    cactus_pos    COORD <80, 18>           ; Cactus position
  0000007A 00000003		    cactus_height DWORD 3                  ; Height of the cactus (3 lines)
 				
  0000007E 20 20 20 20 20	    dinosaurFirstLine  BYTE '     ____', 0
@@ -198,7 +198,7 @@ main.asm						     Page 1 - 1
  00000335 20 20 20 5C 5F	    birdFlyDownSecondLine BYTE '   \__/', 0
 	   5F 2F 00
  0000033D 20 20 7C 2F 00	    birdFlyDownThirdLine BYTE '  |/', 0
- 00000342 005A 000D		    bird_pos COORD <90, 13> ; 起始位置
+ 00000342 0032 000B		    bird_pos COORD <50, 11> ; 起始位置
  00000346 0007			    bird_speed WORD 7 ; 鳥的速度
 				
  00000348 0003			    cactus_speed WORD 3 ; 仙人掌的速度
@@ -309,7 +309,7 @@ main.asm						     Page 1 - 1
 				    ; 加入延遲，避免移動速度過快
 				    INVOKE Sleep, 25  ; 延遲 75 毫秒
  00000031  FF 05 0000083A R	    inc score
- 00000037  E8 0000163D		    call FormatScore
+ 00000037  E8 00001650		    call FormatScore
 				    ;減回畫方塊所位移的2格
  0000003C  66| 83 2D		    sub dino_pos.y, 5
 	   000000B8 R 05
@@ -355,7 +355,7 @@ main.asm						     Page 1 - 1
 				
  000000B5			DoJump:
  000000B5  E8 0000000C		    call Jump
- 000000BA  E8 000015AC		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
+ 000000BA  E8 000015BF		    call WaitForRelease ; 等待按鍵釋放，避免重複跳躍
  000000BF  C3			    ret
 				
  000000C0			DoSquat:
@@ -406,7 +406,7 @@ main.asm						     Page 1 - 1
 				    
 				    ; 增加分數並立即更新顯示
  00000117  FF 05 0000083A R	    inc score
- 0000011D  E8 00001557		    call FormatScore
+ 0000011D  E8 0000156A		    call FormatScore
 				  
 				    ; 繪製更新後的背景
  00000122  E8 000013E3		    call DrawBackground
@@ -487,7 +487,7 @@ main.asm						     Page 1 - 1
 				    
 				    ; 增加分數
  000001CA  FF 05 0000083A R	    inc score
- 000001D0  E8 000014A4		    call FormatScore
+ 000001D0  E8 000014B7		    call FormatScore
 				    
 				    ; 檢查碰撞
  000001D5  E8 00000021		    call CheckCollision
@@ -536,9 +536,9 @@ main.asm						     Page 1 - 1
  0000023A  A3 0000083E R	    mov highscore, eax             ; Update high score
 				
 				    ; 呼叫 FormatHighScore 來顯示更新後的 high score
- 0000023F  E8 0000145B		    call FormatHighScore
+ 0000023F  E8 0000146E		    call FormatHighScore
  00000244  E8 00001286		    call DrawHighScore
- 00000249  E8 0000142B		    call FormatScore
+ 00000249  E8 0000143E		    call FormatScore
  0000024E  E8 00001241		    call DrawScore
 				
  00000253			NoUpdateHighScore:
@@ -585,9 +585,9 @@ main.asm						     Page 1 - 1
  000002A9  66| C7 05		    mov bird_pos.x, 50
 	   00000342 R
 	   0032
- 000002B2  66| C7 05		    mov bird_pos.y, 13
+ 000002B2  66| C7 05		    mov bird_pos.y, 11
 	   00000344 R
-	   000D
+	   000B
 				
 				    ; 重置其他遊戲變數
  000002BB  66| C7 05		    mov velocity, 6         ; 停止恐龍的跳躍速度
@@ -1120,56 +1120,63 @@ main.asm						     Page 1 - 1
  00001661  83 C0 46		    add eax, 70 
  00001664  66| A3		    mov bird_pos.x, ax ; 重新生成小鳥
 	   00000342 R
- 0000166A  C3			    ret
- 0000166B			MoveBird ENDP
+				
+ 0000166A  B8 0000000B		    mov eax, 11           ; 隨機數範圍 0~20
+ 0000166F  E8 00000000 E	    call RandomRange
+ 00001674  83 C0 05		    add eax, 5           ; 將範圍轉換為 10~30
+ 00001677  66| A3		    mov bird_pos.y, ax    ; 重新生成小鳥 y 坐標
+	   00000344 R
+				
+ 0000167D  C3			    ret
+ 0000167E			MoveBird ENDP
 				
 				; 等待按鍵釋放
- 0000166B			WaitForRelease PROC
+ 0000167E			WaitForRelease PROC
 				    ; ecx = 虛擬鍵的代碼
- 0000166B			WaitLoop:
+ 0000167E			WaitLoop:
 				    INVOKE GetAsyncKeyState, ecx
- 00001671  A9 00008000		    test eax, 8000h
- 00001676  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
- 00001678  C3			    ret
- 00001679			WaitForRelease ENDP
+ 00001684  A9 00008000		    test eax, 8000h
+ 00001689  75 F3		    jnz WaitLoop ; 如果還在按著按鍵，繼續等待
+ 0000168B  C3			    ret
+ 0000168C			WaitForRelease ENDP
 				
- 00001679			FormatScore PROC
- 00001679  A1 0000083A R	    mov eax, score
- 0000167E  B9 0000000A		    mov ecx, 10
- 00001683  BF 0000086D R	    mov edi, OFFSET scoreString + 11
- 00001688  C6 07 00		    mov BYTE PTR [edi], 0
- 0000168B  BA 00000000		    mov edx, 0
- 00001690			    L1:
- 00001690  33 D2		    xor edx, edx
- 00001692  F7 F1		        div ecx
- 00001694  80 C2 30		        add dl, '0'
- 00001697  4F			        dec edi
- 00001698  88 17		        mov BYTE PTR [edi], dl
- 0000169A  85 C0		        test eax, eax
- 0000169C  75 F2		        jnz L1
- 0000169E  C3			    ret
- 0000169F			FormatScore ENDP
+ 0000168C			FormatScore PROC
+ 0000168C  A1 0000083A R	    mov eax, score
+ 00001691  B9 0000000A		    mov ecx, 10
+ 00001696  BF 0000086D R	    mov edi, OFFSET scoreString + 11
+ 0000169B  C6 07 00		    mov BYTE PTR [edi], 0
+ 0000169E  BA 00000000		    mov edx, 0
+ 000016A3			    L1:
+ 000016A3  33 D2		    xor edx, edx
+ 000016A5  F7 F1		        div ecx
+ 000016A7  80 C2 30		        add dl, '0'
+ 000016AA  4F			        dec edi
+ 000016AB  88 17		        mov BYTE PTR [edi], dl
+ 000016AD  85 C0		        test eax, eax
+ 000016AF  75 F2		        jnz L1
+ 000016B1  C3			    ret
+ 000016B2			FormatScore ENDP
 				
- 0000169F			FormatHighScore PROC
- 0000169F  A1 0000083E R	    mov eax, highscore
- 000016A4  B9 0000000A		    mov ecx, 10
- 000016A9  BF 0000087E R	    mov edi, OFFSET highscoreString + 16
- 000016AE  C6 07 00		    mov BYTE PTR [edi], 0
- 000016B1  BA 00000000		    mov edx, 0
- 000016B6			    L1:
- 000016B6  33 D2		    xor edx, edx
- 000016B8  F7 F1		        div ecx
- 000016BA  80 C2 30		        add dl, '0'
- 000016BD  4F			        dec edi
- 000016BE  88 17		        mov BYTE PTR [edi], dl
- 000016C0  85 C0		        test eax, eax
- 000016C2  75 F2		        jnz L1
- 000016C4  C3			    ret
- 000016C5			FormatHighScore ENDP
+ 000016B2			FormatHighScore PROC
+ 000016B2  A1 0000083E R	    mov eax, highscore
+ 000016B7  B9 0000000A		    mov ecx, 10
+ 000016BC  BF 0000087E R	    mov edi, OFFSET highscoreString + 16
+ 000016C1  C6 07 00		    mov BYTE PTR [edi], 0
+ 000016C4  BA 00000000		    mov edx, 0
+ 000016C9			    L1:
+ 000016C9  33 D2		    xor edx, edx
+ 000016CB  F7 F1		        div ecx
+ 000016CD  80 C2 30		        add dl, '0'
+ 000016D0  4F			        dec edi
+ 000016D1  88 17		        mov BYTE PTR [edi], dl
+ 000016D3  85 C0		        test eax, eax
+ 000016D5  75 F2		        jnz L1
+ 000016D7  C3			    ret
+ 000016D8			FormatHighScore ENDP
 				
- 000016C5			main ENDP
+ 000016D8			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 11:59:29
+Microsoft (R) Macro Assembler Version 14.42.34435.0	    12/30/24 12:08:05
 main.asm						     Symbols 2 - 1
 
 
@@ -1264,7 +1271,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 000008ED Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000016C5 Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000016D8 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -1310,11 +1317,11 @@ ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatHighScore  . . . . . . . .	P Near	 0000169F _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 000016B6 _TEXT	
+FormatHighScore  . . . . . . . .	P Near	 000016B2 _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 000016C9 _TEXT	
 FormatMessageA . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-FormatScore  . . . . . . . . . .	P Near	 00001679 _TEXT	Length= 00000026 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00001690 _TEXT	
+FormatScore  . . . . . . . . . .	P Near	 0000168C _TEXT	Length= 00000026 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 000016A3 _TEXT	
 GameOverMsg  . . . . . . . . . .	P Near	 000002DC _TEXT	Length= 00000148 Public STDCALL
 GetAsyncKeyState . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetCommandLineA  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1351,7 +1358,7 @@ Jump . . . . . . . . . . . . . .	P Near	 000000C6 _TEXT	Length= 000000C5 Public 
   GoToSquat  . . . . . . . . . .	L Near	 0000017C _TEXT	
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-MoveBird . . . . . . . . . . . .	P Near	 00001616 _TEXT	Length= 00000055 Public STDCALL
+MoveBird . . . . . . . . . . . .	P Near	 00001616 _TEXT	Length= 00000068 Public STDCALL
   resetBird  . . . . . . . . . .	L Near	 00001657 _TEXT	
 MoveCactus . . . . . . . . . . .	P Near	 000015D7 _TEXT	Length= 0000003F Public STDCALL
   resetCactus  . . . . . . . . .	L Near	 00001602 _TEXT	
@@ -1402,8 +1409,8 @@ Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WaitForEnter . . . . . . . . . .	P Near	 00000424 _TEXT	Length= 00000022 Public STDCALL
   WaitLoop . . . . . . . . . . .	L Near	 00000424 _TEXT	
-WaitForRelease . . . . . . . . .	P Near	 0000166B _TEXT	Length= 0000000E Public STDCALL
-  WaitLoop . . . . . . . . . . .	L Near	 0000166B _TEXT	
+WaitForRelease . . . . . . . . .	P Near	 0000167E _TEXT	Length= 0000000E Public STDCALL
+  WaitLoop . . . . . . . . . . .	L Near	 0000167E _TEXT	
 WaitForStart . . . . . . . . . .	P Near	 00000446 _TEXT	Length= 00000014 Public STDCALL
   WaitForStartLoop . . . . . . .	L Near	 00000446 _TEXT	
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1426,7 +1433,7 @@ WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000016C5 Public STDCALL
+start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000016D8 Public STDCALL
   mainLoop . . . . . . . . . . .	L Near	 0000002A _TEXT	
   Gameover . . . . . . . . . . .	L Near	 00000083 _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
